@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fleet Fuel Planner</title>
+<meta name="theme-color" content="#101a22">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--bg:#e7ebee;--card:#fff;--ink:#101a22;--mut:#56636e;--line:#cdd5db;--tint:#f2f5f7;--hi:#f7c600;--hi-ink:#101a22;--good:#1b7447;--warn:#b42318;--up:#1f9d55;--sb:#2f6fdb;--dn:#d6322e;--nv:#3b5b8c;--sl:40%;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1317;--card:#161e25;--ink:#e9eff3;--mut:#93a1ac;--line:#2b3742;--tint:#1c262e;--hi:#ffd21f;--good:#5fd19a;--warn:#ff8f84;--up:#3ddc84;--sb:#6ea2ff;--dn:#ff6b64;--nv:#7fa6e0;--sl:62%;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1317;--card:#161e25;--ink:#e9eff3;--mut:#93a1ac;--line:#2b3742;--tint:#1c262e;--hi:#ffd21f;--good:#5fd19a;--warn:#ff8f84;--up:#3ddc84;--sb:#6ea2ff;--dn:#ff6b64;--nv:#7fa6e0;--sl:62%;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Barlow,"Segoe UI",system-ui,sans-serif}
+main{max-width:1320px;margin:0 auto;padding:20px 16px 40px}
+h1,h2,.read b,.rt,.hr{font-family:"Barlow Condensed","Arial Narrow","Roboto Condensed",sans-serif}
+h1{font-size:2.4rem;line-height:1.05;margin:0 0 6px;font-weight:700}
+h2{font-size:1.4rem;margin:0 0 10px;font-weight:700}
+p{margin:0}.mut{color:var(--mut)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px}
+.panel{border-top:4px solid var(--ink)}
+.tabs{display:flex;gap:4px;border-bottom:2px solid var(--ink);margin-top:14px}
+.tab{font:inherit;font-weight:600;font-size:1.05rem;background:transparent;color:var(--ink);border:0;padding:8px 22px;cursor:pointer;border-radius:4px 4px 0 0}
+.tab[aria-selected=true]{background:var(--ink);color:var(--card)}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:16px;margin-top:16px;align-items:start}
+.left,.stack{display:grid;gap:16px;min-width:0}
+.side{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto}
+.band{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));align-items:start}
+.grid{display:grid;gap:16px;grid-template-columns:minmax(280px,340px) minmax(0,1fr);align-items:start}
+@media (max-width:1100px){.layout{grid-template-columns:1fr}.side{position:static;max-height:none}}
+@media (max-width:820px){.grid{grid-template-columns:1fr}}
+label,.lbl{display:grid;gap:4px;font-weight:600}
+label small{font-weight:400;color:var(--mut)}
+input,select{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:4px;padding:7px 9px;width:100%;min-width:0}
+input:focus-visible,select:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.seg{display:flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.seg label{position:relative;flex:1;display:block;font-weight:500}
+.seg input{position:absolute;opacity:0;width:1px;height:1px}
+.seg span{display:block;padding:8px 10px;text-align:center;white-space:nowrap;cursor:pointer;border-right:1px solid var(--line)}
+.band .wide{grid-column:1/-1}.wide .seg{max-width:460px}
+.seg label:last-child span{border-right:0}
+.seg input:checked+span{background:var(--hi);color:var(--hi-ink);font-weight:700}
+.seg input:focus-visible+span{outline:2px solid var(--ink);outline-offset:-3px}
+.note{margin-top:8px;font-size:.9rem}
+.rowh{display:flex;justify-content:space-between;align-items:baseline}
+.acts{display:flex;gap:8px;margin:10px 0 0}
+.btn{font:inherit;font-weight:600;background:transparent;color:var(--ink);border:1px solid var(--ink);border-radius:4px;padding:5px 12px;cursor:pointer}
+.btn.hi{background:var(--hi);color:var(--hi-ink);border-color:var(--hi)}
+.btn.ghost{border-color:var(--line);color:var(--mut)}
+.fleet{list-style:none;margin:10px 0 0;padding:0;max-height:520px;overflow:auto;border-top:1px solid var(--line)}
+.fl{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:8px 6px;border-bottom:1px solid var(--line)}
+.fl.up{background:var(--tint)}.fl.down b{text-decoration:line-through;color:var(--mut)}
+.fl b{font-size:1.05rem}.sub{display:block;color:var(--mut);font-size:.85rem}
+.stg{display:flex;gap:9px}
+.dot{--c:var(--up);width:20px;height:20px;border-radius:50%;border:2px solid var(--c);background:transparent;padding:0;cursor:pointer}
+.dot.standby{--c:var(--sb)}.dot.down{--c:var(--dn)}
+.dot.on{background:var(--c);box-shadow:0 0 0 2px var(--card),0 0 0 4px var(--c)}
+.sbx{display:flex;gap:12px;margin-top:2px}
+.sbx label{display:inline-flex;gap:5px;align-items:center;font-weight:500;font-size:.88rem}
+.sbx input{width:auto}
+.empty{color:var(--mut);padding:12px 6px}
+details>summary{cursor:pointer;font-weight:600;padding:4px 0}
+.add{display:grid;gap:8px;margin-top:8px}
+.read{display:grid;grid-template-columns:repeat(3,1fr);margin:4px 0 14px}
+.read>div{padding:0 14px;border-left:1px solid var(--line)}
+.read>div:first-child{padding-left:0;border-left:0}
+.read span{display:block;color:var(--mut)}
+.read b{font-size:2.3rem;line-height:1.05;font-weight:700}
+.read small{font-size:1rem;font-weight:600;color:var(--mut)}
+@media (max-width:520px){.read b{font-size:1.7rem}.read>div{padding:0 8px}}
+.tank{display:flex;height:28px;background:var(--tint);border:1px solid var(--ink);border-radius:3px;overflow:hidden}
+.tank i{display:block;height:100%;border-right:2px solid var(--card)}
+.tank-lbl{display:flex;justify-content:space-between;color:var(--mut);font-size:.9rem;margin:4px 0 14px}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th{text-align:left;font-weight:600;color:var(--mut);font-size:.9rem;padding:6px 8px;border-bottom:2px solid var(--ink);white-space:nowrap}
+td{padding:8px;border-bottom:1px solid var(--line);white-space:nowrap}
+th.n,td.n{text-align:right}
+tfoot td{font-weight:700;border-bottom:0;border-top:2px solid var(--ink)}
+.hr{font-size:1.3rem;font-weight:700}
+.hrtag{background:var(--hi);color:var(--hi-ink);padding:1px 8px;border-radius:3px}
+.sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:7px}
+.x{background:none;border:0;color:var(--mut);cursor:pointer;font-size:1rem;padding:4px 6px;border-radius:4px}
+.x:hover{color:var(--warn)}
+td input{width:84px;text-align:right}
+.sg{display:grid;gap:2px;padding:10px 12px;border-left:5px solid var(--hi);background:var(--tint);border-radius:0 4px 4px 0;margin-top:8px}
+.sg.good{border-color:var(--good)}.sg.warn{border-color:var(--warn)}.sg.info{border-color:var(--sb)}
+.sg span{color:var(--mut)}
+.charts{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));margin-top:16px}
+.lg{display:flex;gap:14px;margin-bottom:6px}
+.ax{fill:var(--mut);font:11px Barlow,system-ui,sans-serif}
+.arow{display:grid;gap:8px;grid-template-columns:2fr 1fr 1fr auto;align-items:end;margin-bottom:14px}
+@media (max-width:640px){.arow{grid-template-columns:1fr 1fr}}
+.foot{margin-top:14px;text-align:center}
+.lnk{background:none;border:0;color:var(--mut);text-decoration:underline;cursor:pointer;font:inherit}
+.aiout{margin-top:10px}.aiout p{margin:0 0 8px}.aiout ul{margin:0 0 8px;padding-left:20px}.aiout .err{color:var(--warn)}.aiset{margin-top:12px}.aiset label{margin-top:8px}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1>Fleet fuel planner</h1>
+  <p class="mut">Set each machine up, on standby or down, choose the shifts, and read off the ready hours that stay inside the fuel ceiling.</p>
+</header>
+<nav class="tabs" role="tablist">
+  <button class="tab" role="tab" id="tPlan" aria-selected="true">Plan</button>
+  <button class="tab" role="tab" id="tAct" aria-selected="false">Actuals</button>
+</nav>
+
+<div id="pPlan" class="layout">
+  <div class="left">
+    <section class="card band" aria-label="Plan settings">
+      <div class="lbl" id="shLbl">Shift
+        <div class="seg" role="radiogroup" aria-labelledby="shLbl">
+          <label><input type="radio" name="shift" value="day"><span>Day</span></label>
+          <label><input type="radio" name="shift" value="night"><span>Night</span></label>
+          <label><input type="radio" name="shift" value="both"><span>Both</span></label>
+        </div>
+      </div>
+      <label>Hours per shift<input id="win" type="number" min="0" step="0.5" inputmode="decimal"></label>
+      <label id="lCapD">Day fuel ceiling (L)<input id="capD" type="number" min="0" step="50" inputmode="decimal"></label>
+      <label id="lCapN">Night fuel ceiling (L)<input id="capN" type="number" min="0" step="50" inputmode="decimal"></label>
+      <div class="lbl wide" id="mdLbl">How hours are shared
+        <div class="seg" role="radiogroup" aria-labelledby="mdLbl">
+          <label><input type="radio" name="mode" value="eq"><span>Equal</span></label>
+          <label><input type="radio" name="mode" value="prio"><span>Priority</span></label>
+          <label><input type="radio" name="mode" value="eff"><span>Max hours</span></label>
+        </div>
+        <p id="modeNote" class="mut note"></p>
+      </div>
+    </section>
+    <div class="grid">
+      <section class="card" aria-label="Fleet">
+        <div class="rowh"><h2>Fleet</h2><span id="cnt" class="mut"></span></div>
+        <p class="mut note" style="margin:0 0 8px">Circles set status: green up, blue standby, red down. Only up machines are planned.</p>
+        <input id="q" type="search" placeholder="Search fleet no. or model" aria-label="Search fleet">
+        <div class="acts"><button class="btn" id="addAll">All shown up</button><button class="btn ghost" id="clr">All standby</button></div>
+        <ul id="fleetList" class="fleet"></ul>
+        <details style="margin-top:12px"><summary>Add a machine to the fleet</summary>
+          <div class="add">
+            <input id="nId" placeholder="Fleet no., for example MD040" aria-label="Fleet number">
+            <input id="nModel" list="modelList" placeholder="Model" aria-label="Model">
+            <datalist id="modelList"></datalist>
+            <input id="nRate" type="number" min="0" step="0.5" placeholder="Burn rate (L/hr)" aria-label="Burn rate in litres per hour">
+            <select id="nType" aria-label="Machine type"></select>
+            <button class="btn hi" id="addBtn">Add as up</button>
+            <p id="addMsg" class="mut" role="status"></p>
+          </div>
+        </details>
+      </section>
+      <div class="stack">
+        <div id="shifts" class="stack"></div>
+        <details class="card"><summary>Burn rates by model</summary>
+          <div class="scroll"><table id="rtbl"></table></div>
+          <p class="mut note">Changes apply to every machine of that model.</p>
+        </details>
+      </div>
+    </div>
+  </div>
+  <aside class="card side" aria-label="Suggestions"><h2>Suggestions</h2><div id="sug"></div>
+    <h2 style="margin-top:22px">AI suggestions</h2>
+    <label>Provider<select id="aiP"><option value="claude">Claude</option><option value="gemini">Gemini</option><option value="custom">Copilot / Azure OpenAI / other</option></select></label>
+    <button class="btn hi" id="aiGo" style="margin-top:10px">Ask AI about this plan</button>
+    <div id="aiOut" class="aiout" aria-live="polite"></div>
+    <details class="aiset"><summary>Provider settings</summary>
+      <label>API key<input id="aiKey" type="password" autocomplete="off"></label>
+      <label>Model<input id="aiModel" autocomplete="off"></label>
+      <label id="aiUrlL">Endpoint URL<input id="aiUrl" placeholder="https://your-resource.openai.azure.com/…/chat/completions" autocomplete="off"></label>
+      <label id="aiAuthL">Auth header<select id="aiAuth"><option value="Bearer">Authorization: Bearer</option><option value="api-key">api-key (Azure OpenAI)</option></select></label>
+      <p id="aiHelp" class="mut note"></p>
+      <p class="mut note">Keys stay in this browser on this device. Don’t share the installed app or its saved data.</p>
+    </details></aside>
+</div>
+
+<div id="pAct" hidden>
+  <section class="card panel" style="margin-top:16px">
+    <h2>Actual hours by shift</h2>
+    <div class="arow">
+      <label>Machine<select id="aId"></select></label>
+      <label>Shift<select id="aSh"><option value="day">Day</option><option value="night">Night</option></select></label>
+      <label>Hours operated<input id="aHr" type="number" min="0" step="0.5" inputmode="decimal" placeholder="0"></label>
+      <button class="btn hi" id="aAdd">Add</button>
+    </div>
+    <p id="aMsg" class="mut note" role="status"></p>
+    <div id="aRead" class="read"></div>
+    <div class="scroll"><table id="aTbl"></table></div>
+    <p class="mut note">Actual fuel is an estimate: hours operated multiplied by the machine’s burn rate. Planned figures come from the Plan tab.</p>
+  </section>
+  <div id="charts" class="charts"></div>
+</div>
+<p class="foot"><button class="lnk" id="reset">Reset saved data</button></p>
+</main>
+
+<script>
+const KEY="fleetfuel_v2",TYPES=["Haul truck","Excavator","Dozer","Other"],W={High:3,Normal:2,Low:1},NAME={day:"Day",night:"Night"};
+const NOTES={eq:"Every machine works the same hours; the ceiling decides how many.",prio:"Hours scale with priority (High 3×, Normal 2×, Low 1×) until the ceiling is used.",eff:"The leanest machines run full hours first and the thirstiest get the rest, maximising total machine-hours."};
+const clone=o=>JSON.parse(JSON.stringify(o));
+const DEF={models:{"785D":{rate:150,type:"Haul truck"},"XDE130":{rate:70,type:"Haul truck"},"777F":{rate:56,type:"Haul truck"},"777D":{rate:75,type:"Haul truck"},"6015B":{rate:82,type:"Excavator"},"XE2000":{rate:105,type:"Excavator"},"1200-6":{rate:90,type:"Excavator"},"XE335C":{rate:18,type:"Excavator"},"D375A-6":{rate:57,type:"Dozer"},"SW D10 DZ":{rate:70,type:"Dozer"}},
+ fleet:[["EX104","6015B"],["EX105","XE2000"],["EX92","1200-6"],["MD011","785D"],["MD012","785D"],["MD032","777F"],["MD033","777F"],["HT92","777D"],["HT90","777D"],["MD017","XDE130"],["MD018","XDE130"]].map(([id,model])=>({id,model})),
+ st:{EX104:"up",MD011:"up",MD012:"up",HT92:"up"},sh:{},prio:{},act:[],shift:"day",capD:3000,capN:3000,win:12,mode:"eq"};
+let S=clone(DEF);
+try{const x=JSON.parse(localStorage.getItem(KEY)||"null");if(x&&x.models&&x.fleet)S=Object.assign(clone(DEF),x);}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmt=(n,d=0)=>Number(n).toLocaleString(undefined,{minimumFractionDigits:d,maximumFractionDigits:d});
+const rateOf=m=>(S.models[m.model]||{rate:0}).rate,typeOf=m=>(S.models[m.model]||{type:"Other"}).type;
+const st=id=>S.st[id]||"standby",shOf=id=>S.sh[id]||{day:true,night:false};
+const mach=m=>({id:m.id,model:m.model,rate:rateOf(m),type:typeOf(m)}),byId=id=>S.fleet.find(m=>m.id===id);
+const col=i=>"hsl("+((205+i*53)%360)+" 55% var(--sl))";
+const shifts=()=>S.shift==="both"?["day","night"]:[S.shift];
+const capOf=s=>+(s==="day"?S.capD:S.capN)||0;
+const list=s=>S.fleet.filter(m=>st(m.id)==="up"&&(S.shift!=="both"||shOf(m.id)[s])).map(mach);
+
+function plan(mode,L0,cap,win){
+  const h={},L=L0.filter(m=>m.rate>0);
+  if(mode==="eff"){let rem=cap;[...L].sort((a,b)=>a.rate-b.rate).forEach(m=>{const x=Math.max(0,Math.min(win,rem/m.rate));h[m.id]=x;rem-=x*m.rate;});}
+  else{const wf=mode==="prio"?(m=>W[S.prio[m.id]||"Normal"]):(()=>1);let rem=cap,act=L.slice();
+    while(act.length){const den=act.reduce((s,m)=>s+wf(m)*m.rate,0),k=Math.max(0,rem)/den,over=act.filter(m=>wf(m)*k>=win);
+      if(!over.length){act.forEach(m=>h[m.id]=wf(m)*k);break;}
+      over.forEach(m=>{h[m.id]=win;rem-=win*m.rate;});act=act.filter(m=>!over.includes(m));}}
+  const rows=L0.map(m=>({...m,h:h[m.id]||0,fuel:(h[m.id]||0)*m.rate}));
+  return{rows,cap,win,fuel:rows.reduce((s,r)=>s+r.fuel,0),mh:rows.reduce((s,r)=>s+r.h,0)};
+}
+const computePlans=()=>shifts().map(s=>{const ch=list(s);return{s,name:NAME[s],ch,P:plan(S.mode,ch,capOf(s),+S.win||0)};});
+
+function suggestions(PS){
+  const o=[],add=(t,h,b)=>o.push({t,h,b}),by=k=>S.fleet.filter(m=>st(m.id)===k),ids=a=>a.map(m=>esc(m.id)).join(", ");
+  const up=by("up"),sb=by("standby"),dn=by("down");
+  add("info","Fleet status",up.length+" up, "+sb.length+" standby, "+dn.length+" down."+(dn.length?" Down units ("+ids(dn)+") are left out of the plan.":""));
+  PS.forEach(({name,ch,P})=>{
+    if(!ch.length){add("warn",name+" shift has no machines","Set machines to up"+(S.shift==="both"?" and tick "+name+" on them":"")+" to plan this shift.");return;}
+    const full=ch.reduce((a,m)=>a+m.rate*P.win,0);
+    if(P.cap<=0||P.win<=0)add("warn",name+": set the ceiling and hours","Both need a value above zero.");
+    else if(full<=P.cap)add("good",name+": the ceiling isn’t limiting","Every machine can run the full "+fmt(P.win,1)+" hr on "+fmt(full)+" L, leaving "+fmt(P.cap-full)+" L unused"+(sb.length?". Standby units ("+ids(sb.slice(0,4))+") could be brought up.":"."));
+    else{add("warn",name+": the ceiling is tighter than the plan","Full hours need "+fmt(full)+" L, "+fmt((full/P.cap-1)*100)+"% over the "+fmt(P.cap)+" L ceiling, so hours are cut to land at "+fmt(P.fuel)+" L.");
+      if(S.mode!=="eff"){const E=plan("eff",ch,P.cap,P.win);if(E.mh>P.mh*1.05)add("info",name+": a leaner split does more","Max hours gives "+fmt(E.mh,1)+" machine-hours instead of "+fmt(P.mh,1)+" on the same ceiling, favouring the leanest units.");}}
+    const z=P.rows.filter(r=>r.h<0.05);
+    if(z.length&&P.cap>0&&P.win>0)add("warn",name+": no hours for "+z.map(r=>esc(r.id)).join(", "),"Under this ceiling they get almost nothing. Stand them by or raise the ceiling.");
+    if(ch.length>1&&P.fuel>0){const top=[...P.rows].sort((a,b)=>b.fuel-a.fuel)[0],ln=[...ch].sort((a,b)=>a.rate-b.rate)[0],sh=top.fuel/P.fuel*100;
+      if(sh>=40&&top.id!==ln.id)add("info",name+": "+esc(top.id)+" uses "+fmt(sh)+"% of the fuel","Each hour trimmed from it frees "+top.rate+" L, enough for "+fmt(top.rate/ln.rate,1)+" extra hr on "+esc(ln.id)+".");}
+  });
+  const seen=new Set();let k=0;
+  up.forEach(u=>{const m=mach(u);if(k>=3||m.type==="Other")return;
+    const a=S.fleet.filter(f=>f.id!==m.id&&st(f.id)!=="down").map(mach).filter(x=>x.type===m.type&&x.model!==m.model&&x.rate>=m.rate*.6&&x.rate<=m.rate*.95).sort((p,q)=>p.rate-q.rate)[0];
+    if(!a||seen.has(m.model+a.model))return;seen.add(m.model+a.model);k++;
+    const sv=m.rate-a.rate,pc=fmt(sv/m.rate*100);
+    if(st(a.id)==="up")add("info","Favour "+esc(a.id)+" over "+esc(m.id),"The "+esc(a.model)+" burns "+a.rate+" L/hr against "+m.rate+" for the "+esc(m.model)+", "+pc+"% less. Give it the hours first where the work allows.");
+    else add("good","Bring "+esc(a.id)+" up for "+esc(m.id),"The standby "+esc(a.model)+" burns "+a.rate+" L/hr against "+m.rate+" for the "+esc(m.model)+", "+pc+"% less, about "+fmt(sv*S.win)+" L per "+fmt(S.win,1)+"-hr shift. Only if its capacity suits the job.");});
+  const T=up.filter(m=>typeOf(m)==="Haul truck").length,E=up.filter(m=>typeOf(m)==="Excavator").length,se=sb.filter(m=>typeOf(m)==="Excavator");
+  if(T&&!E)add("warn","Trucks have no loading unit",se.length?"Bring "+esc(se[0].id)+" ("+esc(se[0].model)+") up to load them. Idle trucks still burn fuel.":"Every excavator is down or missing, so the trucks would idle and burn fuel.");
+  else if(E&&T/E>6)add("warn","Too many trucks per excavator",T+" trucks to "+E+" excavator"+(E>1?"s":"")+" means queuing at the shovel. Set a few trucks to standby and spend that fuel on productive hours.");
+  add("info","Cut idle time","A running machine burns fuel while it waits. Shutting down during queues and breaks of more than a few minutes protects the ceiling without costing production.");
+  return o;
+}
+
+let shown=[];
+const dots=id=>["up","standby","down"].map(k=>`<button class="dot ${k}${st(id)===k?" on":""}" data-st="${k}" data-id="${esc(id)}" title="${k}" aria-label="Set ${esc(id)} ${k}" aria-pressed="${st(id)===k}"></button>`).join("");
+function renderFleet(){
+  const q=$("#q").value.trim().toLowerCase(),c=k=>S.fleet.filter(m=>st(m.id)===k).length;
+  shown=S.fleet.filter(m=>(m.id+" "+m.model).toLowerCase().includes(q));
+  $("#cnt").textContent=c("up")+" up, "+c("standby")+" standby, "+c("down")+" down";
+  $("#fleetList").innerHTML=shown.length?shown.map(m=>{const s=st(m.id),f=shOf(m.id);
+    return `<li class="fl ${s}"><div><b>${esc(m.id)}</b><span class="sub">${esc(m.model)}, ${esc(typeOf(m).toLowerCase())}, ${rateOf(m)} L/hr, ${s}</span>${S.shift==="both"&&s==="up"?`<span class="sbx"><label><input type="checkbox" data-sh="${esc(m.id)}:day"${f.day?" checked":""}>Day</label><label><input type="checkbox" data-sh="${esc(m.id)}:night"${f.night?" checked":""}>Night</label></span>`:""}</div><span class="stg">${dots(m.id)}</span></li>`;}).join(""):`<li class="empty">No machines match your search.</li>`;
+}
+
+function block({name,ch,P,s}){
+  const pr=S.mode==="prio";
+  const segs=P.cap>0?P.rows.map((r,i)=>r.fuel>0?`<i title="${esc(r.id)}: ${fmt(r.fuel)} L" style="width:${r.fuel/P.cap*100}%;background:${col(i)}"></i>`:"").join(""):"";
+  let h=`<section class="card panel"><h2>${name} shift</h2><div class="read">${[["Planned fuel",fmt(P.fuel),"L"],["Headroom under ceiling",fmt(Math.max(0,P.cap-P.fuel)),"L"],["Total ready hours",fmt(P.mh,1),"hr"]].map(([a,b,c])=>`<div><span>${a}</span><b>${b}</b> <small>${c}</small></div>`).join("")}</div><div class="tank" role="img" aria-label="${name} planned fuel ${fmt(P.fuel)} litres of ${fmt(P.cap)} litre ceiling">${segs}</div><div class="tank-lbl"><span>0 L</span><span>Ceiling ${fmt(P.cap)} L</span></div>`;
+  if(!ch.length)return h+`<p class="empty">No machines on this shift. Set machines to up${S.shift==="both"?" and tick "+name:""}.</p></section>`;
+  h+=`<div class="scroll"><table><thead><tr><th>Fleet no.</th><th>Model</th><th class="n">L/hr</th>${pr?"<th>Priority</th>":""}<th class="n">Ready hours</th><th class="n">Fuel (L)</th><th class="n">Share</th></tr></thead><tbody>`;
+  P.rows.forEach((r,i)=>{const sh=P.fuel>0?r.fuel/P.fuel*100:0;
+    h+=`<tr><td><span class="sw" style="background:${col(i)}"></span><b>${esc(r.id)}</b></td><td>${esc(r.model)}</td><td class="n">${r.rate}</td>${pr?`<td><select data-pr="${esc(r.id)}" aria-label="Priority for ${esc(r.id)}">${Object.keys(W).map(k=>`<option${(S.prio[r.id]||"Normal")===k?" selected":""}>${k}</option>`).join("")}</select></td>`:""}<td class="n hr"><span class="hrtag">${fmt(r.h,1)} hr</span></td><td class="n">${fmt(r.fuel)}</td><td class="n">${fmt(sh)}%</td></tr>`;});
+  return h+`</tbody><tfoot><tr><td colspan="${pr?4:3}">Total</td><td class="n hr">${fmt(P.mh,1)} hr</td><td class="n">${fmt(P.fuel)}</td><td></td></tr></tfoot></table></div></section>`;
+}
+function renderPlan(){
+  const PS=computePlans();
+  $("#modeNote").textContent=NOTES[S.mode];
+  $("#lCapD").hidden=S.shift==="night";$("#lCapN").hidden=S.shift==="day";
+  $("#shifts").innerHTML=PS.map(block).join("");
+  $("#sug").innerHTML=suggestions(PS).map(s=>`<div class="sg ${s.t}"><b>${s.h}</b><span>${s.b}</span></div>`).join("");
+}
+
+function chart(cats,ser,label){
+  if(!cats.length)return`<p class="empty">Add actual hours to see this chart.</p>`;
+  const gw=ser.length*22+16,W=Math.max(340,cats.length*gw+52),H=230,pl=46,pb=30,pt=18,ph=H-pb-pt;
+  const m0=Math.max(1,...ser.flatMap(s=>s.v)),p=10**Math.floor(Math.log10(m0)),mx=Math.ceil(m0/p)*p;
+  let g=[0,.5,1].map(f=>{const y=pt+ph*(1-f);return`<line x1="${pl}" x2="${W}" y1="${y}" y2="${y}" style="stroke:var(--line)"/><text x="${pl-6}" y="${y+4}" text-anchor="end" class="ax">${fmt(mx*f)}</text>`;}).join("");
+  cats.forEach((c,i)=>{ser.forEach((s,j)=>{const v=s.v[i]||0,h=v/mx*ph,x=pl+i*gw+8+j*22,y=pt+ph-h;
+    g+=`<rect x="${x}" y="${y}" width="18" height="${h}" style="fill:${s.c};stroke:var(--ink)" stroke-width=".8"><title>${esc(c)}, ${esc(s.n)}: ${fmt(v)} L</title></rect>`;
+    if(cats.length<=10&&v>0)g+=`<text x="${x+9}" y="${y-3}" text-anchor="middle" class="ax">${fmt(v)}</text>`;});
+    g+=`<text x="${pl+i*gw+gw/2}" y="${H-10}" text-anchor="middle" class="ax">${esc(c)}</text>`;});
+  return`<div class="lg">${ser.map(s=>`<span><i class="sw" style="background:${s.c}"></i>${s.n}</span>`).join("")}</div><div class="scroll"><svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(label)}, litres">${g}</svg></div>`;
+}
+const aFuel=a=>{const m=byId(a.id);return m?(+a.hrs||0)*rateOf(m):0;};
+function renderActTable(){
+  $("#aTbl").innerHTML=S.act.length?`<thead><tr><th>Shift</th><th>Fleet no.</th><th>Model</th><th class="n">L/hr</th><th class="n">Hours operated</th><th class="n">Est. fuel (L)</th><th></th></tr></thead><tbody>`+S.act.map((a,i)=>{const m=byId(a.id)||{model:"?"};
+    return`<tr><td>${NAME[a.sh]}</td><td><b>${esc(a.id)}</b></td><td>${esc(m.model)}</td><td class="n">${m.id?rateOf(m):0}</td><td class="n"><input type="number" min="0" step="0.5" value="${a.hrs}" data-ah="${i}" aria-label="Hours for ${esc(a.id)}, ${NAME[a.sh]}"></td><td class="n af">${fmt(aFuel(a))}</td><td><button class="x" data-ar="${i}" aria-label="Remove ${esc(a.id)} from actuals">✕</button></td></tr>`;}).join("")+"</tbody>":`<tbody><tr><td class="empty">No actuals yet. Pick a machine, shift and hours above.</td></tr></tbody>`;
+}
+function renderActSummary(){
+  const PS=computePlans(),pl={day:0,night:0},pm={},am={},as={day:0,night:0};
+  PS.forEach(x=>{pl[x.s]=x.P.fuel;x.P.rows.forEach(r=>pm[r.id]=(pm[r.id]||0)+r.fuel);});
+  S.act.forEach(a=>{const f=aFuel(a);as[a.sh]+=f;(am[a.id]=am[a.id]||{day:0,night:0})[a.sh]+=f;});
+  const A=as.day+as.night,Pn=pl.day+pl.night,d=A-Pn;
+  $("#aRead").innerHTML=[["Actual fuel (estimate)",fmt(A),"L"],["Planned fuel",fmt(Pn),"L"],["Actual minus planned",(d>0?"+":d<0?"−":"")+fmt(Math.abs(d)),"L"]].map(([a,b,c])=>`<div><span>${a}</span><b>${b}</b> <small>${c}</small></div>`).join("");
+  const ac=Object.keys(am),all=[...new Set([...ac,...Object.keys(pm)])],G="var(--mut)",Y="var(--hi)";
+  $("#charts").innerHTML=[["Actual fuel per machine",chart(ac,[{n:"Day",c:"var(--hi)",v:ac.map(i=>am[i].day)},{n:"Night",c:"var(--nv)",v:ac.map(i=>am[i].night)}],"Actual fuel per machine")],
+    ["Fuel per shift, planned vs actual",chart(["Day","Night"],[{n:"Planned",c:G,v:[pl.day,pl.night]},{n:"Actual",c:Y,v:[as.day,as.night]}],"Fuel per shift")],
+    ["Fuel per machine, planned vs actual",chart(all,[{n:"Planned",c:G,v:all.map(i=>pm[i]||0)},{n:"Actual",c:Y,v:all.map(i=>am[i]?am[i].day+am[i].night:0)}],"Planned vs actual per machine")]]
+    .map(([t,h])=>`<section class="card"><h2>${t}</h2>${h}</section>`).join("");
+}
+function renderModels(){
+  const ks=Object.keys(S.models);
+  $("#modelList").innerHTML=ks.map(k=>`<option value="${esc(k)}">`).join("");
+  $("#nType").innerHTML=TYPES.map(t=>`<option>${t}</option>`).join("");
+  $("#aId").innerHTML=S.fleet.map(m=>`<option value="${esc(m.id)}">${esc(m.id)} (${esc(m.model)})</option>`).join("");
+  $("#rtbl").innerHTML=`<thead><tr><th>Model</th><th>Type</th><th class="n">L/hr</th><th class="n">Units</th></tr></thead><tbody>`+ks.map(k=>`<tr><td><b>${esc(k)}</b></td><td><select data-mt="${esc(k)}" aria-label="Type of ${esc(k)}">${TYPES.map(t=>`<option${S.models[k].type===t?" selected":""}>${t}</option>`).join("")}</select></td><td class="n"><input type="number" min="0" step="0.5" value="${S.models[k].rate}" data-mr="${esc(k)}" aria-label="Burn rate of ${esc(k)}"></td><td class="n">${S.fleet.filter(m=>m.model===k).length}</td></tr>`).join("")+"</tbody>";
+}
+function init(){
+  $("#win").value=S.win;$("#capD").value=S.capD;$("#capN").value=S.capN;
+  document.querySelectorAll("input[name=mode]").forEach(r=>r.checked=r.value===S.mode);
+  document.querySelectorAll("input[name=shift]").forEach(r=>r.checked=r.value===S.shift);
+  renderModels();renderFleet();renderPlan();renderActTable();renderActSummary();
+}
+const refresh=()=>{save();renderFleet();renderPlan();renderActSummary();};
+
+function tab(act){$("#pPlan").hidden=act;$("#pAct").hidden=!act;$("#tPlan").setAttribute("aria-selected",!act);$("#tAct").setAttribute("aria-selected",act);if(act){renderActTable();renderActSummary();}}
+$("#tPlan").onclick=()=>tab(false);$("#tAct").onclick=()=>tab(true);
+for(const [id,k] of [["#win","win"],["#capD","capD"],["#capN","capN"]])$(id).oninput=e=>{S[k]=parseFloat(e.target.value)||0;save();renderPlan();};
+document.querySelectorAll("input[name=mode]").forEach(r=>r.onchange=()=>{S.mode=r.value;save();renderPlan();});
+document.querySelectorAll("input[name=shift]").forEach(r=>r.onchange=()=>{S.shift=r.value;refresh();});
+$("#q").oninput=renderFleet;
+$("#fleetList").onclick=e=>{const b=e.target.closest("[data-st]");if(b){S.st[b.dataset.id]=b.dataset.st;refresh();}};
+$("#fleetList").onchange=e=>{const c=e.target.closest("[data-sh]");if(c){const [id,s]=c.dataset.sh.split(":");S.sh[id]=Object.assign({},shOf(id),{[s]:c.checked});refresh();}};
+$("#addAll").onclick=()=>{shown.forEach(m=>{if(st(m.id)!=="down")S.st[m.id]="up";});refresh();};
+$("#clr").onclick=()=>{shown.forEach(m=>{if(st(m.id)==="up")S.st[m.id]="standby";});refresh();};
+$("#shifts").onchange=e=>{const s=e.target.closest("[data-pr]");if(s){S.prio[s.dataset.pr]=s.value;save();renderPlan();}};
+$("#rtbl").oninput=e=>{const i=e.target.closest("[data-mr]");if(i){S.models[i.dataset.mr].rate=parseFloat(i.value)||0;refresh();}};
+$("#rtbl").onchange=e=>{const s=e.target.closest("[data-mt]");if(s){S.models[s.dataset.mt].type=s.value;refresh();}};
+$("#nModel").oninput=e=>{const k=Object.keys(S.models).find(x=>x.toLowerCase()===e.target.value.trim().toLowerCase());if(k){$("#nRate").value=S.models[k].rate;$("#nType").value=S.models[k].type;}};
+$("#addBtn").onclick=()=>{
+  const id=$("#nId").value.trim(),name=$("#nModel").value.trim(),rate=parseFloat($("#nRate").value),type=$("#nType").value,msg=$("#addMsg");
+  if(!id||!name){msg.textContent="Enter a fleet number and a model.";return;}
+  if(byId(id)||S.fleet.some(m=>m.id.toLowerCase()===id.toLowerCase())){msg.textContent="That fleet number is already in the fleet.";return;}
+  const key=Object.keys(S.models).find(x=>x.toLowerCase()===name.toLowerCase())||name;
+  if(!(rate>0)&&!S.models[key]){msg.textContent="Enter a burn rate for this new model.";return;}
+  S.models[key]={rate:rate>0?rate:S.models[key].rate,type};S.fleet.push({id,model:key});S.st[id]="up";
+  $("#nId").value="";msg.textContent="Added "+id+" as up.";renderModels();refresh();
+};
+$("#aAdd").onclick=()=>{
+  const id=$("#aId").value,sh=$("#aSh").value,hrs=parseFloat($("#aHr").value),msg=$("#aMsg");
+  if(!id){msg.textContent="Add machines to the fleet first.";return;}
+  if(!(hrs>0)){msg.textContent="Enter the hours the machine operated.";return;}
+  const e=S.act.find(a=>a.id===id&&a.sh===sh);e?e.hrs=(+e.hrs||0)+hrs:S.act.push({id,sh,hrs});
+  $("#aHr").value="";msg.textContent="Added "+hrs+" hr for "+id+" on "+NAME[sh]+".";save();renderActTable();renderActSummary();
+};
+$("#aTbl").oninput=e=>{const i=e.target.closest("[data-ah]");if(i){S.act[+i.dataset.ah].hrs=parseFloat(i.value)||0;i.closest("tr").querySelector(".af").textContent=fmt(aFuel(S.act[+i.dataset.ah]));save();renderActSummary();}};
+$("#aTbl").onclick=e=>{const b=e.target.closest("[data-ar]");if(b){S.act.splice(+b.dataset.ar,1);save();renderActTable();renderActSummary();}};
+$("#reset").onclick=()=>{S=clone(DEF);save();init();};
+/* AI suggestions: calls go straight from this device to the provider */
+const AIK="fleetfuel_ai";
+let AI={p:"claude",claude:{key:"",model:"claude-sonnet-5-5"},gemini:{key:"",model:"gemini-flash-latest"},custom:{key:"",model:"",url:"",auth:"Bearer"}};
+try{const x=JSON.parse(localStorage.getItem(AIK)||"null");if(x)AI=Object.assign(AI,x);}catch(e){}
+const aiSave=()=>{try{localStorage.setItem(AIK,JSON.stringify(AI));}catch(e){}};
+const HELP={claude:"Key from console.anthropic.com (API keys are billed separately from a Claude chat plan).",gemini:"Key from Google AI Studio. Change the model name if Google retires this one.",custom:"For Copilot-style access use an Azure OpenAI chat completions URL or any OpenAI-compatible endpoint. Consumer Copilot has no public API, and the service must allow browser requests."};
+function aiFields(){
+  const c=AI[AI.p];$("#aiP").value=AI.p;$("#aiKey").value=c.key||"";$("#aiModel").value=c.model||"";
+  $("#aiUrlL").hidden=$("#aiAuthL").hidden=AI.p!=="custom";
+  if(AI.p==="custom"){$("#aiUrl").value=c.url||"";$("#aiAuth").value=c.auth||"Bearer";}
+  $("#aiHelp").textContent=HELP[AI.p];
+}
+function aiInit(){
+  aiFields();
+  $("#aiP").onchange=e=>{AI.p=e.target.value;aiSave();aiFields();};
+  $("#aiKey").oninput=e=>{AI[AI.p].key=e.target.value.trim();aiSave();};
+  $("#aiModel").oninput=e=>{AI[AI.p].model=e.target.value.trim();aiSave();};
+  $("#aiUrl").oninput=e=>{AI.custom.url=e.target.value.trim();aiSave();};
+  $("#aiAuth").onchange=e=>{AI.custom.auth=e.target.value;aiSave();};
+  $("#aiGo").onclick=aiAsk;
+}
+function aiContext(){
+  const PS=computePlans(),L=[],g=k=>S.fleet.filter(m=>st(m.id)===k).map(m=>m.id+" ("+m.model+", "+rateOf(m)+" L/hr)").join(", ")||"none";
+  L.push("Shift view: "+S.shift+". Hours per shift: "+S.win+". Hour-sharing mode: "+S.mode+".");
+  L.push("Up (planned to operate): "+g("up")+"\nStandby (available, not operating): "+g("standby")+"\nDown (unavailable): "+g("down"));
+  PS.forEach(({name,P})=>L.push(name+" shift: fuel ceiling "+P.cap+" L, planned "+Math.round(P.fuel)+" L, "+P.mh.toFixed(1)+" machine-hours. Machines: "+(P.rows.map(r=>r.id+" "+r.model+" ("+r.type+", "+r.rate+" L/hr) ready "+r.h.toFixed(1)+" hr, "+Math.round(r.fuel)+" L").join("; ")||"none")));
+  if(S.act.length){const t={day:0,night:0};S.act.forEach(a=>t[a.sh]+=aFuel(a));
+    L.push("Actuals (estimated as hours x burn rate): "+S.act.map(a=>a.id+" "+a.sh+" shift "+a.hrs+" hr, "+Math.round(aFuel(a))+" L").join("; ")+". Totals: day "+Math.round(t.day)+" L, night "+Math.round(t.night)+" L.");}
+  return L.join("\n");
+}
+const md=t=>{const b=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");let h="",ul=false;
+  t.split("\n").forEach(l=>{l=l.trim();const m=l.match(/^(?:[-*•]|\d+[.)])\s+(.*)/);
+    if(m){if(!ul){h+="<ul>";ul=true;}h+="<li>"+b(m[1])+"</li>";}else{if(ul){h+="</ul>";ul=false;}if(l)h+="<p>"+b(l.replace(/^#+\s*/,""))+"</p>";}});
+  return h+(ul?"</ul>":"");};
+async function aiAsk(){
+  const out=$("#aiOut"),c=AI[AI.p],sys="You are a fuel-efficiency advisor for a mining and heavy-equipment fleet. Using only the data given, write 4 to 6 concrete, prioritised suggestions to cut fuel use or gain productive hours under the fuel ceiling. Name machine IDs and quote litres or hours. Respect machine status: never use down machines, and treat standby machines as available. Say so when data is missing instead of guessing. Plain text, short bullet lines, under 250 words.";
+  const usr="Fleet plan:\n"+aiContext()+"\n\nWhat should I change?";
+  const fail=m=>{out.innerHTML='<p class="err">'+esc(m)+"</p>";};
+  if(!c.key)return fail("Add your API key under Provider settings first.");
+  if(AI.p==="custom"&&!c.url)return fail("Add the endpoint URL under Provider settings first.");
+  if(AI.p!=="custom"&&!c.model)return fail("Add a model name under Provider settings first.");
+  $("#aiGo").disabled=true;out.innerHTML='<p class="mut">Asking…</p>';
+  try{
+    let r,d,t;
+    if(AI.p==="claude"){
+      r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":c.key,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:c.model,max_tokens:1200,system:sys,messages:[{role:"user",content:usr}]})});
+      d=await r.json();if(!r.ok)throw new Error((d.error&&d.error.message)||"Request failed ("+r.status+")");t=d.content.map(x=>x.text||"").join("");
+    }else if(AI.p==="gemini"){
+      r=await fetch("https://generativelanguage.googleapis.com/v1beta/models/"+encodeURIComponent(c.model)+":generateContent",{method:"POST",headers:{"content-type":"application/json","x-goog-api-key":c.key},body:JSON.stringify({systemInstruction:{parts:[{text:sys}]},contents:[{role:"user",parts:[{text:usr}]}]})});
+      d=await r.json();if(!r.ok)throw new Error((d.error&&d.error.message)||"Request failed ("+r.status+")");t=d.candidates[0].content.parts.map(x=>x.text||"").join("");
+    }else{
+      const hd={"content-type":"application/json"};c.auth==="api-key"?hd["api-key"]=c.key:hd.Authorization="Bearer "+c.key;
+      const body={messages:[{role:"system",content:sys},{role:"user",content:usr}]};if(c.model)body.model=c.model;
+      r=await fetch(c.url,{method:"POST",headers:hd,body:JSON.stringify(body)});
+      d=await r.json();if(!r.ok)throw new Error((d.error&&d.error.message)||"Request failed ("+r.status+")");t=d.choices[0].message.content;
+    }
+    out.innerHTML=t.trim()?md(t):'<p class="mut">The model returned no text.</p>';
+  }catch(e){fail(e instanceof TypeError?"Could not reach the service. Check your connection, the key and URL, and that the provider allows browser requests.":e.message);}
+  $("#aiGo").disabled=false;
+}
+aiInit();
+init();
+if("serviceWorker" in navigator&&location.protocol!=="file:")navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script>
+</body>
+</html>
