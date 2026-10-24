@@ -148,8 +148,8 @@ textarea{width:100%;height:120px;margin-top:8px;font:12px/1.4 ui-monospace,monos
     <div class="lbl grow">Export report
       <div class="datebox" style="width:100%"><input type="date" id="eFrom" aria-label="Report from date"><input type="date" id="eTo" aria-label="Report to date"><button class="btn" data-ep="day">Day</button><button class="btn" data-ep="week">Week</button><button class="btn" data-ep="month">Month</button></div>
     </div>
-    <div class="acts" style="margin:0;flex:0 1 auto;max-width:100%"><button class="btn" id="csv">Download CSV</button><button class="btn hi" id="pdf">Download PDF</button></div>
-    <p class="mut note" style="flex:1 1 100%;margin:0">CSV opens in Excel. PDF opens your browser’s print dialog: choose Save as PDF as the destination.</p>
+    <div class="acts" style="margin:0;flex:0 1 auto;max-width:100%"><button class="btn" id="xlsx">Download Excel</button><button class="btn" id="csv">Download CSV</button><button class="btn hi" id="pdf">Download PDF</button></div>
+    <p class="mut note" style="flex:1 1 100%;margin:0">Excel (.xlsx) has the same sections, colours and tables as the PDF. CSV is plain data with no formatting. PDF opens your browser’s print dialog: choose Save as PDF as the destination.</p>
     <p id="expMsg" class="note" role="status" style="flex:1 1 100%;margin:0;color:var(--warn)"></p>
   </div>
   <p class="mut note">Machines planned for this date appear here automatically (planned fuel is the fuel ceiling entered for the date). Enter the ready hours each one actually worked. Fuel is estimated as hours multiplied by burn rate.</p>
@@ -400,23 +400,27 @@ function exportCsv(){
   const L=[hd.map(q).join(",")].concat(R.rows.map(x=>[x.d,dl(x.d,{weekday:"long"}),NAME[x.s],x.m.id,x.m.make,x.m.model,x.t,x.ph==null?"":n1(x.ph),n1(x.hrs),x.rt,n1(x.pf),n1(x.af),n1(x.af-x.pf)].map(v=>v===""?"":q(v)).join(",")));
   saveFile("\ufeff"+L.join("\r\n")+"\r\n","text/csv;charset=utf-8","fleet-fuel-report_"+r[0]+"_to_"+r[1]+".csv");
 }
-function reportHTML(R,from,to,name){
-  const e=esc,fo={day:"numeric",month:"long",year:"numeric"},per=from===to?dl(from,{weekday:"long",...fo}):dl(from,fo)+" to "+dl(to,fo);
+function reportModel(R,from,to){
+  const fo={day:"numeric",month:"long",year:"numeric"},per=from===to?dl(from,{weekday:"long",...fo}):dl(from,fo)+" to "+dl(to,fo);
   const gen=new Date().toLocaleString(undefined,{dateStyle:"long",timeStyle:"short"}),v=R.A-R.P;
+  const ty={};R.mach.forEach(x=>{const k=ty[x.t]||(ty[x.t]={n:0,hrs:0,pf:0,af:0});k.n++;k.hrs+=x.hrs;k.pf+=x.pf;k.af+=x.af;});
+  const pfs=R.mach.reduce((a,x)=>a+x.pf,0),top=R.mach[0],over=[...R.mach].sort((a,b)=>(b.af-b.pf)-(a.af-a.pf))[0];
+  const txt=(R.P>0?"Estimated fuel use was "+fmt(R.A)+" L against a plan of "+fmt(R.P)+" L, "+(Math.round(v)===0?"in line with plan":fmt(Math.abs(v))+" L ("+fmt(Math.abs(v)/R.P*100,1)+"%) "+(v>0?"over":"under")+" plan")+". ":"Estimated fuel use was "+fmt(R.A)+" L; no planned fuel was recorded for this period. ")
+    +"Day shift used "+fmt(R.AD)+" L and night shift "+fmt(R.AN)+" L over "+fmt(R.H,1)+" ready hours"+(R.H>0?" (average "+fmt(R.A/R.H,1)+" L per ready hour)":"")+"."
+    +(top&&top.af>0?" Highest consumer: "+top.m.id+" ("+top.m.make+" "+top.m.model+") at "+fmt(top.af)+" L.":"")
+    +(over&&over.af-over.pf>=1?" Largest overrun: "+over.m.id+" at "+vsign(over.af-over.pf)+" L against plan.":"");
+  const kp=[["Planned fuel",fmt(R.P)+" L",""],["Estimated actual fuel",fmt(R.A)+" L","Day "+fmt(R.AD)+" L, night "+fmt(R.AN)+" L"],["Variance to plan",vsign(v)+" L",vpct(v,R.P)+(R.P>0?" of plan":"")],["Ready hours worked",fmt(R.H,1)+" hr",R.H>0?fmt(R.A/R.H,1)+" L per ready hour":""]];
+  const dayRows=R.daily.filter(x=>x.pn>0||x.ad>0||x.an>0),dt=dayRows.reduce((a,x)=>[a[0]+x.pn,a[1]+x.ad,a[2]+x.an],[0,0,0]);
+  return{per,gen,v,ty,pfs,top,over,txt,kp,dayRows,dt};
+}
+function reportHTML(R,from,to,name){
+  const e=esc,M=reportModel(R,from,to),{per,gen,v,ty,pfs,top,over,kp,dayRows,dt}=M,txt=e(M.txt);
   const G="#8fa1ae",Y="#f7c600",N="#3b5b8c",SR=[["Planned",G,"pn"],["Actual",Y,"at"]];let cats,ser;
   if(R.days.length<=14){cats=R.daily.map(x=>dl(x.d,{day:"numeric",month:"short"}));ser=SR.map(([n,c,k])=>({n,c,v:R.daily.map(x=>x[k])}));}
   else{const wk={};R.daily.forEach(x=>{const k=addDays(x.d,-((new Date(x.d+"T00:00:00").getDay()+6)%7)),w=wk[k]||(wk[k]={pn:0,ad:0,an:0,at:0});w.pn+=x.pn;w.ad+=x.ad;w.an+=x.an;w.at+=x.at;});
     const ks=Object.keys(wk).sort();cats=ks.map(k=>"Wk "+dl(k,{day:"numeric",month:"short"}));ser=SR.map(([n,c,k])=>({n,c,v:ks.map(z=>wk[z][k])}));}
-  const ty={};R.mach.forEach(x=>{const k=ty[x.t]||(ty[x.t]={n:0,hrs:0,pf:0,af:0});k.n++;k.hrs+=x.hrs;k.pf+=x.pf;k.af+=x.af;});
   const vc=x=>Math.round(x)>0?"bad":Math.round(x)<0?"ok":"",V=x=>`<span class="${vc(x)}">${vsign(x)}</span>`,VP=(x,p)=>`<span class="${vc(x)}">${vpct(x,p)}</span>`;
   const T=(h,r,f)=>`<table><thead><tr>${h.map(([t,n])=>`<th${n?' class="n"':""}>${t}</th>`).join("")}</tr></thead><tbody>${r.map(c=>`<tr>${c.map((x,i)=>`<td${h[i][1]?' class="n"':""}>${x}</td>`).join("")}</tr>`).join("")}</tbody>${f?`<tfoot><tr>${f.map((x,i)=>`<td${h[i][1]?' class="n"':""}>${x}</td>`).join("")}</tr></tfoot>`:""}</table>`;
-  const pfs=R.mach.reduce((a,x)=>a+x.pf,0),top=R.mach[0],over=[...R.mach].sort((a,b)=>(b.af-b.pf)-(a.af-a.pf))[0];
-  const txt=(R.P>0?"Estimated fuel use was "+fmt(R.A)+" L against a plan of "+fmt(R.P)+" L, "+(Math.round(v)===0?"in line with plan":fmt(Math.abs(v))+" L ("+fmt(Math.abs(v)/R.P*100,1)+"%) "+(v>0?"over":"under")+" plan")+". ":"Estimated fuel use was "+fmt(R.A)+" L; no planned fuel was recorded for this period. ")
-    +"Day shift used "+fmt(R.AD)+" L and night shift "+fmt(R.AN)+" L over "+fmt(R.H,1)+" ready hours"+(R.H>0?" (average "+fmt(R.A/R.H,1)+" L per ready hour)":"")+"."
-    +(top&&top.af>0?" Highest consumer: "+e(top.m.id)+" ("+e(top.m.make)+" "+e(top.m.model)+") at "+fmt(top.af)+" L.":"")
-    +(over&&over.af-over.pf>=1?" Largest overrun: "+e(over.m.id)+" at "+vsign(over.af-over.pf)+" L against plan.":"");
-  const kp=[["Planned fuel",fmt(R.P)+" L",""],["Estimated actual fuel",fmt(R.A)+" L","Day "+fmt(R.AD)+" L, night "+fmt(R.AN)+" L"],["Variance to plan",vsign(v)+" L",vpct(v,R.P)+(R.P>0?" of plan":"")],["Ready hours worked",fmt(R.H,1)+" hr",R.H>0?fmt(R.A/R.H,1)+" L per ready hour":""]];
-  const dayRows=R.daily.filter(x=>x.pn>0||x.ad>0||x.an>0),dt=dayRows.reduce((a,x)=>[a[0]+x.pn,a[1]+x.ad,a[2]+x.an],[0,0,0]);
   const css=`:root{--ink:#0f1b24;--mut:#5b6872;--line:#d7dde2;--hi:#f7c600}@page{size:A4;margin:15mm 13mm 17mm;@bottom-left{content:"Fleet Fuel Report  |  ${per}";font:8pt Arial,sans-serif;color:#5b6872}@bottom-right{content:"Page " counter(page) " of " counter(pages);font:8pt Arial,sans-serif;color:#5b6872}}*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}body{margin:0;color:var(--ink);font:9.5pt/1.45 "Segoe UI","Helvetica Neue",Arial,sans-serif}header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid var(--hi);padding-bottom:8px;margin-bottom:12px}h1{font-size:22pt;margin:0;line-height:1.1}.sub{color:var(--mut);margin-top:3px}.brand{text-align:right;font-weight:700;font-size:9pt;color:var(--mut)}.brand i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--hi);margin-right:5px}.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 12px}.kpi{border:1px solid var(--line);border-top:3px solid var(--ink);border-radius:4px;padding:7px 9px}.kpi span{display:block;color:var(--mut);font-size:8pt}.kpi b{font-size:14.5pt;line-height:1.25}.kpi small{display:block;color:var(--mut);font-size:7.6pt;min-height:1em}.sum{background:#f4f6f8;border-left:3px solid var(--hi);padding:8px 12px;margin-bottom:6px}h2{font-size:11.5pt;margin:16px 0 6px;padding-bottom:3px;border-bottom:1px solid var(--ink);break-after:avoid}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:8.6pt}thead{display:table-header-group}th{background:#101a22;color:#fff;text-align:left;padding:5px 6px;font-weight:600}td{padding:4px 6px;border-bottom:1px solid var(--line)}tbody tr:nth-child(even) td{background:#f7f9fa}tr{break-inside:avoid}.n{text-align:right}tfoot td{font-weight:700;border-top:2px solid var(--ink);border-bottom:0;background:#fff!important}.bad{color:#b42318}.ok{color:#1b7447}.note{color:var(--mut);font-size:8pt;margin-top:10px}.pb{break-before:page}.lg{display:flex;gap:12px;margin-bottom:4px;font-size:8.5pt}.sw{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}.ax{fill:#5b6872;font:10px Arial,sans-serif}svg{display:block;margin:0 auto}`;
   return`<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${e(name)}</title><style>${css}</style></head><body>
 <header><div><h1>Fleet Fuel Report</h1><div class="sub">${per}</div></div><div class="brand"><i></i>Fleet Fuel Planner<div style="font-weight:400">Generated ${e(gen)}</div></div></header>
@@ -490,7 +494,104 @@ $("#aShifts").onclick=e=>{const d=S.adate,a=S.act[d]||(S.act[d]={day:{},night:{}
   const x=e.target.closest("[data-xa]"),r=e.target.closest("[data-ar]");
   if(x){const s=x.dataset.xa,v=$(`select[data-xs="${s}"]`).value;if(v){a[s]=a[s]||{};a[s][v]=0;save();renderAct();}}
   if(r){const [s,id]=split(r.dataset.ar);if(a[s])delete a[s][id];save();renderAct();}};
-$("#csv").onclick=exportCsv;$("#pdf").onclick=exportPdf;$$("[data-ep]").forEach(b=>b.onclick=()=>rng(b.dataset.ep));
+/* ---------- Excel export: same sections, colours and tables as the PDF (no libraries needed) ---------- */
+const xe=t=>String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"),xc=i=>String.fromCharCode(65+i);
+const CRCT=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0;}return t;})();
+const crc32=b=>{let c=0xFFFFFFFF;for(let i=0;i<b.length;i++)c=CRCT[(c^b[i])&255]^(c>>>8);return(c^0xFFFFFFFF)>>>0;};
+function zipStore(files){
+  const enc=new TextEncoder(),u16=v=>[v&255,(v>>8)&255],u32=v=>[v&255,(v>>8)&255,(v>>16)&255,(v>>>24)&255],out=[],cen=[];let off=0;
+  files.forEach(f=>{const nm=enc.encode(f.name),data=enc.encode(f.text),crc=crc32(data),sz=data.length;
+    const lh=Uint8Array.from([0x50,0x4b,3,4,...u16(20),...u16(0x0800),...u16(0),...u16(0),...u16(0x21),...u32(crc),...u32(sz),...u32(sz),...u16(nm.length),...u16(0)]);
+    out.push(lh,nm,data);
+    cen.push(Uint8Array.from([0x50,0x4b,1,2,...u16(20),...u16(20),...u16(0x0800),...u16(0),...u16(0),...u16(0x21),...u32(crc),...u32(sz),...u32(sz),...u16(nm.length),...u16(0),...u16(0),...u16(0),...u16(0),...u32(0),...u32(off)]),nm);
+    off+=lh.length+nm.length+sz;});
+  const cl=cen.reduce((a,b)=>a+b.length,0),end=Uint8Array.from([0x50,0x4b,5,6,...u16(0),...u16(0),...u16(files.length),...u16(files.length),...u32(cl),...u32(off),...u16(0)]);
+  return new Blob([...out,...cen,end],{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+}
+function xStyles(){
+  const fonts=[],fills=['<fill><patternFill patternType="none"/></fill>','<fill><patternFill patternType="gray125"/></fill>'],borders=[],fmts=[],xfs=[];
+  const reg=(a,x)=>{let i=a.indexOf(x);if(i<0){i=a.length;a.push(x);}return i;};
+  const side=(n,v)=>v?`<${n} style="${v[0]}"><color rgb="FF${v[1]}"/></${n}>`:`<${n}/>`;
+  const S=(o={})=>{
+    const f=reg(fonts,`<font>${o.b?"<b/>":""}<sz val="${o.sz||10}"/><color rgb="FF${o.c||"0F1B24"}"/><name val="Arial"/></font>`),
+      fl=o.fill?reg(fills,`<fill><patternFill patternType="solid"><fgColor rgb="FF${o.fill}"/><bgColor indexed="64"/></patternFill></fill>`):0,
+      bd=reg(borders,`<border>${side("left",o.bl)}${side("right",o.br)}${side("top",o.bt)}${side("bottom",o.bb)}<diagonal/></border>`),
+      nf=o.fmt?164+reg(fmts,o.fmt):0,
+      al=(o.h||o.v||o.w)?`<alignment${o.h?` horizontal="${o.h}"`:""} vertical="${o.v||"center"}"${o.w?' wrapText="1"':""}/>`:"";
+    return reg(xfs,`<xf numFmtId="${nf}" fontId="${f}" fillId="${fl}" borderId="${bd}" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1" applyBorder="1"${al?' applyAlignment="1">'+al+"</xf>":"/>"}`);
+  };
+  const xml=()=>`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">`+(fmts.length?`<numFmts count="${fmts.length}">${fmts.map((c,i)=>`<numFmt numFmtId="${164+i}" formatCode="${xe(c)}"/>`).join("")}</numFmts>`:"")+`<fonts count="${fonts.length}">${fonts.join("")}</fonts><fills count="${fills.length}">${fills.join("")}</fills><borders count="${borders.length}">${borders.join("")}</borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="${xfs.length}">${xfs.join("")}</cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>`;
+  S();return{S,xml};
+}
+function exportXlsx(){
+  const r=range();if(!r)return;const R=rep(r[0],r[1]);
+  if(!R.rows.length){$("#expMsg").textContent="No plan or actuals are recorded in this period.";return;}
+  const M=reportModel(R,r[0],r[1]),{S,xml}=xStyles(),INK="0F1B24",MUT="5B6872",LINE="D7DDE2",HI="F7C600",BAD="B42318",OK="1B7447",TINT="F4F6F8",ZEB="F7F9FA";
+  const ln=["thin",LINE],ink=["medium",INK],W=[18,26,18,18,14,14,14,14,12],NC=9,rows=[],merges=[],hts={};let rc=0;
+  const put=(row,c,v,s)=>{(rows[row]=rows[row]||[])[c]=v==null?{s}:{v,s};};
+  const mrg=(row,c0,c1)=>merges.push(`${xc(c0)}${row+1}:${xc(c1)}${row+1}`);
+  const fill=(row,c0,c1,s)=>{for(let c=c0;c<=c1;c++)if(!(rows[row]&&rows[row][c]))put(row,c,null,s);};
+  // header
+  put(0,0,"Fleet Fuel Report",S({sz:22,b:1}));fill(0,1,4,S());mrg(0,0,4);put(0,5,"Fleet Fuel Planner",S({b:1,sz:9,c:MUT,h:"right"}));fill(0,6,8,S());mrg(0,5,8);hts[0]=34;
+  put(1,0,M.per,S({c:MUT}));fill(1,1,4,S());mrg(1,0,4);put(1,5,"Generated "+M.gen,S({sz:9,c:MUT,h:"right"}));fill(1,6,8,S());mrg(1,5,8);
+  fill(2,0,8,S({fill:HI}));hts[2]=4;hts[3]=8;
+  // KPI boxes
+  M.kp.forEach(([a,b,c],k)=>{const c0=k*2,wl=k?["thick","FFFFFF"]:null;
+    put(4,c0,a,S({sz:8,c:MUT,fill:TINT,bt:ink,bl:wl}));put(4,c0+1,null,S({fill:TINT,bt:ink}));mrg(4,c0,c0+1);
+    put(5,c0,b,S({sz:15,b:1,fill:TINT,h:"left",bl:wl}));put(5,c0+1,null,S({fill:TINT}));mrg(5,c0,c0+1);
+    put(6,c0,c||"",S({sz:8,c:MUT,fill:TINT,bl:wl}));put(6,c0+1,null,S({fill:TINT}));mrg(6,c0,c0+1);});
+  hts[5]=26;hts[7]=8;
+  // summary
+  put(8,0,M.txt,S({fill:TINT,w:1,v:"top",bl:["thick",HI]}));fill(8,1,8,S({fill:TINT}));mrg(8,0,8);hts[8]=Math.max(32,Math.ceil(M.txt.length/120)*14+12);hts[9]=8;
+  rc=10;
+  const sec=t=>{put(rc,0,t,S({sz:11,b:1,bb:ink}));fill(rc,1,NC-1,S({bb:ink}));mrg(rc,0,NC-1);hts[rc]=22;rc++;};
+  const gap=()=>{hts[rc]=10;rc++;};
+  const tbl=(cols,data,total)=>{
+    cols.forEach((c,i)=>put(rc,i,c[0],S({b:1,c:"FFFFFF",fill:"101A22",h:c[1]?"right":"left"})));rc++;
+    const cell=(c,v,o)=>{const t=c[2];
+      if(typeof v==="string"&&(c[1]||t==="p"))return[v,S({...o,h:"right"})];
+      if(t==="b")return[v,S({...o,b:1})];
+      if(t==="i")return[v,S({...o,fmt:"#,##0",h:"right"})];
+      if(t==="d")return[v,S({...o,fmt:"0.0",h:"right"})];
+      if(t==="pc")return[v,S({...o,fmt:"0.0%",h:"right"})];
+      if(t==="v"){const g=Math.round(v);return[g,S({...o,fmt:'+#,##0;"−"#,##0;0',h:"right",c:g>0?BAD:g<0?OK:INK})];}
+      if(t==="p"){const g=v.sg;return[v.v,S({...o,fmt:'+0.0%;"−"0.0%;0.0%',h:"right",c:g>0?BAD:g<0?OK:INK})];}
+      return[v,S({...o,h:c[1]?"right":"left"})];};
+    data.forEach((row,ri)=>{row.forEach((v,i)=>{const o={bb:ln};if(ri%2)o.fill=ZEB;const[val,s]=cell(cols[i],v,o);put(rc,i,val,s);});rc++;});
+    if(total){total.forEach((v,i)=>{const o={b:1,bt:ink};const[val,s]=cell(cols[i],v,o);put(rc,i,val,s);});rc++;}
+  };
+  const vv=x=>Math.round(x),pcv=(x,p)=>p>0?{v:vv(x)===0?0:x/p,sg:vv(x)}:"–";
+  const pcell=(x,p)=>pcv(x,p);
+  sec("Fuel by "+(R.days.length<=14?"day":"week")+" (daily)");
+  tbl([["Date"],["Planned (L)",1,"i"],["Actual day (L)",1,"i"],["Actual night (L)",1,"i"],["Actual total (L)",1,"i"],["Variance (L)",1,"v"],["Variance %",1,"p"]],
+    M.dayRows.map(x=>[dl(x.d),x.pn,x.ad,x.an,x.ad+x.an,x.ad+x.an-x.pn,pcell(x.ad+x.an-x.pn,x.pn)]),
+    ["Total",M.dt[0],M.dt[1],M.dt[2],M.dt[1]+M.dt[2],M.dt[1]+M.dt[2]-M.dt[0],pcell(M.dt[1]+M.dt[2]-M.dt[0],M.dt[0])]);gap();
+  sec("Fuel by machine type");
+  tbl([["Type"],["Machines",1,"i"],["Ready hours",1,"d"],["Planned (L)",1,"i"],["Actual (L)",1,"i"],["Share of actual",1,"pc"]],
+    Object.keys(M.ty).map(k=>[k,M.ty[k].n,M.ty[k].hrs,M.ty[k].pf,M.ty[k].af,R.A>0?M.ty[k].af/R.A:"–"]));gap();
+  sec("Fuel by machine");
+  tbl([["Fleet no.",0,"b"],["Machine"],["Type"],["Planned hr",1,"d"],["Ready hr",1,"d"],["Planned (L)",1,"i"],["Actual (L)",1,"i"],["Variance (L)",1,"v"],["Var %",1,"p"]],
+    R.mach.map(x=>[x.m.id,x.m.make+" "+x.m.model,x.t,x.ph,x.hrs,x.pf,x.af,x.af-x.pf,pcell(x.af-x.pf,x.pf)]),
+    ["Total","","",R.mach.reduce((a,x)=>a+x.ph,0),R.H,M.pfs,R.A,R.A-M.pfs,pcell(R.A-M.pfs,M.pfs)]);gap();
+  sec("Detailed log");
+  tbl([["Date"],["Shift"],["Fleet no.",0,"b"],["Machine"],["Planned hr",1,"d"],["Ready hr",1,"d"],["L/hr",1,"i"],["Est. fuel (L)",1,"i"]],
+    R.rows.map(x=>[dl(x.d),NAME[x.s],x.m.id,x.m.make+" "+x.m.model,x.ph==null?"–":x.ph,x.hrs,x.rt,x.af]));gap();
+  put(rc,0,"Fuel figures are estimates, not metered consumption: ready hours multiplied by each model’s burn rate. Variance is actual minus planned, so a positive figure means fuel use above plan. Planned fuel for each date is the fuel ceiling entered for that date; planned hours and the machine and shift split come from the hour-sharing method.",S({sz:8,c:MUT,w:1,v:"top"}));fill(rc,1,NC-1,S());mrg(rc,0,NC-1);hts[rc]=30;rc++;
+  const cellXml=(row,c,o)=>{const ref=xc(c)+(row+1);if(o.v==null||o.v==="")return`<c r="${ref}" s="${o.s}"/>`;
+    return typeof o.v==="number"?`<c r="${ref}" s="${o.s}"><v>${isFinite(o.v)?o.v:0}</v></c>`:`<c r="${ref}" s="${o.s}" t="inlineStr"><is><t xml:space="preserve">${xe(o.v)}</t></is></c>`;};
+  let sd="";for(let row=0;row<rc;row++){const rr=rows[row]||[];let cs="";for(let c=0;c<NC;c++)if(rr[c])cs+=cellXml(row,c,rr[c]);sd+=`<row r="${row+1}"${hts[row]?` ht="${hts[row]}" customHeight="1"`:""}>${cs}</row>`;}
+  const NS='xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"',H='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+  const sheet=H+`<worksheet ${NS}><sheetPr><pageSetUpPr fitToPage="1"/></sheetPr><sheetViews><sheetView showGridLines="0" workbookViewId="0"/></sheetViews><sheetFormatPr defaultRowHeight="15"/><cols>${W.map((w,i)=>`<col min="${i+1}" max="${i+1}" width="${w}" customWidth="1"/>`).join("")}</cols><sheetData>${sd}</sheetData><mergeCells count="${merges.length}">${merges.map(m=>`<mergeCell ref="${m}"/>`).join("")}</mergeCells><pageMargins left="0.5" right="0.5" top="0.6" bottom="0.7" header="0.3" footer="0.3"/><pageSetup paperSize="9" orientation="landscape" fitToWidth="1" fitToHeight="0"/><headerFooter><oddFooter>${xe("&LFleet Fuel Report  |  "+M.per+"&RPage &P of &N")}</oddFooter></headerFooter></worksheet>`;
+  const blob=zipStore([
+    {name:"[Content_Types].xml",text:H+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>'},
+    {name:"_rels/.rels",text:H+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'},
+    {name:"xl/workbook.xml",text:H+`<workbook ${NS} xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="Fleet Fuel Report" sheetId="1" r:id="rId1"/></sheets></workbook>`},
+    {name:"xl/_rels/workbook.xml.rels",text:H+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>'},
+    {name:"xl/styles.xml",text:xml()},
+    {name:"xl/worksheets/sheet1.xml",text:sheet}]);
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="fleet-fuel-report_"+r[0]+"_to_"+r[1]+".xlsx";document.body.appendChild(a);a.click();a.remove();$("#expMsg").textContent="";
+}
+$("#xlsx").onclick=exportXlsx;$("#csv").onclick=exportCsv;$("#pdf").onclick=exportPdf;$$("[data-ep]").forEach(b=>b.onclick=()=>rng(b.dataset.ep));
 ["#rq"].forEach(i=>$(i).oninput=renderRates);["#rt","#rmk","#rst","#rs"].forEach(i=>$(i).onchange=renderRates);
 $("#sUp").onclick=()=>{shownR.forEach(m=>S.st[m.id]="up");refresh();};$("#sSb").onclick=()=>{shownR.forEach(m=>S.st[m.id]="standby");refresh();};$("#rdir").onclick=()=>{rdir=-rdir;renderRates();};
 $("#rtbl").onchange=e=>{const i=e.target.closest("[data-mr]"),s=e.target.closest("[data-mt]");
