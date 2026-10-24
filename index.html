@@ -50,7 +50,7 @@ input:focus-visible,select:focus-visible,button:focus-visible,summary:focus-visi
 @media (max-width:760px){.cols{grid-template-columns:1fr}}
 .rowh{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
 .chip{background:var(--tint);border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-weight:600;white-space:nowrap}
-.fleet{list-style:none;margin:10px 0 0;padding:0;max-height:max(320px,calc(100vh - 330px));overflow:auto;border-top:1px solid var(--line)}
+.fleet{list-style:none;margin:10px 0 0;padding:0 14px 0 0;scrollbar-gutter:stable;max-height:max(320px,calc(100vh - 330px));overflow:auto;border-top:1px solid var(--line)}
 .fl{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:7px 6px;border-bottom:1px solid var(--line)}
 .fl.on{background:var(--tint)}.fl b{font-size:1rem}.sub{display:block;color:var(--mut);font-size:.84rem}
 .sbx{display:flex;gap:10px}.sbx label{display:inline-flex;gap:5px;align-items:center;font-weight:500}.sbx input{width:auto}
@@ -103,19 +103,11 @@ textarea{width:100%;height:120px;margin-top:8px;font:12px/1.4 ui-monospace,monos
 
 <section id="p_plan">
   <div class="card bar">
-    <div class="lbl datebox">Date
+    <div class="lbl datebox">Start date (night shift)
       <div class="datebox" style="width:100%"><button class="btn" id="dPrev" aria-label="Previous day">‹</button><input type="date" id="pDate" aria-label="Plan date"><button class="btn" id="dNext" aria-label="Next day">›</button><button class="btn" id="dToday">Today</button></div>
     </div>
-    <div class="lbl" id="shLbl">Shift
-      <div class="seg" role="radiogroup" aria-labelledby="shLbl">
-        <label><input type="radio" name="shift" value="day"><span>Day</span></label>
-        <label><input type="radio" name="shift" value="night"><span>Night</span></label>
-        <label><input type="radio" name="shift" value="both"><span>Both</span></label>
-      </div>
-    </div>
     <label>Hours per shift<input id="win" type="number" min="0" step="0.5" inputmode="decimal"></label>
-    <label id="lCapD">Day fuel ceiling (L)<input id="capD" type="number" min="0" step="50" inputmode="decimal"></label>
-    <label id="lCapN">Night fuel ceiling (L)<input id="capN" type="number" min="0" step="50" inputmode="decimal"></label>
+    <label>Fuel ceiling, 24 hr (L)<input id="cap" type="number" min="0" step="50" inputmode="decimal"></label>
     <div class="lbl grow" id="mdLbl">How hours are shared
       <div class="seg" role="radiogroup" aria-labelledby="mdLbl">
         <label><input type="radio" name="mode" value="eq"><span>Equal hours</span></label>
@@ -123,11 +115,12 @@ textarea{width:100%;height:120px;margin-top:8px;font:12px/1.4 ui-monospace,monos
         <label><input type="radio" name="mode" value="eff"><span>Max machine-hours</span></label>
       </div>
     </div>
+    <p id="winTxt" class="mut note" style="flex:1 1 100%;margin:0"></p>
   </div>
   <div class="cols">
     <section class="card" aria-label="Machines for this date">
       <div class="rowh"><h2>Machines</h2><span id="cnt" class="chip"></span></div>
-      <p class="mut note" style="margin:0 0 8px">Up machines only. Tick the shifts each one works on this date. Change status on the Machine status tab.</p>
+      <p class="mut note" style="margin:0 0 8px">Up machines only. Tick the shifts each one works in this 24 hr window. Change status on the Machine status tab.</p>
       <input id="q" type="search" placeholder="Search fleet no., make or model" aria-label="Search machines">
       <div class="acts"><button class="btn" id="addAll">Add all shown</button><button class="btn" id="clr">Clear this date</button></div>
       <ul id="fleetList" class="fleet"></ul>
@@ -135,12 +128,6 @@ textarea{width:100%;height:120px;margin-top:8px;font:12px/1.4 ui-monospace,monos
     <div id="shifts" class="stack"></div>
     <aside class="card colR" aria-label="Suggestions">
       <h2>Suggestions</h2><div id="sug"></div>
-      <h2 style="margin-top:18px">Ask an AI (no API key)</h2>
-      <p class="mut note" style="margin:0">Copy a summary of this date’s plan, then paste it into a normal chat with Claude, Gemini or Copilot.</p>
-      <div class="acts"><button class="btn hi" id="cpy">Copy plan for AI</button>
-        <a class="btn" href="https://claude.ai/new" target="_blank" rel="noopener">Claude</a><a class="btn" href="https://gemini.google.com/app" target="_blank" rel="noopener">Gemini</a><a class="btn" href="https://copilot.microsoft.com/" target="_blank" rel="noopener">Copilot</a></div>
-      <p id="cpyMsg" class="mut note" role="status"></p>
-      <textarea id="cpyBox" readonly hidden aria-label="Plan summary to copy"></textarea>
     </aside>
   </div>
 </section>
@@ -161,7 +148,7 @@ textarea{width:100%;height:120px;margin-top:8px;font:12px/1.4 ui-monospace,monos
     <p class="mut note" style="flex:1 1 100%;margin:0">CSV opens in Excel. PDF opens your browser’s print dialog: choose Save as PDF as the destination.</p>
     <p id="expMsg" class="note" role="status" style="flex:1 1 100%;margin:0;color:var(--warn)"></p>
   </div>
-  <p class="mut note">Machines planned for this date appear here automatically. Enter the ready hours each one actually worked. Fuel is estimated as hours multiplied by burn rate.</p>
+  <p class="mut note">Machines planned for this date appear here automatically (the Day shift comes from the plan that starts the night before). Enter the ready hours each one actually worked. Fuel is estimated as hours multiplied by burn rate.</p>
   <div class="two" id="aShifts"></div>
   <div class="charts" id="charts"></div>
 </section>
@@ -208,17 +195,20 @@ textarea{width:100%;height:120px;margin-top:8px;font:12px/1.4 ui-monospace,monos
 </main>
 
 <script>
+const W_PRI={High:3,Normal:2,Low:1};
 const KEY="fleetfuel_v3",TYPES=["Haul truck","Excavator","Dozer","Other"],W={High:3,Normal:2,Low:1},NAME={day:"Day",night:"Night"};
 const NOTES={eq:"Every machine works the same hours; the ceiling decides how many.",prio:"Hours scale with priority (High 3×, Normal 2×, Low 1×) until the ceiling is used.",eff:"The leanest machines run full hours first and the thirstiest get the rest, maximising total machine-hours."};
 const clone=o=>JSON.parse(JSON.stringify(o)),pad=n=>String(n).padStart(2,"0");
 const ymd=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
 const addDays=(s,n)=>{const d=new Date(s+"T00:00:00");d.setDate(d.getDate()+n);return ymd(d);};
 const TODAY=ymd(new Date());
+const WO={weekday:"short",day:"numeric",month:"short",year:"numeric"};
 const dl=(s,o)=>new Date(s+"T00:00:00").toLocaleDateString(undefined,o||{weekday:"short",day:"numeric",month:"short"});
 const RAW=[["Caterpillar","785D","MD011",150,"Haul truck"],["Caterpillar","785D","MD012",150,"Haul truck"],["XCMG","XDE130","MD017",70,"Haul truck"],["XCMG","XDE130","MD018",70,"Haul truck"],["Caterpillar","777F","MD032",56,"Haul truck"],["Caterpillar","777F","MD033",56,"Haul truck"],["Caterpillar","777D","HT90",75,"Haul truck"],["Caterpillar","777D","HT92",75,"Haul truck"],["Caterpillar","6015B","EX104",82,"Excavator"],["XCMG","XE2000","EX105",105,"Excavator"],["Hitachi","1200-6","EX92",90,"Excavator"],["XCMG","XE335C","HE018",18,"Excavator"],["Komatsu","D375A-6","DZ57",57,"Dozer"]];
 const mkDef=()=>{const models={},fleet=[],st={};RAW.forEach(([make,model,id,rate,type])=>{models[model]={rate,type};fleet.push({id,make,model});st[id]="up";});return{models,fleet,st,plans:{},act:{},date:TODAY,adate:TODAY};};
 let S=mkDef();
 try{const x=JSON.parse(localStorage.getItem(KEY)||"null");if(x&&x.fleet&&x.models)S=Object.assign(mkDef(),x);}catch(e){}
+Object.values(S.plans).forEach(p=>{if(p.cap===undefined){const d=+p.capD||0,n=+p.capN||0;p.cap=p.shift==="day"?d:p.shift==="night"?n:d+n;}});
 S.date=TODAY;S.adate=TODAY;
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}};
 const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
@@ -230,41 +220,48 @@ const col=i=>"hsl("+((205+i*53)%360)+" 55% var(--sl))";
 const split=v=>{const i=v.indexOf(":");return[v.slice(0,i),v.slice(i+1)];};
 
 /* plans are stored per date */
-const DEFP=()=>({shift:"day",capD:3000,capN:3000,win:12,mode:"eq",prio:{},ops:{}});
+const DEFP=()=>({cap:6000,win:12,mode:"eq",prio:{},ops:{}});
 function base(d){const ds=Object.keys(S.plans).filter(x=>x<d).sort();return ds.length?clone(S.plans[ds[ds.length-1]]):DEFP();}
 const pl=()=>S.plans[S.date]||(S.plans[S.date]=base(S.date));
-const shifts=p=>p.shift==="both"?["day","night"]:[p.shift];
-const capOf=(p,s)=>+(s==="day"?p.capD:p.capN)||0,isOn=(p,id,s)=>!!(p.ops[id]&&p.ops[id][s]);
+const SH=["night","day"],shifts=()=>SH;
+const isOn=(p,id,s)=>!!(p.ops[id]&&p.ops[id][s]);
 const list=(p,s)=>S.fleet.filter(m=>st(m.id)==="up"&&isOn(p,m.id,s)).map(mach);
 
 function plan(mode,L0,cap,win,prio){
-  const h={},L=L0.filter(m=>m.rate>0);
-  if(mode==="eff"){let rem=cap;[...L].sort((a,b)=>a.rate-b.rate).forEach(m=>{const x=Math.max(0,Math.min(win,rem/m.rate));h[m.id]=x;rem-=x*m.rate;});}
+  const h={},K=m=>m.k||m.id,L=L0.filter(m=>m.rate>0);
+  if(mode==="eff"){let rem=cap;[...L].sort((a,b)=>a.rate-b.rate).forEach(m=>{const x=Math.max(0,Math.min(win,rem/m.rate));h[K(m)]=x;rem-=x*m.rate;});}
   else{const wf=mode==="prio"?(m=>W[(prio||{})[m.id]||"Normal"]):(()=>1);let rem=cap,act=L.slice();
     while(act.length){const den=act.reduce((s,m)=>s+wf(m)*m.rate,0),k=Math.max(0,rem)/den,over=act.filter(m=>wf(m)*k>=win);
-      if(!over.length){act.forEach(m=>h[m.id]=wf(m)*k);break;}
-      over.forEach(m=>{h[m.id]=win;rem-=win*m.rate;});act=act.filter(m=>!over.includes(m));}}
-  const rows=L0.map(m=>({...m,h:h[m.id]||0,fuel:(h[m.id]||0)*m.rate}));
+      if(!over.length){act.forEach(m=>h[K(m)]=wf(m)*k);break;}
+      over.forEach(m=>{h[K(m)]=win;rem-=win*m.rate;});act=act.filter(m=>!over.includes(m));}}
+  const rows=L0.map(m=>({...m,h:h[K(m)]||0,fuel:(h[K(m)]||0)*m.rate}));
   return{rows,cap,win,fuel:rows.reduce((s,r)=>s+r.fuel,0),mh:rows.reduce((s,r)=>s+r.h,0)};
 }
-const plansFor=p=>shifts(p).map(s=>{const ch=list(p,s);return{s,name:NAME[s],ch,P:plan(p.mode,ch,capOf(p,s),+p.win||0,p.prio)};});
+/* one fuel ceiling covers a 24 hr window: night shift on the start date, then day shift on the next date */
+function winPlan(p){
+  const L=[];SH.forEach(s=>list(p,s).forEach(m=>L.push({...m,k:s+":"+m.id,s})));
+  const T=plan(p.mode,L,+p.cap||0,+p.win||0,p.prio);T.rows.forEach((r,i)=>r.ci=i);
+  const by={};SH.forEach(s=>{const rows=T.rows.filter(r=>r.s===s);by[s]={rows,fuel:rows.reduce((a,r)=>a+r.fuel,0),mh:rows.reduce((a,r)=>a+r.h,0)};});
+  return{T,by};
+}
+const plansFor=p=>{const W=winPlan(p);return SH.map(s=>({s,name:NAME[s],ch:W.by[s].rows,P:{rows:W.by[s].rows,cap:W.T.cap,win:W.T.win,fuel:W.by[s].fuel,mh:W.by[s].mh}}));};
 
-function suggestions(PS,p){
+function suggestions(W,p){
   const o=[],add=(t,h,b)=>o.push({t,h,b}),by=k=>S.fleet.filter(m=>st(m.id)===k),ids=a=>a.map(m=>esc(m.id)).join(", "),win=+p.win||0;
-  const up=by("up"),sb=by("standby"),dn=by("down"),pln=new Set(PS.flatMap(x=>x.ch.map(c=>c.id)));
+  const Q=W.T,ch=Q.rows,up=by("up"),sb=by("standby"),dn=by("down"),pln=new Set(ch.map(c=>c.id)),tag=r=>esc(r.id)+" ("+NAME[r.s].toLowerCase()+")";
   add("info","Fleet status",up.length+" up, "+sb.length+" standby, "+dn.length+" down."+(dn.length?" Down units ("+ids(dn)+") are left out of the plan.":""));
-  PS.forEach(({name,ch,P})=>{
-    if(!ch.length){add("warn",name+" shift has no machines","Tick "+name+" on the machines you want to run.");return;}
+  SH.forEach(s=>{if(!W.by[s].rows.length)add("warn","No machines on the "+NAME[s].toLowerCase()+" shift","Tick "+NAME[s]+" on the machines you want to run.");});
+  if(ch.length){
     const full=ch.reduce((a,m)=>a+m.rate*win,0);
-    if(P.cap<=0||win<=0)add("warn",name+": set the ceiling and hours","Both need a value above zero.");
-    else if(full<=P.cap)add("good",name+": the ceiling isn’t limiting","Every machine can run the full "+fmt(win,1)+" hr on "+fmt(full)+" L, leaving "+fmt(P.cap-full)+" L unused"+(sb.length?". Standby units ("+ids(sb.slice(0,4))+") could be added.":"."));
-    else{add("warn",name+": the ceiling is tighter than the plan","Full hours need "+fmt(full)+" L, "+fmt((full/P.cap-1)*100)+"% over the "+fmt(P.cap)+" L ceiling, so hours are cut to land at "+fmt(P.fuel)+" L.");
-      if(p.mode!=="eff"){const E=plan("eff",ch,P.cap,win);if(E.mh>P.mh*1.05)add("info",name+": a leaner split does more","Max machine-hours gives "+fmt(E.mh,1)+" hr instead of "+fmt(P.mh,1)+" on the same ceiling, favouring the leanest units.");}}
-    const z=P.rows.filter(r=>r.h<0.05);
-    if(z.length&&P.cap>0&&win>0)add("warn",name+": no hours for "+z.map(r=>esc(r.id)).join(", "),"Under this ceiling they get almost nothing. Untick them or raise the ceiling.");
-    if(ch.length>1&&P.fuel>0){const top=[...P.rows].sort((a,b)=>b.fuel-a.fuel)[0],ln=[...ch].sort((a,b)=>a.rate-b.rate)[0],sh=top.fuel/P.fuel*100;
-      if(sh>=40&&top.id!==ln.id)add("info",name+": "+esc(top.id)+" uses "+fmt(sh)+"% of the fuel","Each hour trimmed from it frees "+top.rate+" L, enough for "+fmt(top.rate/ln.rate,1)+" extra hr on "+esc(ln.id)+".");}
-  });
+    if(Q.cap<=0||win<=0)add("warn","Set the ceiling and hours","Both need a value above zero.");
+    else if(full<=Q.cap)add("good","The 24 hr ceiling isn’t limiting","Every machine can run the full "+fmt(win,1)+" hr on each shift it’s ticked for, using "+fmt(full)+" L and leaving "+fmt(Q.cap-full)+" L unused"+(sb.length?". Standby units ("+ids(sb.slice(0,4))+") could be added.":"."));
+    else{add("warn","The 24 hr ceiling is tighter than the plan","Full hours need "+fmt(full)+" L, "+fmt((full/Q.cap-1)*100)+"% over the "+fmt(Q.cap)+" L ceiling, so hours are cut to land at "+fmt(Q.fuel)+" L.");
+      if(p.mode!=="eff"){const E=plan("eff",ch,Q.cap,win);if(E.mh>Q.mh*1.05)add("info","A leaner split does more","Max machine-hours gives "+fmt(E.mh,1)+" hr instead of "+fmt(Q.mh,1)+" on the same ceiling, favouring the leanest units.");}}
+    const z=ch.filter(r=>r.h<0.05);
+    if(z.length&&Q.cap>0&&win>0)add("warn","No hours for "+z.map(tag).join(", "),"Under this ceiling they get almost nothing. Untick them or raise the ceiling.");
+    if(ch.length>1&&Q.fuel>0){const top=[...ch].sort((a,b)=>b.fuel-a.fuel)[0],ln=[...ch].sort((a,b)=>a.rate-b.rate)[0],sh=top.fuel/Q.fuel*100;
+      if(sh>=40&&top.id!==ln.id)add("info",tag(top)+" uses "+fmt(sh)+"% of the fuel","Each hour trimmed from it frees "+top.rate+" L, enough for "+fmt(top.rate/ln.rate,1)+" extra hr on "+esc(ln.id)+".");}
+  }
   const seen=new Set();let k=0;
   up.filter(u=>pln.has(u.id)).forEach(u=>{const m=mach(u);if(k>=3||m.type==="Other")return;
     const a=S.fleet.filter(f=>f.id!==m.id&&st(f.id)!=="down").map(mach).filter(x=>x.type===m.type&&x.model!==m.model&&x.rate>=m.rate*.6&&x.rate<=m.rate*.95).sort((p1,q)=>p1.rate-q.rate)[0];
@@ -282,9 +279,9 @@ function suggestions(PS,p){
 /* ---------- Plan tab ---------- */
 let shown=[];
 function syncSettings(){
-  const p=pl();$("#pDate").value=S.date;$("#win").value=p.win;$("#capD").value=p.capD;$("#capN").value=p.capN;
-  $$("input[name=mode]").forEach(r=>r.checked=r.value===p.mode);$$("input[name=shift]").forEach(r=>r.checked=r.value===p.shift);
-  $("#lCapD").hidden=p.shift==="night";$("#lCapN").hidden=p.shift==="day";
+  const p=pl();$("#pDate").value=S.date;$("#win").value=p.win;$("#cap").value=p.cap;
+  $$("input[name=mode]").forEach(r=>r.checked=r.value===p.mode);
+  $("#winTxt").textContent="24 hr window: "+dl(S.date,WO)+" night shift to "+dl(addDays(S.date,1),WO)+" day shift. The ceiling covers both shifts together.";
 }
 function renderFleet(){
   const p=pl(),q=$("#q").value.trim().toLowerCase(),sh=shifts(p),ups=S.fleet.filter(m=>st(m.id)==="up");
@@ -293,47 +290,46 @@ function renderFleet(){
   const GL={"Haul truck":"Haul trucks",Excavator:"Excavators",Dozer:"Dozers",Other:"Other"},row=m=>`<li class="fl${sh.some(s=>isOn(p,m.id,s))?" on":""}"><div><b>${esc(m.id)}</b><span class="sub">${esc(m.make)} ${esc(m.model)}, ${esc(typeOf(m).toLowerCase())}, ${rateOf(m)} L/hr</span></div><span class="sbx">${sh.map(s=>`<label><input type="checkbox" data-op="${s}:${esc(m.id)}"${isOn(p,m.id,s)?" checked":""}>${NAME[s]}</label>`).join("")}</span></li>`;
   $("#fleetList").innerHTML=shown.length?TYPES.map(t=>{const g=shown.filter(m=>typeOf(m)===t);return g.length?`<li class="grp"><span>${GL[t]}</span><span class="chip">${g.length}</span></li>`+g.map(row).join(""):"";}).join(""):`<li class="empty">${ups.length?"No machines match your search.":"No machines are up. Set status on the Machine status tab."}</li>`;
 }
-function block({name,ch,P},p){
-  const pr=p.mode==="prio";
-  const segs=P.cap>0?P.rows.map((r,i)=>r.fuel>0?`<i title="${esc(r.id)}: ${fmt(r.fuel)} L" style="width:${r.fuel/P.cap*100}%;background:${col(i)}"></i>`:"").join(""):"";
-  let h=`<section class="card"><h2>${name} shift</h2><div class="read">${[["Planned fuel",fmt(P.fuel),"L"],["Headroom under ceiling",fmt(Math.max(0,P.cap-P.fuel)),"L"],["Total ready hours",fmt(P.mh,1),"hr"]].map(([a,b,c])=>`<div><span>${a}</span><b>${b}</b> <small>${c}</small></div>`).join("")}</div><div class="tank" role="img" aria-label="${name} planned fuel ${fmt(P.fuel)} litres of a ${fmt(P.cap)} litre ceiling">${segs}</div><div class="tank-lbl"><span>0 L</span><span>Ceiling ${fmt(P.cap)} L</span></div>`;
-  if(!ch.length)return h+`<p class="empty">No machines on this shift yet. Tick ${name} on machines in the list.</p></section>`;
-  h+=`<div class="scroll"><table><thead><tr><th>Fleet no.</th><th>Machine</th><th class="n">L/hr</th>${pr?"<th>Priority</th>":""}<th class="n">Ready hours</th><th class="n">Fuel (L)</th><th class="n">Share</th></tr></thead><tbody>`;
-  P.rows.forEach((r,i)=>{const sh=P.fuel>0?r.fuel/P.fuel*100:0;
-    h+=`<tr><td><span class="sw" style="background:${col(i)}"></span><b>${esc(r.id)}</b></td><td>${esc(r.make)} ${esc(r.model)}</td><td class="n">${r.rate}</td>${pr?`<td><select data-pr="${esc(r.id)}" aria-label="Priority for ${esc(r.id)}">${Object.keys(W).map(k=>`<option${((p.prio||{})[r.id]||"Normal")===k?" selected":""}>${k}</option>`).join("")}</select></td>`:""}<td class="n"><span class="hrtag">${fmt(r.h,1)} hr</span></td><td class="n">${fmt(r.fuel)}</td><td class="n">${fmt(sh)}%</td></tr>`;});
-  return h+`</tbody><tfoot><tr><td colspan="${pr?4:3}">Total</td><td class="n">${fmt(P.mh,1)} hr</td><td class="n">${fmt(P.fuel)}</td><td></td></tr></tfoot></table></div></section>`;
+function winCard(W){
+  const T=W.T,segs=T.cap>0?T.rows.map(r=>r.fuel>0?`<i title="${esc(r.id)} (${NAME[r.s]}): ${fmt(r.fuel)} L" style="width:${r.fuel/T.cap*100}%;background:${col(r.ci)}"></i>`:"").join(""):"";
+  return`<section class="card"><h2>24 hr plan: ${dl(S.date,WO)} night to ${dl(addDays(S.date,1),WO)} day</h2><div class="read">${[["Planned fuel",fmt(T.fuel),"L"],["Headroom under ceiling",fmt(Math.max(0,T.cap-T.fuel)),"L"],["Total ready hours",fmt(T.mh,1),"hr"]].map(([a,b,c])=>`<div><span>${a}</span><b>${b}</b> <small>${c}</small></div>`).join("")}</div><div class="tank" role="img" aria-label="Planned fuel ${fmt(T.fuel)} litres of a ${fmt(T.cap)} litre 24 hour ceiling">${segs}</div><div class="tank-lbl"><span>0 L</span><span>Ceiling ${fmt(T.cap)} L</span></div></section>`;
+}
+function block(W,s,p){
+  const pr=p.mode==="prio",B=W.by[s],T=W.T,name=NAME[s],date=s==="night"?S.date:addDays(S.date,1);
+  let h=`<section class="card"><div class="rowh"><h2>${name} shift, ${dl(date)}</h2><span class="chip">${fmt(B.fuel)} L</span></div>`;
+  if(!B.rows.length)return h+`<p class="empty">No machines on this shift yet. Tick ${name} on machines in the list.</p></section>`;
+  h+=`<div class="scroll"><table><thead><tr><th>Fleet no.</th><th>Machine</th><th class="n">L/hr</th>${pr?"<th>Priority</th>":""}<th class="n">Ready hours</th><th class="n">Fuel (L)</th><th class="n">Share of 24 hr</th></tr></thead><tbody>`;
+  B.rows.forEach(r=>{const sh=T.fuel>0?r.fuel/T.fuel*100:0;
+    h+=`<tr><td><span class="sw" style="background:${col(r.ci)}"></span><b>${esc(r.id)}</b></td><td>${esc(r.make)} ${esc(r.model)}</td><td class="n">${r.rate}</td>${pr?`<td><select data-pr="${esc(r.id)}" aria-label="Priority for ${esc(r.id)}">${Object.keys(W_PRI).map(k=>`<option${((p.prio||{})[r.id]||"Normal")===k?" selected":""}>${k}</option>`).join("")}</select></td>`:""}<td class="n"><span class="hrtag">${fmt(r.h,1)} hr</span></td><td class="n">${fmt(r.fuel)}</td><td class="n">${fmt(sh)}%</td></tr>`;});
+  return h+`</tbody><tfoot><tr><td colspan="${pr?4:3}">Total</td><td class="n">${fmt(B.mh,1)} hr</td><td class="n">${fmt(B.fuel)}</td><td></td></tr></tfoot></table></div></section>`;
 }
 function renderShifts(){
-  const p=pl(),PS=plansFor(p);
-  $("#shifts").innerHTML=PS.map(x=>block(x,p)).join("")+`<p class="mut note">${NOTES[p.mode]}</p>`;
-  $("#sug").innerHTML=suggestions(PS,p).map(s=>`<div class="sg ${s.t}"><b>${s.h}</b><span>${s.b}</span></div>`).join("");
+  const p=pl(),W=winPlan(p);
+  $("#shifts").innerHTML=winCard(W)+SH.map(s=>block(W,s,p)).join("")+`<p class="mut note">${NOTES[p.mode]}</p>`;
+  $("#sug").innerHTML=suggestions(W,p).map(s=>`<div class="sg ${s.t}"><b>${s.h}</b><span>${s.b}</span></div>`).join("");
 }
 const renderPlan=()=>{syncSettings();renderFleet();renderShifts();};
 
-function promptText(){
-  const p=pl(),PS=plansFor(p),g=k=>S.fleet.filter(m=>st(m.id)===k).map(m=>m.id+" ("+m.make+" "+m.model+", "+rateOf(m)+" L/hr)").join(", ")||"none";
-  return "You are a fuel-efficiency advisor for a mining and heavy-equipment fleet. Using only the data below, give 4 to 6 concrete, prioritised suggestions to cut fuel use or gain productive hours under the fuel ceiling. Name machine IDs and quote litres or hours. Never use down machines and treat standby machines as available. Say so if data is missing instead of guessing. Plain text, short bullet lines, under 250 words.\n\nDate: "+S.date+". Shift view: "+p.shift+". Hours per shift: "+p.win+". Hour-sharing mode: "+p.mode+".\nUp (can be planned): "+g("up")+"\nStandby (available, not operating): "+g("standby")+"\nDown (unavailable): "+g("down")+"\n"+PS.map(({name,P})=>name+" shift: fuel ceiling "+P.cap+" L, planned "+Math.round(P.fuel)+" L, "+P.mh.toFixed(1)+" machine-hours. Machines: "+(P.rows.map(r=>r.id+" "+r.make+" "+r.model+" ("+r.type+", "+r.rate+" L/hr) ready "+r.h.toFixed(1)+" hr, "+Math.round(r.fuel)+" L").join("; ")||"none")).join("\n");
-}
-
 /* ---------- Actuals tab ---------- */
+function plannedShift(d,s){const p=S.plans[s==="day"?addDays(d,-1):d];return p?plansFor(p).find(x=>x.s===s):null;}
 function actRows(d,s){
-  const p=S.plans[d],pr={};
-  if(p&&shifts(p).includes(s)){const x=plansFor(p).find(x=>x.s===s);x&&x.P.rows.forEach(r=>pr[r.id]=r.h);}
+  const x=plannedShift(d,s),pr={};
+  x&&x.P.rows.forEach(r=>pr[r.id]=r.h);
   const ent=(S.act[d]||{})[s]||{};
   return[...new Set([...Object.keys(pr),...Object.keys(ent)])].map(byId).filter(Boolean).map(m=>({m,ph:pr[m.id],hrs:+ent[m.id]||0,extra:!(m.id in pr)}));
 }
 function dayStats(d){
-  const p=S.plans[d],PS=p?plansFor(p):[],pl0={day:0,night:0},pm={},as={day:0,night:0},am={};
-  PS.forEach(x=>{pl0[x.s]=x.P.fuel;x.P.rows.forEach(r=>pm[r.id]=(pm[r.id]||0)+r.fuel);});
+  const pl0={day:0,night:0},pm={},as={day:0,night:0},am={};
+  SH.forEach(s=>{const x=plannedShift(d,s);if(x){pl0[s]=x.P.fuel;x.P.rows.forEach(r=>pm[r.id]=(pm[r.id]||0)+r.fuel);}});
   ["day","night"].forEach(s=>Object.entries((S.act[d]||{})[s]||{}).forEach(([id,h])=>{const m=byId(id);if(!m)return;const f=(+h||0)*rateOf(m);as[s]+=f;(am[id]=am[id]||{day:0,night:0})[s]+=f;}));
   return{pl:pl0,pm,as,am};
 }
 function renderActTables(){
-  const d=S.adate,p=S.plans[d];
+  const d=S.adate;
   $("#aShifts").innerHTML=["day","night"].map(s=>{
-    const rows=actRows(d,s),have=new Set(rows.map(r=>r.m.id)),inPlan=p&&shifts(p).includes(s);
+    const rows=actRows(d,s),have=new Set(rows.map(r=>r.m.id)),inPlan=!!plannedShift(d,s);
     const opts=S.fleet.filter(m=>!have.has(m.id)&&st(m.id)!=="down").map(m=>`<option value="${esc(m.id)}">${esc(m.id)} (${esc(m.make)} ${esc(m.model)})</option>`).join("");
-    return`<section class="card"><div class="rowh"><h2>${NAME[s]} shift</h2><span class="chip" id="ft-${s}"></span></div>`+(rows.length?`<div class="scroll"><table><thead><tr><th>Fleet no.</th><th>Machine</th><th class="n">L/hr</th><th class="n">Planned hr</th><th class="n">Ready hours</th><th class="n">Est. fuel (L)</th><th></th></tr></thead><tbody>`+rows.map(({m,ph,hrs,extra})=>`<tr><td><b>${esc(m.id)}</b></td><td>${esc(m.make)} ${esc(m.model)}</td><td class="n">${rateOf(m)}</td><td class="n">${ph==null?"–":fmt(ph,1)}</td><td class="n"><input type="number" min="0" step="0.5" inputmode="decimal" placeholder="0" value="${hrs||""}" data-ah="${s}:${esc(m.id)}" aria-label="Ready hours for ${esc(m.id)}, ${NAME[s]} shift"></td><td class="n af">${fmt(hrs*rateOf(m))}</td><td>${extra?`<button class="x" data-ar="${s}:${esc(m.id)}" aria-label="Remove ${esc(m.id)}">✕</button>`:""}</td></tr>`).join("")+"</tbody></table></div>":`<p class="empty">${p?(inPlan?"No machines planned for this shift.":"This shift isn’t part of the plan for this date."):"No plan saved for this date."} Plan machines in the Plan tab, or add one below.</p>`)+`<div class="acts"><select data-xs="${s}" style="flex:1 1 180px;width:auto" aria-label="Add a machine to the ${NAME[s]} shift">${opts}</select><button class="btn" data-xa="${s}">Add machine</button></div></section>`;
+    return`<section class="card"><div class="rowh"><h2>${NAME[s]} shift</h2><span class="chip" id="ft-${s}"></span></div>`+(rows.length?`<div class="scroll"><table><thead><tr><th>Fleet no.</th><th>Machine</th><th class="n">L/hr</th><th class="n">Planned hr</th><th class="n">Ready hours</th><th class="n">Est. fuel (L)</th><th></th></tr></thead><tbody>`+rows.map(({m,ph,hrs,extra})=>`<tr><td><b>${esc(m.id)}</b></td><td>${esc(m.make)} ${esc(m.model)}</td><td class="n">${rateOf(m)}</td><td class="n">${ph==null?"–":fmt(ph,1)}</td><td class="n"><input type="number" min="0" step="0.5" inputmode="decimal" placeholder="0" value="${hrs||""}" data-ah="${s}:${esc(m.id)}" aria-label="Ready hours for ${esc(m.id)}, ${NAME[s]} shift"></td><td class="n af">${fmt(hrs*rateOf(m))}</td><td>${extra?`<button class="x" data-ar="${s}:${esc(m.id)}" aria-label="Remove ${esc(m.id)}">✕</button>`:""}</td></tr>`).join("")+"</tbody></table></div>":`<p class="empty">${inPlan?"No machines planned for this shift.":(s==="day"?"No plan saved for the window that ends on this day shift.":"No plan saved for this date.")} Plan machines in the Plan tab, or add one below.</p>`)+`<div class="acts"><select data-xs="${s}" style="flex:1 1 180px;width:auto" aria-label="Add a machine to the ${NAME[s]} shift">${opts}</select><button class="btn" data-xa="${s}">Add machine</button></div></section>`;
   }).join("");
 }
 function chart(cats,ser,label){
@@ -376,7 +372,7 @@ function rep(from,to){
   const days=[];for(let d=from;d<=to;d=addDays(d,1))days.push(d);
   const rows=[],daily=[],mm={};
   days.forEach(d=>{const x=dayStats(d);daily.push({d,pn:x.pl.day+x.pl.night,ad:x.as.day,an:x.as.night});
-    if(!S.plans[d]&&!S.act[d])return;
+    if(!S.plans[d]&&!S.plans[addDays(d,-1)]&&!S.act[d])return;
     ["day","night"].forEach(s=>actRows(d,s).forEach(({m,ph,hrs})=>{const rt=rateOf(m),pf=(ph||0)*rt,af=hrs*rt;
       rows.push({d,s,m,t:typeOf(m),rt,ph,hrs,pf,af});
       const k=mm[m.id]||(mm[m.id]={m,t:typeOf(m),ph:0,hrs:0,pf:0,af:0});k.ph+=ph||0;k.hrs+=hrs;k.pf+=pf;k.af+=af;}));});
@@ -422,7 +418,7 @@ ${T([["Type"],["Machines",1],["Ready hours",1],["Planned (L)",1],["Actual (L)",1
 ${T([["Fleet no."],["Machine"],["Type"],["Planned hr",1],["Ready hr",1],["Planned (L)",1],["Actual (L)",1],["Variance (L)",1],["Var %",1]],R.mach.map(x=>[`<b>${e(x.m.id)}</b>`,e(x.m.make)+" "+e(x.m.model),e(x.t),fmt(x.ph,1),fmt(x.hrs,1),fmt(x.pf),fmt(x.af),V(x.af-x.pf),VP(x.af-x.pf,x.pf)]),["Total","","",fmt(R.mach.reduce((a,x)=>a+x.ph,0),1),fmt(R.H,1),fmt(R.P),fmt(R.A),V(v),VP(v,R.P)])}
 <h2 class="pb">Detailed log</h2>
 ${T([["Date"],["Shift"],["Fleet no."],["Machine"],["Planned hr",1],["Ready hr",1],["L/hr",1],["Est. fuel (L)",1]],R.rows.map(x=>[dl(x.d),NAME[x.s],`<b>${e(x.m.id)}</b>`,e(x.m.make)+" "+e(x.m.model),x.ph==null?"–":fmt(x.ph,1),fmt(x.hrs,1),x.rt,fmt(x.af)]))}
-<p class="note">Fuel figures are estimates, not metered consumption: ready hours multiplied by each model’s burn rate. Variance is actual minus planned, so a positive figure means fuel use above plan. Planned figures come from the fuel ceiling and hour-sharing method set for each date.</p>
+<p class="note">Fuel figures are estimates, not metered consumption: ready hours multiplied by each model’s burn rate. Variance is actual minus planned, so a positive figure means fuel use above plan. Planned figures come from the fuel ceiling and hour-sharing method set for each 24-hour window.</p>
 </body></html>`;
 }
 function exportPdf(){
@@ -474,17 +470,13 @@ const setDate=d=>{if(!d)return;S.date=d;pl();save();renderPlan();};
 $("#pDate").onchange=e=>setDate(e.target.value);$("#dPrev").onclick=()=>setDate(addDays(S.date,-1));$("#dNext").onclick=()=>setDate(addDays(S.date,1));$("#dToday").onclick=()=>setDate(TODAY);
 const setA=d=>{if(!d)return;S.adate=d;rng("week");save();renderAct();};
 $("#aDate").onchange=e=>setA(e.target.value);$("#aPrev").onclick=()=>setA(addDays(S.adate,-1));$("#aNext").onclick=()=>setA(addDays(S.adate,1));$("#aToday").onclick=()=>setA(TODAY);
-for(const [id,k] of [["#win","win"],["#capD","capD"],["#capN","capN"]])$(id).oninput=e=>{pl()[k]=parseFloat(e.target.value)||0;save();renderShifts();};
+for(const [id,k] of [["#win","win"],["#cap","cap"]])$(id).oninput=e=>{pl()[k]=parseFloat(e.target.value)||0;save();renderShifts();};
 $$("input[name=mode]").forEach(r=>r.onchange=()=>{pl().mode=r.value;save();renderShifts();});
-$$("input[name=shift]").forEach(r=>r.onchange=()=>{pl().shift=r.value;save();renderPlan();});
 $("#q").oninput=renderFleet;
 $("#fleetList").onchange=e=>{const c=e.target.closest("[data-op]");if(!c)return;const [s,id]=split(c.dataset.op),p=pl();p.ops[id]=Object.assign({},p.ops[id],{[s]:c.checked});save();renderFleet();renderShifts();};
 $("#addAll").onclick=()=>{const p=pl();shown.forEach(m=>{p.ops[m.id]=Object.assign({},p.ops[m.id]);shifts(p).forEach(s=>p.ops[m.id][s]=true);});save();renderFleet();renderShifts();};
 $("#clr").onclick=()=>{const p=pl();Object.keys(p.ops).forEach(id=>shifts(p).forEach(s=>{if(p.ops[id])p.ops[id][s]=false;}));save();renderFleet();renderShifts();};
 $("#shifts").onchange=e=>{const s=e.target.closest("[data-pr]");if(s){pl().prio[s.dataset.pr]=s.value;save();renderShifts();}};
-$("#cpy").onclick=async()=>{const t=promptText(),m=$("#cpyMsg"),b=$("#cpyBox");b.hidden=true;
-  try{await navigator.clipboard.writeText(t);m.textContent="Copied. Paste it into your AI chat.";}
-  catch(e){b.value=t;b.hidden=false;b.select();m.textContent="Your browser blocked copying. Select the text below and copy it.";}};
 $("#aShifts").oninput=e=>{const i=e.target.closest("[data-ah]");if(!i)return;const [s,id]=split(i.dataset.ah),d=S.adate,a=S.act[d]||(S.act[d]={day:{},night:{}});
   a[s]=a[s]||{};a[s][id]=parseFloat(i.value)||0;i.closest("tr").querySelector(".af").textContent=fmt(a[s][id]*rateOf(byId(id)));save();renderActSummary();};
 $("#aShifts").onclick=e=>{const d=S.adate,a=S.act[d]||(S.act[d]={day:{},night:{}});

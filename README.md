@@ -3,10 +3,11 @@
 Plan fuel use for a heavy equipment fleet.
 
 - Set each machine as up, standby or down
-- Plan Day, Night or both shifts within a fuel ceiling and get ready hours per machine
+- Plan Night and Day shifts together within one 24-hour fuel ceiling (Night shift on the start date, then Day shift on the next date) and get ready hours per machine
 - Record actual hours per shift and compare estimated fuel against the plan
-- Optional AI suggestions (Claude, Gemini or an OpenAI-compatible endpoint)
+- Built-in suggestions to cut fuel use, with no API key or AI service needed
+- Export reports from the Actuals tab as CSV or PDF
 
 Live app: https://bobbysabila.github.io/fleet-fuel-planner/
 
-API keys are entered in the app and stored only in your own browser. They are never part of this repository.
+All data is stored only in your own browser. Nothing is sent anywhere.
