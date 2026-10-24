@@ -207,10 +207,11 @@ const TODAY=ymd(new Date());
 const WO={weekday:"short",day:"numeric",month:"short",year:"numeric"};
 const dl=(s,o)=>new Date(s+"T00:00:00").toLocaleDateString(undefined,o||{weekday:"short",day:"numeric",month:"short"});
 const RAW=[["Caterpillar","785D","MD011",150,"Haul truck"],["Caterpillar","785D","MD012",150,"Haul truck"],["XCMG","XDE130","MD017",70,"Haul truck"],["XCMG","XDE130","MD018",70,"Haul truck"],["Caterpillar","777F","MD032",56,"Haul truck"],["Caterpillar","777F","MD033",56,"Haul truck"],["Caterpillar","777D","HT90",75,"Haul truck"],["Caterpillar","777D","HT92",75,"Haul truck"],["Caterpillar","6015B","EX104",82,"Excavator"],["XCMG","XE2000","EX105",105,"Excavator"],["Hitachi","1200-6","EX92",90,"Excavator"],["XCMG","XE335C","HE018",18,"Excavator"],["Komatsu","D375A-6","DZ57",57,"Dozer"]];
-const mkDef=()=>{const models={},fleet=[],st={};RAW.forEach(([make,model,id,rate,type])=>{models[model]={rate,type};fleet.push({id,make,model});st[id]="up";});return{models,fleet,st,plans:{},act:{},date:TODAY,adate:TODAY};};
-let S=mkDef();
-try{const x=JSON.parse(localStorage.getItem(KEY)||"null");if(x&&x.fleet&&x.models)S=Object.assign(mkDef(),x);}catch(e){}
+const mkDef=()=>{const models={},fleet=[],st={};RAW.forEach(([make,model,id,rate,type])=>{models[model]={rate,type};fleet.push({id,make,model});st[id]="up";});return{models,fleet,st,plans:{},act:{},date:TODAY,adate:TODAY,capFix:1};};
+let S=mkDef(),STORED=null;
+try{const x=JSON.parse(localStorage.getItem(KEY)||"null");if(x&&x.fleet&&x.models){STORED=x;S=Object.assign(mkDef(),x);}}catch(e){}
 Object.values(S.plans).forEach(p=>{if(p.cap===undefined){const d=+p.capD||0,n=+p.capN||0;p.cap=p.shift==="day"?d:p.shift==="night"?n:d+n;}});
+if(STORED&&!STORED.capFix){Object.values(S.plans).forEach(p=>{if(+p.cap===6000)p.cap=0;});}S.capFix=1;
 S.date=TODAY;S.adate=TODAY;
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}};
 const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
@@ -224,7 +225,7 @@ const split=v=>{const i=v.indexOf(":");return[v.slice(0,i),v.slice(i+1)];};
 /* plans are stored per date */
 const DEFP=()=>({cap:0,win:12,mode:"eq",prio:{},ops:{}});
 function base(d){const ds=Object.keys(S.plans).filter(x=>x<d).sort();if(!ds.length)return DEFP();const c=clone(S.plans[ds[ds.length-1]]);c.cap=0;return c;}
-const pl=()=>S.plans[S.date]||(S.plans[S.date]=base(S.date));
+const pl=()=>S.plans[S.date]||(S.plans[S.date]=base(S.date)),plView=()=>S.plans[S.date]||base(S.date);
 const SH=["night","day"],shifts=()=>SH;
 const isOn=(p,id,s)=>!!(p.ops[id]&&p.ops[id][s]);
 const list=(p,s)=>S.fleet.filter(m=>st(m.id)==="up"&&isOn(p,m.id,s)).map(mach);
@@ -281,12 +282,12 @@ function suggestions(W,p){
 /* ---------- Plan tab ---------- */
 let shown=[];
 function syncSettings(){
-  const p=pl();$("#pDate").value=S.date;$("#win").value=p.win;$("#cap").value=p.cap||"";
+  const p=plView();$("#pDate").value=S.date;$("#win").value=p.win;$("#cap").value=p.cap||"";
   $$("input[name=mode]").forEach(r=>r.checked=r.value===p.mode);
   $("#winTxt").textContent="24 hr window: "+dl(S.date,WO)+" night shift to "+dl(addDays(S.date,1),WO)+" day shift. The ceiling covers both shifts together.";
 }
 function renderFleet(){
-  const p=pl(),q=$("#q").value.trim().toLowerCase(),sh=shifts(p),ups=S.fleet.filter(m=>st(m.id)==="up");
+  const p=plView(),q=$("#q").value.trim().toLowerCase(),sh=shifts(p),ups=S.fleet.filter(m=>st(m.id)==="up");
   shown=ups.filter(m=>(m.id+" "+m.make+" "+m.model).toLowerCase().includes(q));
   $("#cnt").textContent=ups.length+" up";
   const GL={"Haul truck":"Haul trucks",Excavator:"Excavators",Dozer:"Dozers",Other:"Other"},row=m=>`<li class="fl${sh.some(s=>isOn(p,m.id,s))?" on":""}"><div><b>${esc(m.id)}</b><span class="sub">${esc(m.make)} ${esc(m.model)}, ${esc(typeOf(m).toLowerCase())}, ${rateOf(m)} L/hr</span></div><span class="sbx">${sh.map(s=>`<label><input type="checkbox" data-op="${s}:${esc(m.id)}"${isOn(p,m.id,s)?" checked":""}>${NAME[s]}</label>`).join("")}</span></li>`;
@@ -306,7 +307,7 @@ function block(W,s,p){
   return h+`</tbody><tfoot><tr><td colspan="${pr?4:3}">Total</td><td class="n">${fmt(B.mh,1)} hr</td><td class="n">${fmt(B.fuel)}</td><td></td></tr></tfoot></table></div></section>`;
 }
 function renderShifts(){
-  const p=pl(),W=winPlan(p);
+  const p=plView(),W=winPlan(p);
   $("#shifts").innerHTML=winCard(W)+SH.map(s=>block(W,s,p)).join("")+`<p class="mut note">${NOTES[p.mode]}</p>`;
   $("#sug").innerHTML=suggestions(W,p).map(s=>`<div class="sg ${s.t}"><b>${s.h}</b><span>${s.b}</span></div>`).join("");
 }
@@ -468,7 +469,7 @@ const R={plan:renderPlan,act:renderAct,mach:renderStatus,rates:renderRates};
 const refresh=()=>{save();R[cur]();};
 function tab(n){cur=n;pend=null;$$(".tab").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===n));["plan","act","mach","rates"].forEach(k=>$("#p_"+k).hidden=k!==n);R[n]();}
 $$(".tab").forEach(b=>b.onclick=()=>tab(b.dataset.tab));
-const setDate=d=>{if(!d)return;S.date=d;pl();save();renderPlan();};
+const setDate=d=>{if(!d)return;S.date=d;renderPlan();};
 $("#pDate").onchange=e=>setDate(e.target.value);$("#dPrev").onclick=()=>setDate(addDays(S.date,-1));$("#dNext").onclick=()=>setDate(addDays(S.date,1));$("#dToday").onclick=()=>setDate(TODAY);
 const setA=d=>{if(!d)return;S.adate=d;rng("week");save();renderAct();};
 $("#aDate").onchange=e=>setA(e.target.value);$("#aPrev").onclick=()=>setA(addDays(S.adate,-1));$("#aNext").onclick=()=>setA(addDays(S.adate,1));$("#aToday").onclick=()=>setA(TODAY);
