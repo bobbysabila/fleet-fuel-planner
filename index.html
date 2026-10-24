@@ -56,7 +56,9 @@ input:focus-visible,select:focus-visible,button:focus-visible,summary:focus-visi
 .sbx{display:flex;gap:10px}.sbx label{display:inline-flex;gap:5px;align-items:center;font-weight:500}.sbx input{width:auto}
 .empty{color:var(--mut);padding:12px 6px}
 .grp{display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:1;background:var(--card);padding:8px 6px 6px;border-bottom:1px solid var(--ink);font-weight:700}
-.stg{display:inline-flex;gap:9px;vertical-align:middle}
+.stg{display:inline-flex;gap:9px;align-items:center;vertical-align:middle}
+.stl{margin-left:3px}
+th.stc,td.stc{padding-left:36px}
 .dot{--c:var(--up);width:20px;height:20px;border-radius:50%;border:2px solid var(--c);background:transparent;padding:0;cursor:pointer}
 .dot.standby{--c:var(--sb)}.dot.down{--c:var(--dn)}
 .dot.on{background:var(--c);box-shadow:0 0 0 2px var(--card),0 0 0 4px var(--c)}
@@ -107,7 +109,7 @@ textarea{width:100%;height:120px;margin-top:8px;font:12px/1.4 ui-monospace,monos
       <div class="datebox" style="width:100%"><button class="btn" id="dPrev" aria-label="Previous day">‹</button><input type="date" id="pDate" aria-label="Plan date"><button class="btn" id="dNext" aria-label="Next day">›</button><button class="btn" id="dToday">Today</button></div>
     </div>
     <label>Hours per shift<input id="win" type="number" min="0" step="0.5" inputmode="decimal"></label>
-    <label>Fuel ceiling, 24 hr (L)<input id="cap" type="number" min="0" step="50" inputmode="decimal"></label>
+    <label>Fuel ceiling, 24 hr (L)<input id="cap" type="number" min="0" step="50" inputmode="decimal" placeholder="Enter litres"></label>
     <div class="lbl grow" id="mdLbl">How hours are shared
       <div class="seg" role="radiogroup" aria-labelledby="mdLbl">
         <label><input type="radio" name="mode" value="eq"><span>Equal hours</span></label>
@@ -220,8 +222,8 @@ const col=i=>"hsl("+((205+i*53)%360)+" 55% var(--sl))";
 const split=v=>{const i=v.indexOf(":");return[v.slice(0,i),v.slice(i+1)];};
 
 /* plans are stored per date */
-const DEFP=()=>({cap:6000,win:12,mode:"eq",prio:{},ops:{}});
-function base(d){const ds=Object.keys(S.plans).filter(x=>x<d).sort();return ds.length?clone(S.plans[ds[ds.length-1]]):DEFP();}
+const DEFP=()=>({cap:0,win:12,mode:"eq",prio:{},ops:{}});
+function base(d){const ds=Object.keys(S.plans).filter(x=>x<d).sort();if(!ds.length)return DEFP();const c=clone(S.plans[ds[ds.length-1]]);c.cap=0;return c;}
 const pl=()=>S.plans[S.date]||(S.plans[S.date]=base(S.date));
 const SH=["night","day"],shifts=()=>SH;
 const isOn=(p,id,s)=>!!(p.ops[id]&&p.ops[id][s]);
@@ -279,7 +281,7 @@ function suggestions(W,p){
 /* ---------- Plan tab ---------- */
 let shown=[];
 function syncSettings(){
-  const p=pl();$("#pDate").value=S.date;$("#win").value=p.win;$("#cap").value=p.cap;
+  const p=pl();$("#pDate").value=S.date;$("#win").value=p.win;$("#cap").value=p.cap||"";
   $$("input[name=mode]").forEach(r=>r.checked=r.value===p.mode);
   $("#winTxt").textContent="24 hr window: "+dl(S.date,WO)+" night shift to "+dl(addDays(S.date,1),WO)+" day shift. The ceiling covers both shifts together.";
 }
@@ -437,7 +439,7 @@ function renderStatus(){
   const q=$("#sq").value.trim().toLowerCase(),f=$("#sf").value,c=k=>S.fleet.filter(m=>st(m.id)===k).length;
   shownS=S.fleet.filter(m=>(f==="all"||st(m.id)===f)&&(m.id+" "+m.make+" "+m.model).toLowerCase().includes(q));
   $("#sCnt").textContent=c("up")+" up, "+c("standby")+" standby, "+c("down")+" down";
-  $("#stTbl").innerHTML=`<thead><tr><th>Fleet no.</th><th>Make</th><th>Model</th><th>Type</th><th class="n">L/hr</th><th>Status</th></tr></thead><tbody>`+(shownS.map(m=>`<tr><td><b>${esc(m.id)}</b></td><td>${esc(m.make)}</td><td>${esc(m.model)}</td><td>${esc(typeOf(m))}</td><td class="n">${rateOf(m)}</td><td><span class="stg">${dots(m.id)}</span> ${st(m.id)}</td></tr>`).join("")||`<tr><td class="empty" colspan="6">No machines match.</td></tr>`)+"</tbody>";
+  $("#stTbl").innerHTML=`<thead><tr><th>Type</th><th>Make</th><th>Model</th><th>Fleet no.</th><th class="n">L/hr</th><th class="stc">Status</th></tr></thead><tbody>`+(shownS.map(m=>`<tr><td>${esc(typeOf(m))}</td><td>${esc(m.make)}</td><td>${esc(m.model)}</td><td><b>${esc(m.id)}</b></td><td class="n">${rateOf(m)}</td><td class="stc"><span class="stg">${dots(m.id)}<span class="stl">${st(m.id)}</span></span></td></tr>`).join("")||`<tr><td class="empty" colspan="6">No machines match.</td></tr>`)+"</tbody>";
 }
 function fillSel(el,vals,all){const v=el.value;el.innerHTML=`<option value="">${all}</option>`+vals.map(x=>`<option>${esc(x)}</option>`).join("");if(vals.includes(v))el.value=v;}
 function renderRates(){
