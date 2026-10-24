@@ -9,421 +9,510 @@
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
 <style>
-:root{--bg:#e7ebee;--card:#fff;--ink:#101a22;--mut:#56636e;--line:#cdd5db;--tint:#f2f5f7;--hi:#f7c600;--hi-ink:#101a22;--good:#1b7447;--warn:#b42318;--up:#1f9d55;--sb:#2f6fdb;--dn:#d6322e;--nv:#3b5b8c;--sl:40%;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1317;--card:#161e25;--ink:#e9eff3;--mut:#93a1ac;--line:#2b3742;--tint:#1c262e;--hi:#ffd21f;--good:#5fd19a;--warn:#ff8f84;--up:#3ddc84;--sb:#6ea2ff;--dn:#ff6b64;--nv:#7fa6e0;--sl:62%;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0e1317;--card:#161e25;--ink:#e9eff3;--mut:#93a1ac;--line:#2b3742;--tint:#1c262e;--hi:#ffd21f;--good:#5fd19a;--warn:#ff8f84;--up:#3ddc84;--sb:#6ea2ff;--dn:#ff6b64;--nv:#7fa6e0;--sl:62%;color-scheme:dark}
+:root{--bg:#eef1f4;--card:#fff;--ink:#0f1b24;--mut:#5b6872;--line:#dbe1e6;--tint:#f4f6f8;--hi:#f7c600;--hi-ink:#101a22;--good:#1b7447;--warn:#b42318;--up:#1f9d55;--sb:#2f6fdb;--dn:#d6322e;--nv:#3b5b8c;--bar:#101a22;--sl:40%;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1216;--card:#151d24;--ink:#e8eef2;--mut:#93a1ac;--line:#27323b;--tint:#1b252d;--hi:#ffd21f;--good:#5fd19a;--warn:#ff8f84;--up:#3ddc84;--sb:#6ea2ff;--dn:#ff6b64;--nv:#7fa6e0;--bar:#0a0e11;--sl:62%;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1216;--card:#151d24;--ink:#e8eef2;--mut:#93a1ac;--line:#27323b;--tint:#1b252d;--hi:#ffd21f;--good:#5fd19a;--warn:#ff8f84;--up:#3ddc84;--sb:#6ea2ff;--dn:#ff6b64;--nv:#7fa6e0;--bar:#0a0e11;--sl:62%;color-scheme:dark}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *,*::before,*::after{box-sizing:inherit}
 [hidden]{display:none!important}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Barlow,"Segoe UI",system-ui,sans-serif}
-main{max-width:1320px;margin:0 auto;padding:20px 16px 40px}
-h1,h2,.read b,.rt,.hr{font-family:"Barlow Condensed","Arial Narrow","Roboto Condensed",sans-serif}
-h1{font-size:2.4rem;line-height:1.05;margin:0 0 6px;font-weight:700}
-h2{font-size:1.4rem;margin:0 0 10px;font-weight:700}
-p{margin:0}.mut{color:var(--mut)}
-.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px}
-.panel{border-top:4px solid var(--ink)}
-.tabs{display:flex;gap:4px;border-bottom:2px solid var(--ink);margin-top:14px}
-.tab{font:inherit;font-weight:600;font-size:1.05rem;background:transparent;color:var(--ink);border:0;padding:8px 22px;cursor:pointer;border-radius:4px 4px 0 0}
-.tab[aria-selected=true]{background:var(--ink);color:var(--card)}
-.layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:16px;margin-top:16px;align-items:start}
-.left,.stack{display:grid;gap:16px;min-width:0}
-.side{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto}
-.band{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));align-items:start}
-.grid{display:grid;gap:16px;grid-template-columns:minmax(280px,340px) minmax(0,1fr);align-items:start}
-@media (max-width:1100px){.layout{grid-template-columns:1fr}.side{position:static;max-height:none}}
-@media (max-width:820px){.grid{grid-template-columns:1fr}}
+body{margin:0;background:var(--bg);color:var(--ink);font:14.5px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.top{background:var(--bar);color:#fff;display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px;padding:10px clamp(12px,2vw,28px)}
+.brand{font-weight:700;font-size:1.15rem}
+.brand i{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--hi);margin-right:8px}
+.tabs{display:flex;gap:4px;flex-wrap:wrap}
+.tab{font:inherit;font-weight:600;color:#c5d0d8;background:transparent;border:0;padding:7px 14px;border-radius:999px;cursor:pointer}
+.tab[aria-selected=true]{background:var(--hi);color:var(--hi-ink)}
+.tab:focus-visible{outline:2px solid #fff;outline-offset:2px}
+main{padding:16px clamp(12px,2vw,28px) 36px}
+h2{font-size:1.05rem;margin:0 0 10px;font-weight:700}
+p{margin:0}.mut{color:var(--mut)}.note{font-size:.88rem;margin-top:6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;min-width:0}
+.bar{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:end}
+.bar>*{flex:1 1 150px}.bar>.datebox,.bar>.grow{flex:2 1 290px}
+.datebox{display:flex;gap:6px;flex-wrap:wrap}.datebox input{width:auto;flex:1 1 140px}
 label,.lbl{display:grid;gap:4px;font-weight:600}
-label small{font-weight:400;color:var(--mut)}
-input,select{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:4px;padding:7px 9px;width:100%;min-width:0}
-input:focus-visible,select:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-.seg{display:flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+input,select{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:6px;padding:7px 9px;width:100%;min-width:0}
+input:focus-visible,select:focus-visible,button:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.seg{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
 .seg label{position:relative;flex:1;display:block;font-weight:500}
 .seg input{position:absolute;opacity:0;width:1px;height:1px}
 .seg span{display:block;padding:8px 10px;text-align:center;white-space:nowrap;cursor:pointer;border-right:1px solid var(--line)}
-.band .wide{grid-column:1/-1}.wide .seg{max-width:460px}
 .seg label:last-child span{border-right:0}
 .seg input:checked+span{background:var(--hi);color:var(--hi-ink);font-weight:700}
 .seg input:focus-visible+span{outline:2px solid var(--ink);outline-offset:-3px}
-.note{margin-top:8px;font-size:.9rem}
-.rowh{display:flex;justify-content:space-between;align-items:baseline}
-.acts{display:flex;gap:8px;margin:10px 0 0}
-.btn{font:inherit;font-weight:600;background:transparent;color:var(--ink);border:1px solid var(--ink);border-radius:4px;padding:5px 12px;cursor:pointer}
-.btn.hi{background:var(--hi);color:var(--hi-ink);border-color:var(--hi)}
-.btn.ghost{border-color:var(--line);color:var(--mut)}
-.fleet{list-style:none;margin:10px 0 0;padding:0;max-height:520px;overflow:auto;border-top:1px solid var(--line)}
-.fl{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:8px 6px;border-bottom:1px solid var(--line)}
-.fl.up{background:var(--tint)}.fl.down b{text-decoration:line-through;color:var(--mut)}
-.fl b{font-size:1.05rem}.sub{display:block;color:var(--mut);font-size:.85rem}
-.stg{display:flex;gap:9px}
+.btn{font:inherit;font-weight:600;background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px 12px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{border-color:var(--ink)}.btn.hi{background:var(--hi);color:var(--hi-ink);border-color:var(--hi)}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.cols{display:grid;gap:16px;grid-template-columns:minmax(250px,1fr) minmax(0,2.5fr) minmax(270px,1.1fr);align-items:start;margin-top:16px}
+.stack{display:grid;gap:16px;min-width:0}
+@media (min-width:1181px){.colR{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto}}
+@media (max-width:1180px){.cols{grid-template-columns:minmax(250px,1fr) minmax(0,2fr)}.colR{grid-column:1/-1}}
+@media (max-width:760px){.cols{grid-template-columns:1fr}}
+.rowh{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.chip{background:var(--tint);border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-weight:600;white-space:nowrap}
+.fleet{list-style:none;margin:10px 0 0;padding:0;max-height:max(320px,calc(100vh - 330px));overflow:auto;border-top:1px solid var(--line)}
+.fl{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:7px 6px;border-bottom:1px solid var(--line)}
+.fl.on{background:var(--tint)}.fl b{font-size:1rem}.sub{display:block;color:var(--mut);font-size:.84rem}
+.sbx{display:flex;gap:10px}.sbx label{display:inline-flex;gap:5px;align-items:center;font-weight:500}.sbx input{width:auto}
+.empty{color:var(--mut);padding:12px 6px}
+.grp{display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:1;background:var(--card);padding:8px 6px 6px;border-bottom:1px solid var(--ink);font-weight:700}
+.stg{display:inline-flex;gap:9px;vertical-align:middle}
 .dot{--c:var(--up);width:20px;height:20px;border-radius:50%;border:2px solid var(--c);background:transparent;padding:0;cursor:pointer}
 .dot.standby{--c:var(--sb)}.dot.down{--c:var(--dn)}
 .dot.on{background:var(--c);box-shadow:0 0 0 2px var(--card),0 0 0 4px var(--c)}
-.sbx{display:flex;gap:12px;margin-top:2px}
-.sbx label{display:inline-flex;gap:5px;align-items:center;font-weight:500;font-size:.88rem}
-.sbx input{width:auto}
-.empty{color:var(--mut);padding:12px 6px}
-details>summary{cursor:pointer;font-weight:600;padding:4px 0}
-.add{display:grid;gap:8px;margin-top:8px}
-.read{display:grid;grid-template-columns:repeat(3,1fr);margin:4px 0 14px}
-.read>div{padding:0 14px;border-left:1px solid var(--line)}
-.read>div:first-child{padding-left:0;border-left:0}
-.read span{display:block;color:var(--mut)}
-.read b{font-size:2.3rem;line-height:1.05;font-weight:700}
-.read small{font-size:1rem;font-weight:600;color:var(--mut)}
-@media (max-width:520px){.read b{font-size:1.7rem}.read>div{padding:0 8px}}
-.tank{display:flex;height:28px;background:var(--tint);border:1px solid var(--ink);border-radius:3px;overflow:hidden}
+.read{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:12px}
+.read>div{background:var(--tint);border-radius:8px;padding:8px 12px}
+.read span{display:block;color:var(--mut);font-size:.85rem}.read b{font-size:1.5rem;line-height:1.2}.read small{color:var(--mut);font-weight:600}
+.tank{display:flex;height:22px;background:var(--tint);border:1px solid var(--line);border-radius:6px;overflow:hidden}
 .tank i{display:block;height:100%;border-right:2px solid var(--card)}
-.tank-lbl{display:flex;justify-content:space-between;color:var(--mut);font-size:.9rem;margin:4px 0 14px}
+.tank-lbl{display:flex;justify-content:space-between;color:var(--mut);font-size:.85rem;margin:4px 0 12px}
 .scroll{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
-th{text-align:left;font-weight:600;color:var(--mut);font-size:.9rem;padding:6px 8px;border-bottom:2px solid var(--ink);white-space:nowrap}
-td{padding:8px;border-bottom:1px solid var(--line);white-space:nowrap}
-th.n,td.n{text-align:right}
-tfoot td{font-weight:700;border-bottom:0;border-top:2px solid var(--ink)}
-.hr{font-size:1.3rem;font-weight:700}
-.hrtag{background:var(--hi);color:var(--hi-ink);padding:1px 8px;border-radius:3px}
-.sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:7px}
-.x{background:none;border:0;color:var(--mut);cursor:pointer;font-size:1rem;padding:4px 6px;border-radius:4px}
-.x:hover{color:var(--warn)}
-td input{width:84px;text-align:right}
-.sg{display:grid;gap:2px;padding:10px 12px;border-left:5px solid var(--hi);background:var(--tint);border-radius:0 4px 4px 0;margin-top:8px}
-.sg.good{border-color:var(--good)}.sg.warn{border-color:var(--warn)}.sg.info{border-color:var(--sb)}
-.sg span{color:var(--mut)}
-.charts{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));margin-top:16px}
-.lg{display:flex;gap:14px;margin-bottom:6px}
-.ax{fill:var(--mut);font:11px Barlow,system-ui,sans-serif}
-.arow{display:grid;gap:8px;grid-template-columns:2fr 1fr 1fr auto;align-items:end;margin-bottom:14px}
-@media (max-width:640px){.arow{grid-template-columns:1fr 1fr}}
-.foot{margin-top:14px;text-align:center}
-.lnk{background:none;border:0;color:var(--mut);text-decoration:underline;cursor:pointer;font:inherit}
-.aiout{margin-top:10px}.aiout p{margin:0 0 8px}.aiout ul{margin:0 0 8px;padding-left:20px}.aiout .err{color:var(--warn)}.aiset{margin-top:12px}.aiset label{margin-top:8px}
+th{text-align:left;font-weight:600;color:var(--mut);font-size:.86rem;padding:6px 8px;border-bottom:1px solid var(--ink);white-space:nowrap}
+td{padding:7px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+th.n,td.n{text-align:right}tr.sel td{background:var(--tint)}
+tfoot td{font-weight:700;border-bottom:0;border-top:1px solid var(--ink)}
+.hrtag{background:var(--hi);color:var(--hi-ink);padding:1px 8px;border-radius:5px;font-weight:700}
+.sw{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:7px}
+td input{width:90px;text-align:right}td select{width:auto}
+.x{background:none;border:1px solid transparent;color:var(--mut);cursor:pointer;border-radius:6px;padding:3px 8px;font:inherit}
+.x:hover,.x.sure{color:var(--warn);border-color:var(--warn)}
+.sg{display:grid;gap:2px;padding:9px 12px;border-left:4px solid var(--sb);background:var(--tint);border-radius:0 8px 8px 0;margin-top:8px}
+.sg.good{border-color:var(--good)}.sg.warn{border-color:var(--warn)}.sg span{color:var(--mut)}
+.two{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));margin-top:16px}
+.charts{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));margin-top:16px}.wide{grid-column:1/-1}
+.lg{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:6px}.ax{fill:var(--mut);font:11px system-ui,sans-serif}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}.tools>*{flex:1 1 140px;width:auto}
+.form{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-top:10px;align-items:end}
+details>summary{cursor:pointer;font-weight:600}
+textarea{width:100%;height:120px;margin-top:8px;font:12px/1.4 ui-monospace,monospace;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:6px}
+.foot{margin-top:16px;text-align:center}.lnk{background:none;border:0;color:var(--mut);text-decoration:underline;cursor:pointer;font:inherit}
 </style>
 </head>
 <body>
-<main>
-<header>
-  <h1>Fleet fuel planner</h1>
-  <p class="mut">Set each machine up, on standby or down, choose the shifts, and read off the ready hours that stay inside the fuel ceiling.</p>
+<header class="top">
+  <div class="brand"><i></i>Fleet Fuel Planner</div>
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button class="tab" role="tab" data-tab="plan" aria-selected="true">Plan</button>
+    <button class="tab" role="tab" data-tab="act" aria-selected="false">Actuals</button>
+    <button class="tab" role="tab" data-tab="mach" aria-selected="false">Machine status</button>
+    <button class="tab" role="tab" data-tab="rates" aria-selected="false">Burn rates by model</button>
+  </nav>
 </header>
-<nav class="tabs" role="tablist">
-  <button class="tab" role="tab" id="tPlan" aria-selected="true">Plan</button>
-  <button class="tab" role="tab" id="tAct" aria-selected="false">Actuals</button>
-</nav>
+<main>
 
-<div id="pPlan" class="layout">
-  <div class="left">
-    <section class="card band" aria-label="Plan settings">
-      <div class="lbl" id="shLbl">Shift
-        <div class="seg" role="radiogroup" aria-labelledby="shLbl">
-          <label><input type="radio" name="shift" value="day"><span>Day</span></label>
-          <label><input type="radio" name="shift" value="night"><span>Night</span></label>
-          <label><input type="radio" name="shift" value="both"><span>Both</span></label>
-        </div>
+<section id="p_plan">
+  <div class="card bar">
+    <div class="lbl datebox">Date
+      <div class="datebox" style="width:100%"><button class="btn" id="dPrev" aria-label="Previous day">‹</button><input type="date" id="pDate" aria-label="Plan date"><button class="btn" id="dNext" aria-label="Next day">›</button><button class="btn" id="dToday">Today</button></div>
+    </div>
+    <div class="lbl" id="shLbl">Shift
+      <div class="seg" role="radiogroup" aria-labelledby="shLbl">
+        <label><input type="radio" name="shift" value="day"><span>Day</span></label>
+        <label><input type="radio" name="shift" value="night"><span>Night</span></label>
+        <label><input type="radio" name="shift" value="both"><span>Both</span></label>
       </div>
-      <label>Hours per shift<input id="win" type="number" min="0" step="0.5" inputmode="decimal"></label>
-      <label id="lCapD">Day fuel ceiling (L)<input id="capD" type="number" min="0" step="50" inputmode="decimal"></label>
-      <label id="lCapN">Night fuel ceiling (L)<input id="capN" type="number" min="0" step="50" inputmode="decimal"></label>
-      <div class="lbl wide" id="mdLbl">How hours are shared
-        <div class="seg" role="radiogroup" aria-labelledby="mdLbl">
-          <label><input type="radio" name="mode" value="eq"><span>Equal</span></label>
-          <label><input type="radio" name="mode" value="prio"><span>Priority</span></label>
-          <label><input type="radio" name="mode" value="eff"><span>Max hours</span></label>
-        </div>
-        <p id="modeNote" class="mut note"></p>
-      </div>
-    </section>
-    <div class="grid">
-      <section class="card" aria-label="Fleet">
-        <div class="rowh"><h2>Fleet</h2><span id="cnt" class="mut"></span></div>
-        <p class="mut note" style="margin:0 0 8px">Circles set status: green up, blue standby, red down. Only up machines are planned.</p>
-        <input id="q" type="search" placeholder="Search fleet no. or model" aria-label="Search fleet">
-        <div class="acts"><button class="btn" id="addAll">All shown up</button><button class="btn ghost" id="clr">All standby</button></div>
-        <ul id="fleetList" class="fleet"></ul>
-        <details style="margin-top:12px"><summary>Add a machine to the fleet</summary>
-          <div class="add">
-            <input id="nId" placeholder="Fleet no., for example MD040" aria-label="Fleet number">
-            <input id="nModel" list="modelList" placeholder="Model" aria-label="Model">
-            <datalist id="modelList"></datalist>
-            <input id="nRate" type="number" min="0" step="0.5" placeholder="Burn rate (L/hr)" aria-label="Burn rate in litres per hour">
-            <select id="nType" aria-label="Machine type"></select>
-            <button class="btn hi" id="addBtn">Add as up</button>
-            <p id="addMsg" class="mut" role="status"></p>
-          </div>
-        </details>
-      </section>
-      <div class="stack">
-        <div id="shifts" class="stack"></div>
-        <details class="card"><summary>Burn rates by model</summary>
-          <div class="scroll"><table id="rtbl"></table></div>
-          <p class="mut note">Changes apply to every machine of that model.</p>
-        </details>
+    </div>
+    <label>Hours per shift<input id="win" type="number" min="0" step="0.5" inputmode="decimal"></label>
+    <label id="lCapD">Day fuel ceiling (L)<input id="capD" type="number" min="0" step="50" inputmode="decimal"></label>
+    <label id="lCapN">Night fuel ceiling (L)<input id="capN" type="number" min="0" step="50" inputmode="decimal"></label>
+    <div class="lbl grow" id="mdLbl">How hours are shared
+      <div class="seg" role="radiogroup" aria-labelledby="mdLbl">
+        <label><input type="radio" name="mode" value="eq"><span>Equal hours</span></label>
+        <label><input type="radio" name="mode" value="prio"><span>By priority</span></label>
+        <label><input type="radio" name="mode" value="eff"><span>Max machine-hours</span></label>
       </div>
     </div>
   </div>
-  <aside class="card side" aria-label="Suggestions"><h2>Suggestions</h2><div id="sug"></div>
-    <h2 style="margin-top:22px">AI suggestions</h2>
-    <label>Provider<select id="aiP"><option value="claude">Claude</option><option value="gemini">Gemini</option><option value="custom">Copilot / Azure OpenAI / other</option></select></label>
-    <button class="btn hi" id="aiGo" style="margin-top:10px">Ask AI about this plan</button>
-    <div id="aiOut" class="aiout" aria-live="polite"></div>
-    <details class="aiset"><summary>Provider settings</summary>
-      <label>API key<input id="aiKey" type="password" autocomplete="off"></label>
-      <label>Model<input id="aiModel" autocomplete="off"></label>
-      <label id="aiUrlL">Endpoint URL<input id="aiUrl" placeholder="https://your-resource.openai.azure.com/…/chat/completions" autocomplete="off"></label>
-      <label id="aiAuthL">Auth header<select id="aiAuth"><option value="Bearer">Authorization: Bearer</option><option value="api-key">api-key (Azure OpenAI)</option></select></label>
-      <p id="aiHelp" class="mut note"></p>
-      <p class="mut note">Keys stay in this browser on this device. Don’t share the installed app or its saved data.</p>
-    </details></aside>
-</div>
+  <div class="cols">
+    <section class="card" aria-label="Machines for this date">
+      <div class="rowh"><h2>Machines</h2><span id="cnt" class="chip"></span></div>
+      <p class="mut note" style="margin:0 0 8px">Up machines only. Tick the shifts each one works on this date. Change status on the Machine status tab.</p>
+      <input id="q" type="search" placeholder="Search fleet no., make or model" aria-label="Search machines">
+      <div class="acts"><button class="btn" id="addAll">Add all shown</button><button class="btn" id="clr">Clear this date</button></div>
+      <ul id="fleetList" class="fleet"></ul>
+    </section>
+    <div id="shifts" class="stack"></div>
+    <aside class="card colR" aria-label="Suggestions">
+      <h2>Suggestions</h2><div id="sug"></div>
+      <h2 style="margin-top:18px">Ask an AI (no API key)</h2>
+      <p class="mut note" style="margin:0">Copy a summary of this date’s plan, then paste it into a normal chat with Claude, Gemini or Copilot.</p>
+      <div class="acts"><button class="btn hi" id="cpy">Copy plan for AI</button>
+        <a class="btn" href="https://claude.ai/new" target="_blank" rel="noopener">Claude</a><a class="btn" href="https://gemini.google.com/app" target="_blank" rel="noopener">Gemini</a><a class="btn" href="https://copilot.microsoft.com/" target="_blank" rel="noopener">Copilot</a></div>
+      <p id="cpyMsg" class="mut note" role="status"></p>
+      <textarea id="cpyBox" readonly hidden aria-label="Plan summary to copy"></textarea>
+    </aside>
+  </div>
+</section>
 
-<div id="pAct" hidden>
-  <section class="card panel" style="margin-top:16px">
-    <h2>Actual hours by shift</h2>
-    <div class="arow">
-      <label>Machine<select id="aId"></select></label>
-      <label>Shift<select id="aSh"><option value="day">Day</option><option value="night">Night</option></select></label>
-      <label>Hours operated<input id="aHr" type="number" min="0" step="0.5" inputmode="decimal" placeholder="0"></label>
-      <button class="btn hi" id="aAdd">Add</button>
+<section id="p_act" hidden>
+  <div class="card bar">
+    <div class="lbl datebox">Date
+      <div class="datebox" style="width:100%"><button class="btn" id="aPrev" aria-label="Previous day">‹</button><input type="date" id="aDate" aria-label="Actuals date"><button class="btn" id="aNext" aria-label="Next day">›</button><button class="btn" id="aToday">Today</button></div>
     </div>
-    <p id="aMsg" class="mut note" role="status"></p>
-    <div id="aRead" class="read"></div>
-    <div class="scroll"><table id="aTbl"></table></div>
-    <p class="mut note">Actual fuel is an estimate: hours operated multiplied by the machine’s burn rate. Planned figures come from the Plan tab.</p>
-  </section>
-  <div id="charts" class="charts"></div>
-</div>
-<p class="foot"><button class="lnk" id="reset">Reset saved data</button></p>
+    <div class="read grow" id="aRead" style="margin:0"></div>
+    <span hidden></span>
+  </div>
+  <div class="card bar" id="exp" style="margin-top:16px">
+    <div class="lbl grow">Export report
+      <div class="datebox" style="width:100%"><input type="date" id="eFrom" aria-label="Report from date"><input type="date" id="eTo" aria-label="Report to date"><button class="btn" data-ep="day">Day</button><button class="btn" data-ep="week">Week</button><button class="btn" data-ep="month">Month</button></div>
+    </div>
+    <div class="acts" style="margin:0;flex:0 0 auto"><button class="btn" id="csv">Download CSV</button><button class="btn hi" id="pdf">Download PDF</button></div>
+    <p class="mut note" style="flex:1 1 100%;margin:0">CSV opens in Excel. PDF opens your browser’s print dialog: choose Save as PDF as the destination.</p>
+    <p id="expMsg" class="note" role="status" style="flex:1 1 100%;margin:0;color:var(--warn)"></p>
+  </div>
+  <p class="mut note">Machines planned for this date appear here automatically. Enter the ready hours each one actually worked. Fuel is estimated as hours multiplied by burn rate.</p>
+  <div class="two" id="aShifts"></div>
+  <div class="charts" id="charts"></div>
+</section>
+
+<section id="p_mach" hidden>
+  <div class="card">
+    <div class="rowh"><h2>Machine status</h2><span id="sCnt" class="mut"></span></div>
+    <div class="tools"><input id="sq" type="search" placeholder="Search fleet no., make or model" aria-label="Search"><select id="sf" aria-label="Filter by status"><option value="all">All statuses</option><option value="up">Up</option><option value="standby">Standby</option><option value="down">Down</option></select></div>
+    <p class="mut note" style="margin:0 0 8px">Green circle is up (can be planned), blue is standby (available, not planned), red is down (unavailable).</p>
+    <div class="acts" style="margin:0 0 10px"><button class="btn" id="sUp">Set shown to up</button><button class="btn" id="sSb">Set shown to standby</button></div>
+    <div class="scroll"><table id="stTbl"></table></div>
+  </div>
+</section>
+
+<section id="p_rates" hidden>
+  <div class="card">
+    <details id="addD"><summary>Add a machine</summary>
+      <div class="form">
+        <label>Make<input id="nMake" list="makeList" autocomplete="off"></label>
+        <label>Model<input id="nModel" list="modelList" autocomplete="off"></label>
+        <label>Fleet no.<input id="nId" autocomplete="off"></label>
+        <label>Burn rate (L/hr)<input id="nRate" type="number" min="0" step="0.5"></label>
+        <label>Type<select id="nType"></select></label>
+        <button class="btn hi" id="addBtn">Add machine</button>
+      </div>
+      <datalist id="makeList"></datalist><datalist id="modelList"></datalist>
+      <p id="addMsg" class="mut note" role="status"></p>
+    </details>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <div class="rowh"><h2>Burn rates by model</h2><span id="rCnt" class="mut"></span></div>
+    <div class="tools">
+      <input id="rq" type="search" placeholder="Search fleet no., make or model" aria-label="Search">
+      <select id="rt" aria-label="Filter by type"></select>
+      <select id="rmk" aria-label="Filter by make"></select>
+      <select id="rs" aria-label="Sort by"><option value="id">Sort: fleet no.</option><option value="make">Sort: make</option><option value="model">Sort: model</option><option value="type">Sort: type</option><option value="rate">Sort: burn rate</option></select>
+      <button class="btn" id="rdir" style="flex:0 0 auto">Ascending</button>
+    </div>
+    <div class="scroll"><table id="rtbl"></table></div>
+    <p class="mut note">A burn rate and type apply to every machine of that model. Removing a machine also removes it from plans and actuals.</p>
+  </div>
+</section>
+<p class="foot"><button class="lnk" id="reset">Reset all saved data</button></p>
 </main>
 
 <script>
-const KEY="fleetfuel_v2",TYPES=["Haul truck","Excavator","Dozer","Other"],W={High:3,Normal:2,Low:1},NAME={day:"Day",night:"Night"};
+const KEY="fleetfuel_v3",TYPES=["Haul truck","Excavator","Dozer","Other"],W={High:3,Normal:2,Low:1},NAME={day:"Day",night:"Night"};
 const NOTES={eq:"Every machine works the same hours; the ceiling decides how many.",prio:"Hours scale with priority (High 3×, Normal 2×, Low 1×) until the ceiling is used.",eff:"The leanest machines run full hours first and the thirstiest get the rest, maximising total machine-hours."};
-const clone=o=>JSON.parse(JSON.stringify(o));
-const DEF={models:{"785D":{rate:150,type:"Haul truck"},"XDE130":{rate:70,type:"Haul truck"},"777F":{rate:56,type:"Haul truck"},"777D":{rate:75,type:"Haul truck"},"6015B":{rate:82,type:"Excavator"},"XE2000":{rate:105,type:"Excavator"},"1200-6":{rate:90,type:"Excavator"},"XE335C":{rate:18,type:"Excavator"},"D375A-6":{rate:57,type:"Dozer"},"SW D10 DZ":{rate:70,type:"Dozer"}},
- fleet:[["EX104","6015B"],["EX105","XE2000"],["EX92","1200-6"],["MD011","785D"],["MD012","785D"],["MD032","777F"],["MD033","777F"],["HT92","777D"],["HT90","777D"],["MD017","XDE130"],["MD018","XDE130"]].map(([id,model])=>({id,model})),
- st:{EX104:"up",MD011:"up",MD012:"up",HT92:"up"},sh:{},prio:{},act:[],shift:"day",capD:3000,capN:3000,win:12,mode:"eq"};
-let S=clone(DEF);
-try{const x=JSON.parse(localStorage.getItem(KEY)||"null");if(x&&x.models&&x.fleet)S=Object.assign(clone(DEF),x);}catch(e){}
+const clone=o=>JSON.parse(JSON.stringify(o)),pad=n=>String(n).padStart(2,"0");
+const ymd=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+const addDays=(s,n)=>{const d=new Date(s+"T00:00:00");d.setDate(d.getDate()+n);return ymd(d);};
+const TODAY=ymd(new Date());
+const dl=(s,o)=>new Date(s+"T00:00:00").toLocaleDateString(undefined,o||{weekday:"short",day:"numeric",month:"short"});
+const RAW=[["Caterpillar","785D","MD011",150,"Haul truck"],["Caterpillar","785D","MD012",150,"Haul truck"],["XCMG","XDE130","MD017",70,"Haul truck"],["XCMG","XDE130","MD018",70,"Haul truck"],["Caterpillar","777F","MD032",56,"Haul truck"],["Caterpillar","777F","MD033",56,"Haul truck"],["Caterpillar","777D","HT90",75,"Haul truck"],["Caterpillar","777D","HT92",75,"Haul truck"],["Caterpillar","6015B","EX104",82,"Excavator"],["XCMG","XE2000","EX105",105,"Excavator"],["Hitachi","1200-6","EX92",90,"Excavator"],["XCMG","XE335C","HE018",18,"Excavator"],["Komatsu","D375A-6","DZ57",57,"Dozer"]];
+const mkDef=()=>{const models={},fleet=[],st={};RAW.forEach(([make,model,id,rate,type])=>{models[model]={rate,type};fleet.push({id,make,model});st[id]="up";});return{models,fleet,st,plans:{},act:{},date:TODAY,adate:TODAY};};
+let S=mkDef();
+try{const x=JSON.parse(localStorage.getItem(KEY)||"null");if(x&&x.fleet&&x.models)S=Object.assign(mkDef(),x);}catch(e){}
+S.date=TODAY;S.adate=TODAY;
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}};
-const $=s=>document.querySelector(s);
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const fmt=(n,d=0)=>Number(n).toLocaleString(undefined,{minimumFractionDigits:d,maximumFractionDigits:d});
-const rateOf=m=>(S.models[m.model]||{rate:0}).rate,typeOf=m=>(S.models[m.model]||{type:"Other"}).type;
-const st=id=>S.st[id]||"standby",shOf=id=>S.sh[id]||{day:true,night:false};
-const mach=m=>({id:m.id,model:m.model,rate:rateOf(m),type:typeOf(m)}),byId=id=>S.fleet.find(m=>m.id===id);
+const byId=id=>S.fleet.find(m=>m.id===id),rateOf=m=>(S.models[m.model]||{rate:0}).rate,typeOf=m=>(S.models[m.model]||{type:"Other"}).type;
+const st=id=>S.st[id]||"standby",mach=m=>({id:m.id,make:m.make,model:m.model,rate:rateOf(m),type:typeOf(m)});
 const col=i=>"hsl("+((205+i*53)%360)+" 55% var(--sl))";
-const shifts=()=>S.shift==="both"?["day","night"]:[S.shift];
-const capOf=s=>+(s==="day"?S.capD:S.capN)||0;
-const list=s=>S.fleet.filter(m=>st(m.id)==="up"&&(S.shift!=="both"||shOf(m.id)[s])).map(mach);
+const split=v=>{const i=v.indexOf(":");return[v.slice(0,i),v.slice(i+1)];};
 
-function plan(mode,L0,cap,win){
+/* plans are stored per date */
+const DEFP=()=>({shift:"day",capD:3000,capN:3000,win:12,mode:"eq",prio:{},ops:{}});
+function base(d){const ds=Object.keys(S.plans).filter(x=>x<d).sort();return ds.length?clone(S.plans[ds[ds.length-1]]):DEFP();}
+const pl=()=>S.plans[S.date]||(S.plans[S.date]=base(S.date));
+const shifts=p=>p.shift==="both"?["day","night"]:[p.shift];
+const capOf=(p,s)=>+(s==="day"?p.capD:p.capN)||0,isOn=(p,id,s)=>!!(p.ops[id]&&p.ops[id][s]);
+const list=(p,s)=>S.fleet.filter(m=>st(m.id)==="up"&&isOn(p,m.id,s)).map(mach);
+
+function plan(mode,L0,cap,win,prio){
   const h={},L=L0.filter(m=>m.rate>0);
   if(mode==="eff"){let rem=cap;[...L].sort((a,b)=>a.rate-b.rate).forEach(m=>{const x=Math.max(0,Math.min(win,rem/m.rate));h[m.id]=x;rem-=x*m.rate;});}
-  else{const wf=mode==="prio"?(m=>W[S.prio[m.id]||"Normal"]):(()=>1);let rem=cap,act=L.slice();
+  else{const wf=mode==="prio"?(m=>W[(prio||{})[m.id]||"Normal"]):(()=>1);let rem=cap,act=L.slice();
     while(act.length){const den=act.reduce((s,m)=>s+wf(m)*m.rate,0),k=Math.max(0,rem)/den,over=act.filter(m=>wf(m)*k>=win);
       if(!over.length){act.forEach(m=>h[m.id]=wf(m)*k);break;}
       over.forEach(m=>{h[m.id]=win;rem-=win*m.rate;});act=act.filter(m=>!over.includes(m));}}
   const rows=L0.map(m=>({...m,h:h[m.id]||0,fuel:(h[m.id]||0)*m.rate}));
   return{rows,cap,win,fuel:rows.reduce((s,r)=>s+r.fuel,0),mh:rows.reduce((s,r)=>s+r.h,0)};
 }
-const computePlans=()=>shifts().map(s=>{const ch=list(s);return{s,name:NAME[s],ch,P:plan(S.mode,ch,capOf(s),+S.win||0)};});
+const plansFor=p=>shifts(p).map(s=>{const ch=list(p,s);return{s,name:NAME[s],ch,P:plan(p.mode,ch,capOf(p,s),+p.win||0,p.prio)};});
 
-function suggestions(PS){
-  const o=[],add=(t,h,b)=>o.push({t,h,b}),by=k=>S.fleet.filter(m=>st(m.id)===k),ids=a=>a.map(m=>esc(m.id)).join(", ");
-  const up=by("up"),sb=by("standby"),dn=by("down");
+function suggestions(PS,p){
+  const o=[],add=(t,h,b)=>o.push({t,h,b}),by=k=>S.fleet.filter(m=>st(m.id)===k),ids=a=>a.map(m=>esc(m.id)).join(", "),win=+p.win||0;
+  const up=by("up"),sb=by("standby"),dn=by("down"),pln=new Set(PS.flatMap(x=>x.ch.map(c=>c.id)));
   add("info","Fleet status",up.length+" up, "+sb.length+" standby, "+dn.length+" down."+(dn.length?" Down units ("+ids(dn)+") are left out of the plan.":""));
   PS.forEach(({name,ch,P})=>{
-    if(!ch.length){add("warn",name+" shift has no machines","Set machines to up"+(S.shift==="both"?" and tick "+name+" on them":"")+" to plan this shift.");return;}
-    const full=ch.reduce((a,m)=>a+m.rate*P.win,0);
-    if(P.cap<=0||P.win<=0)add("warn",name+": set the ceiling and hours","Both need a value above zero.");
-    else if(full<=P.cap)add("good",name+": the ceiling isn’t limiting","Every machine can run the full "+fmt(P.win,1)+" hr on "+fmt(full)+" L, leaving "+fmt(P.cap-full)+" L unused"+(sb.length?". Standby units ("+ids(sb.slice(0,4))+") could be brought up.":"."));
+    if(!ch.length){add("warn",name+" shift has no machines","Tick "+name+" on the machines you want to run.");return;}
+    const full=ch.reduce((a,m)=>a+m.rate*win,0);
+    if(P.cap<=0||win<=0)add("warn",name+": set the ceiling and hours","Both need a value above zero.");
+    else if(full<=P.cap)add("good",name+": the ceiling isn’t limiting","Every machine can run the full "+fmt(win,1)+" hr on "+fmt(full)+" L, leaving "+fmt(P.cap-full)+" L unused"+(sb.length?". Standby units ("+ids(sb.slice(0,4))+") could be added.":"."));
     else{add("warn",name+": the ceiling is tighter than the plan","Full hours need "+fmt(full)+" L, "+fmt((full/P.cap-1)*100)+"% over the "+fmt(P.cap)+" L ceiling, so hours are cut to land at "+fmt(P.fuel)+" L.");
-      if(S.mode!=="eff"){const E=plan("eff",ch,P.cap,P.win);if(E.mh>P.mh*1.05)add("info",name+": a leaner split does more","Max hours gives "+fmt(E.mh,1)+" machine-hours instead of "+fmt(P.mh,1)+" on the same ceiling, favouring the leanest units.");}}
+      if(p.mode!=="eff"){const E=plan("eff",ch,P.cap,win);if(E.mh>P.mh*1.05)add("info",name+": a leaner split does more","Max machine-hours gives "+fmt(E.mh,1)+" hr instead of "+fmt(P.mh,1)+" on the same ceiling, favouring the leanest units.");}}
     const z=P.rows.filter(r=>r.h<0.05);
-    if(z.length&&P.cap>0&&P.win>0)add("warn",name+": no hours for "+z.map(r=>esc(r.id)).join(", "),"Under this ceiling they get almost nothing. Stand them by or raise the ceiling.");
+    if(z.length&&P.cap>0&&win>0)add("warn",name+": no hours for "+z.map(r=>esc(r.id)).join(", "),"Under this ceiling they get almost nothing. Untick them or raise the ceiling.");
     if(ch.length>1&&P.fuel>0){const top=[...P.rows].sort((a,b)=>b.fuel-a.fuel)[0],ln=[...ch].sort((a,b)=>a.rate-b.rate)[0],sh=top.fuel/P.fuel*100;
       if(sh>=40&&top.id!==ln.id)add("info",name+": "+esc(top.id)+" uses "+fmt(sh)+"% of the fuel","Each hour trimmed from it frees "+top.rate+" L, enough for "+fmt(top.rate/ln.rate,1)+" extra hr on "+esc(ln.id)+".");}
   });
   const seen=new Set();let k=0;
-  up.forEach(u=>{const m=mach(u);if(k>=3||m.type==="Other")return;
-    const a=S.fleet.filter(f=>f.id!==m.id&&st(f.id)!=="down").map(mach).filter(x=>x.type===m.type&&x.model!==m.model&&x.rate>=m.rate*.6&&x.rate<=m.rate*.95).sort((p,q)=>p.rate-q.rate)[0];
+  up.filter(u=>pln.has(u.id)).forEach(u=>{const m=mach(u);if(k>=3||m.type==="Other")return;
+    const a=S.fleet.filter(f=>f.id!==m.id&&st(f.id)!=="down").map(mach).filter(x=>x.type===m.type&&x.model!==m.model&&x.rate>=m.rate*.6&&x.rate<=m.rate*.95).sort((p1,q)=>p1.rate-q.rate)[0];
     if(!a||seen.has(m.model+a.model))return;seen.add(m.model+a.model);k++;
-    const sv=m.rate-a.rate,pc=fmt(sv/m.rate*100);
-    if(st(a.id)==="up")add("info","Favour "+esc(a.id)+" over "+esc(m.id),"The "+esc(a.model)+" burns "+a.rate+" L/hr against "+m.rate+" for the "+esc(m.model)+", "+pc+"% less. Give it the hours first where the work allows.");
-    else add("good","Bring "+esc(a.id)+" up for "+esc(m.id),"The standby "+esc(a.model)+" burns "+a.rate+" L/hr against "+m.rate+" for the "+esc(m.model)+", "+pc+"% less, about "+fmt(sv*S.win)+" L per "+fmt(S.win,1)+"-hr shift. Only if its capacity suits the job.");});
-  const T=up.filter(m=>typeOf(m)==="Haul truck").length,E=up.filter(m=>typeOf(m)==="Excavator").length,se=sb.filter(m=>typeOf(m)==="Excavator");
-  if(T&&!E)add("warn","Trucks have no loading unit",se.length?"Bring "+esc(se[0].id)+" ("+esc(se[0].model)+") up to load them. Idle trucks still burn fuel.":"Every excavator is down or missing, so the trucks would idle and burn fuel.");
-  else if(E&&T/E>6)add("warn","Too many trucks per excavator",T+" trucks to "+E+" excavator"+(E>1?"s":"")+" means queuing at the shovel. Set a few trucks to standby and spend that fuel on productive hours.");
+    const sv=m.rate-a.rate,pc=fmt(sv/m.rate*100),cmp="The "+esc(a.make)+" "+esc(a.model)+" burns "+a.rate+" L/hr against "+m.rate+" for the "+esc(m.model)+", "+pc+"% less";
+    if(pln.has(a.id))add("info","Favour "+esc(a.id)+" over "+esc(m.id),cmp+". Give it the hours first where the work allows.");
+    else add("good",(st(a.id)==="standby"?"Bring "+esc(a.id)+" up for ":"Plan "+esc(a.id)+" instead of ")+esc(m.id),cmp+", about "+fmt(sv*win)+" L per "+fmt(win,1)+"-hr shift. Only if its capacity suits the job.");});
+  const T=[...pln].filter(i=>typeOf(byId(i))==="Haul truck").length,E=[...pln].filter(i=>typeOf(byId(i))==="Excavator").length,se=S.fleet.filter(m=>typeOf(m)==="Excavator"&&st(m.id)!=="down"&&!pln.has(m.id));
+  if(T&&!E)add("warn","Trucks have no loading unit",se.length?"Plan "+esc(se[0].id)+" ("+esc(se[0].make)+" "+esc(se[0].model)+") to load them. Idle trucks still burn fuel.":"Every excavator is down or missing, so the trucks would idle and burn fuel.");
+  else if(E&&T/E>6)add("warn","Too many trucks per excavator",T+" trucks to "+E+" excavator"+(E>1?"s":"")+" means queuing at the shovel. Untick a few trucks and spend that fuel on productive hours.");
   add("info","Cut idle time","A running machine burns fuel while it waits. Shutting down during queues and breaks of more than a few minutes protects the ceiling without costing production.");
   return o;
 }
 
+/* ---------- Plan tab ---------- */
 let shown=[];
-const dots=id=>["up","standby","down"].map(k=>`<button class="dot ${k}${st(id)===k?" on":""}" data-st="${k}" data-id="${esc(id)}" title="${k}" aria-label="Set ${esc(id)} ${k}" aria-pressed="${st(id)===k}"></button>`).join("");
+function syncSettings(){
+  const p=pl();$("#pDate").value=S.date;$("#win").value=p.win;$("#capD").value=p.capD;$("#capN").value=p.capN;
+  $$("input[name=mode]").forEach(r=>r.checked=r.value===p.mode);$$("input[name=shift]").forEach(r=>r.checked=r.value===p.shift);
+  $("#lCapD").hidden=p.shift==="night";$("#lCapN").hidden=p.shift==="day";
+}
 function renderFleet(){
-  const q=$("#q").value.trim().toLowerCase(),c=k=>S.fleet.filter(m=>st(m.id)===k).length;
-  shown=S.fleet.filter(m=>(m.id+" "+m.model).toLowerCase().includes(q));
-  $("#cnt").textContent=c("up")+" up, "+c("standby")+" standby, "+c("down")+" down";
-  $("#fleetList").innerHTML=shown.length?shown.map(m=>{const s=st(m.id),f=shOf(m.id);
-    return `<li class="fl ${s}"><div><b>${esc(m.id)}</b><span class="sub">${esc(m.model)}, ${esc(typeOf(m).toLowerCase())}, ${rateOf(m)} L/hr, ${s}</span>${S.shift==="both"&&s==="up"?`<span class="sbx"><label><input type="checkbox" data-sh="${esc(m.id)}:day"${f.day?" checked":""}>Day</label><label><input type="checkbox" data-sh="${esc(m.id)}:night"${f.night?" checked":""}>Night</label></span>`:""}</div><span class="stg">${dots(m.id)}</span></li>`;}).join(""):`<li class="empty">No machines match your search.</li>`;
+  const p=pl(),q=$("#q").value.trim().toLowerCase(),sh=shifts(p),ups=S.fleet.filter(m=>st(m.id)==="up");
+  shown=ups.filter(m=>(m.id+" "+m.make+" "+m.model).toLowerCase().includes(q));
+  $("#cnt").textContent=ups.length+" up";
+  const GL={"Haul truck":"Haul trucks",Excavator:"Excavators",Dozer:"Dozers",Other:"Other"},row=m=>`<li class="fl${sh.some(s=>isOn(p,m.id,s))?" on":""}"><div><b>${esc(m.id)}</b><span class="sub">${esc(m.make)} ${esc(m.model)}, ${esc(typeOf(m).toLowerCase())}, ${rateOf(m)} L/hr</span></div><span class="sbx">${sh.map(s=>`<label><input type="checkbox" data-op="${s}:${esc(m.id)}"${isOn(p,m.id,s)?" checked":""}>${NAME[s]}</label>`).join("")}</span></li>`;
+  $("#fleetList").innerHTML=shown.length?TYPES.map(t=>{const g=shown.filter(m=>typeOf(m)===t);return g.length?`<li class="grp"><span>${GL[t]}</span><span class="chip">${g.length}</span></li>`+g.map(row).join(""):"";}).join(""):`<li class="empty">${ups.length?"No machines match your search.":"No machines are up. Set status on the Machine status tab."}</li>`;
 }
-
-function block({name,ch,P,s}){
-  const pr=S.mode==="prio";
+function block({name,ch,P},p){
+  const pr=p.mode==="prio";
   const segs=P.cap>0?P.rows.map((r,i)=>r.fuel>0?`<i title="${esc(r.id)}: ${fmt(r.fuel)} L" style="width:${r.fuel/P.cap*100}%;background:${col(i)}"></i>`:"").join(""):"";
-  let h=`<section class="card panel"><h2>${name} shift</h2><div class="read">${[["Planned fuel",fmt(P.fuel),"L"],["Headroom under ceiling",fmt(Math.max(0,P.cap-P.fuel)),"L"],["Total ready hours",fmt(P.mh,1),"hr"]].map(([a,b,c])=>`<div><span>${a}</span><b>${b}</b> <small>${c}</small></div>`).join("")}</div><div class="tank" role="img" aria-label="${name} planned fuel ${fmt(P.fuel)} litres of ${fmt(P.cap)} litre ceiling">${segs}</div><div class="tank-lbl"><span>0 L</span><span>Ceiling ${fmt(P.cap)} L</span></div>`;
-  if(!ch.length)return h+`<p class="empty">No machines on this shift. Set machines to up${S.shift==="both"?" and tick "+name:""}.</p></section>`;
-  h+=`<div class="scroll"><table><thead><tr><th>Fleet no.</th><th>Model</th><th class="n">L/hr</th>${pr?"<th>Priority</th>":""}<th class="n">Ready hours</th><th class="n">Fuel (L)</th><th class="n">Share</th></tr></thead><tbody>`;
+  let h=`<section class="card"><h2>${name} shift</h2><div class="read">${[["Planned fuel",fmt(P.fuel),"L"],["Headroom under ceiling",fmt(Math.max(0,P.cap-P.fuel)),"L"],["Total ready hours",fmt(P.mh,1),"hr"]].map(([a,b,c])=>`<div><span>${a}</span><b>${b}</b> <small>${c}</small></div>`).join("")}</div><div class="tank" role="img" aria-label="${name} planned fuel ${fmt(P.fuel)} litres of a ${fmt(P.cap)} litre ceiling">${segs}</div><div class="tank-lbl"><span>0 L</span><span>Ceiling ${fmt(P.cap)} L</span></div>`;
+  if(!ch.length)return h+`<p class="empty">No machines on this shift yet. Tick ${name} on machines in the list.</p></section>`;
+  h+=`<div class="scroll"><table><thead><tr><th>Fleet no.</th><th>Machine</th><th class="n">L/hr</th>${pr?"<th>Priority</th>":""}<th class="n">Ready hours</th><th class="n">Fuel (L)</th><th class="n">Share</th></tr></thead><tbody>`;
   P.rows.forEach((r,i)=>{const sh=P.fuel>0?r.fuel/P.fuel*100:0;
-    h+=`<tr><td><span class="sw" style="background:${col(i)}"></span><b>${esc(r.id)}</b></td><td>${esc(r.model)}</td><td class="n">${r.rate}</td>${pr?`<td><select data-pr="${esc(r.id)}" aria-label="Priority for ${esc(r.id)}">${Object.keys(W).map(k=>`<option${(S.prio[r.id]||"Normal")===k?" selected":""}>${k}</option>`).join("")}</select></td>`:""}<td class="n hr"><span class="hrtag">${fmt(r.h,1)} hr</span></td><td class="n">${fmt(r.fuel)}</td><td class="n">${fmt(sh)}%</td></tr>`;});
-  return h+`</tbody><tfoot><tr><td colspan="${pr?4:3}">Total</td><td class="n hr">${fmt(P.mh,1)} hr</td><td class="n">${fmt(P.fuel)}</td><td></td></tr></tfoot></table></div></section>`;
+    h+=`<tr><td><span class="sw" style="background:${col(i)}"></span><b>${esc(r.id)}</b></td><td>${esc(r.make)} ${esc(r.model)}</td><td class="n">${r.rate}</td>${pr?`<td><select data-pr="${esc(r.id)}" aria-label="Priority for ${esc(r.id)}">${Object.keys(W).map(k=>`<option${((p.prio||{})[r.id]||"Normal")===k?" selected":""}>${k}</option>`).join("")}</select></td>`:""}<td class="n"><span class="hrtag">${fmt(r.h,1)} hr</span></td><td class="n">${fmt(r.fuel)}</td><td class="n">${fmt(sh)}%</td></tr>`;});
+  return h+`</tbody><tfoot><tr><td colspan="${pr?4:3}">Total</td><td class="n">${fmt(P.mh,1)} hr</td><td class="n">${fmt(P.fuel)}</td><td></td></tr></tfoot></table></div></section>`;
 }
-function renderPlan(){
-  const PS=computePlans();
-  $("#modeNote").textContent=NOTES[S.mode];
-  $("#lCapD").hidden=S.shift==="night";$("#lCapN").hidden=S.shift==="day";
-  $("#shifts").innerHTML=PS.map(block).join("");
-  $("#sug").innerHTML=suggestions(PS).map(s=>`<div class="sg ${s.t}"><b>${s.h}</b><span>${s.b}</span></div>`).join("");
+function renderShifts(){
+  const p=pl(),PS=plansFor(p);
+  $("#shifts").innerHTML=PS.map(x=>block(x,p)).join("")+`<p class="mut note">${NOTES[p.mode]}</p>`;
+  $("#sug").innerHTML=suggestions(PS,p).map(s=>`<div class="sg ${s.t}"><b>${s.h}</b><span>${s.b}</span></div>`).join("");
+}
+const renderPlan=()=>{syncSettings();renderFleet();renderShifts();};
+
+function promptText(){
+  const p=pl(),PS=plansFor(p),g=k=>S.fleet.filter(m=>st(m.id)===k).map(m=>m.id+" ("+m.make+" "+m.model+", "+rateOf(m)+" L/hr)").join(", ")||"none";
+  return "You are a fuel-efficiency advisor for a mining and heavy-equipment fleet. Using only the data below, give 4 to 6 concrete, prioritised suggestions to cut fuel use or gain productive hours under the fuel ceiling. Name machine IDs and quote litres or hours. Never use down machines and treat standby machines as available. Say so if data is missing instead of guessing. Plain text, short bullet lines, under 250 words.\n\nDate: "+S.date+". Shift view: "+p.shift+". Hours per shift: "+p.win+". Hour-sharing mode: "+p.mode+".\nUp (can be planned): "+g("up")+"\nStandby (available, not operating): "+g("standby")+"\nDown (unavailable): "+g("down")+"\n"+PS.map(({name,P})=>name+" shift: fuel ceiling "+P.cap+" L, planned "+Math.round(P.fuel)+" L, "+P.mh.toFixed(1)+" machine-hours. Machines: "+(P.rows.map(r=>r.id+" "+r.make+" "+r.model+" ("+r.type+", "+r.rate+" L/hr) ready "+r.h.toFixed(1)+" hr, "+Math.round(r.fuel)+" L").join("; ")||"none")).join("\n");
 }
 
-function chart(cats,ser,label){
-  if(!cats.length)return`<p class="empty">Add actual hours to see this chart.</p>`;
-  const gw=ser.length*22+16,W=Math.max(340,cats.length*gw+52),H=230,pl=46,pb=30,pt=18,ph=H-pb-pt;
-  const m0=Math.max(1,...ser.flatMap(s=>s.v)),p=10**Math.floor(Math.log10(m0)),mx=Math.ceil(m0/p)*p;
-  let g=[0,.5,1].map(f=>{const y=pt+ph*(1-f);return`<line x1="${pl}" x2="${W}" y1="${y}" y2="${y}" style="stroke:var(--line)"/><text x="${pl-6}" y="${y+4}" text-anchor="end" class="ax">${fmt(mx*f)}</text>`;}).join("");
-  cats.forEach((c,i)=>{ser.forEach((s,j)=>{const v=s.v[i]||0,h=v/mx*ph,x=pl+i*gw+8+j*22,y=pt+ph-h;
-    g+=`<rect x="${x}" y="${y}" width="18" height="${h}" style="fill:${s.c};stroke:var(--ink)" stroke-width=".8"><title>${esc(c)}, ${esc(s.n)}: ${fmt(v)} L</title></rect>`;
-    if(cats.length<=10&&v>0)g+=`<text x="${x+9}" y="${y-3}" text-anchor="middle" class="ax">${fmt(v)}</text>`;});
-    g+=`<text x="${pl+i*gw+gw/2}" y="${H-10}" text-anchor="middle" class="ax">${esc(c)}</text>`;});
-  return`<div class="lg">${ser.map(s=>`<span><i class="sw" style="background:${s.c}"></i>${s.n}</span>`).join("")}</div><div class="scroll"><svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(label)}, litres">${g}</svg></div>`;
+/* ---------- Actuals tab ---------- */
+function actRows(d,s){
+  const p=S.plans[d],pr={};
+  if(p&&shifts(p).includes(s)){const x=plansFor(p).find(x=>x.s===s);x&&x.P.rows.forEach(r=>pr[r.id]=r.h);}
+  const ent=(S.act[d]||{})[s]||{};
+  return[...new Set([...Object.keys(pr),...Object.keys(ent)])].map(byId).filter(Boolean).map(m=>({m,ph:pr[m.id],hrs:+ent[m.id]||0,extra:!(m.id in pr)}));
 }
-const aFuel=a=>{const m=byId(a.id);return m?(+a.hrs||0)*rateOf(m):0;};
-function renderActTable(){
-  $("#aTbl").innerHTML=S.act.length?`<thead><tr><th>Shift</th><th>Fleet no.</th><th>Model</th><th class="n">L/hr</th><th class="n">Hours operated</th><th class="n">Est. fuel (L)</th><th></th></tr></thead><tbody>`+S.act.map((a,i)=>{const m=byId(a.id)||{model:"?"};
-    return`<tr><td>${NAME[a.sh]}</td><td><b>${esc(a.id)}</b></td><td>${esc(m.model)}</td><td class="n">${m.id?rateOf(m):0}</td><td class="n"><input type="number" min="0" step="0.5" value="${a.hrs}" data-ah="${i}" aria-label="Hours for ${esc(a.id)}, ${NAME[a.sh]}"></td><td class="n af">${fmt(aFuel(a))}</td><td><button class="x" data-ar="${i}" aria-label="Remove ${esc(a.id)} from actuals">✕</button></td></tr>`;}).join("")+"</tbody>":`<tbody><tr><td class="empty">No actuals yet. Pick a machine, shift and hours above.</td></tr></tbody>`;
+function dayStats(d){
+  const p=S.plans[d],PS=p?plansFor(p):[],pl0={day:0,night:0},pm={},as={day:0,night:0},am={};
+  PS.forEach(x=>{pl0[x.s]=x.P.fuel;x.P.rows.forEach(r=>pm[r.id]=(pm[r.id]||0)+r.fuel);});
+  ["day","night"].forEach(s=>Object.entries((S.act[d]||{})[s]||{}).forEach(([id,h])=>{const m=byId(id);if(!m)return;const f=(+h||0)*rateOf(m);as[s]+=f;(am[id]=am[id]||{day:0,night:0})[s]+=f;}));
+  return{pl:pl0,pm,as,am};
+}
+function renderActTables(){
+  const d=S.adate,p=S.plans[d];
+  $("#aShifts").innerHTML=["day","night"].map(s=>{
+    const rows=actRows(d,s),have=new Set(rows.map(r=>r.m.id)),inPlan=p&&shifts(p).includes(s);
+    const opts=S.fleet.filter(m=>!have.has(m.id)&&st(m.id)!=="down").map(m=>`<option value="${esc(m.id)}">${esc(m.id)} (${esc(m.make)} ${esc(m.model)})</option>`).join("");
+    return`<section class="card"><div class="rowh"><h2>${NAME[s]} shift</h2><span class="chip" id="ft-${s}"></span></div>`+(rows.length?`<div class="scroll"><table><thead><tr><th>Fleet no.</th><th>Machine</th><th class="n">L/hr</th><th class="n">Planned hr</th><th class="n">Ready hours</th><th class="n">Est. fuel (L)</th><th></th></tr></thead><tbody>`+rows.map(({m,ph,hrs,extra})=>`<tr><td><b>${esc(m.id)}</b></td><td>${esc(m.make)} ${esc(m.model)}</td><td class="n">${rateOf(m)}</td><td class="n">${ph==null?"–":fmt(ph,1)}</td><td class="n"><input type="number" min="0" step="0.5" inputmode="decimal" placeholder="0" value="${hrs||""}" data-ah="${s}:${esc(m.id)}" aria-label="Ready hours for ${esc(m.id)}, ${NAME[s]} shift"></td><td class="n af">${fmt(hrs*rateOf(m))}</td><td>${extra?`<button class="x" data-ar="${s}:${esc(m.id)}" aria-label="Remove ${esc(m.id)}">✕</button>`:""}</td></tr>`).join("")+"</tbody></table></div>":`<p class="empty">${p?(inPlan?"No machines planned for this shift.":"This shift isn’t part of the plan for this date."):"No plan saved for this date."} Plan machines in the Plan tab, or add one below.</p>`)+`<div class="acts"><select data-xs="${s}" style="flex:1 1 180px;width:auto" aria-label="Add a machine to the ${NAME[s]} shift">${opts}</select><button class="btn" data-xa="${s}">Add machine</button></div></section>`;
+  }).join("");
+}
+function chart(cats,ser,label){
+  if(!cats.length)return`<p class="empty">Nothing to chart yet.</p>`;
+  const gw=ser.length*20+16,Wd=Math.max(360,cats.length*gw+52),H=230,pl0=46,pb=30,pt=18,ph=H-pb-pt;
+  const m0=Math.max(1,...ser.flatMap(s=>s.v)),p=10**Math.floor(Math.log10(m0)),mx=Math.ceil(m0/p)*p;
+  let g=[0,.5,1].map(f=>{const y=pt+ph*(1-f);return`<line x1="${pl0}" x2="${Wd}" y1="${y}" y2="${y}" style="stroke:var(--line)"/><text x="${pl0-6}" y="${y+4}" text-anchor="end" class="ax">${fmt(mx*f)}</text>`;}).join("");
+  cats.forEach((c,i)=>{ser.forEach((s,j)=>{const v=s.v[i]||0,h=v/mx*ph,x=pl0+i*gw+8+j*20,y=pt+ph-h;
+    g+=`<rect x="${x}" y="${y}" width="17" height="${h}" rx="2" style="fill:${s.c};stroke:var(--ink)" stroke-width=".7"><title>${esc(c)}, ${esc(s.n)}: ${fmt(v)} L</title></rect>`;
+    if(ser.length<=2&&cats.length<=8&&v>0)g+=`<text x="${x+8}" y="${y-3}" text-anchor="middle" class="ax">${fmt(v)}</text>`;});
+    g+=`<text x="${pl0+i*gw+gw/2}" y="${H-10}" text-anchor="middle" class="ax">${esc(c)}</text>`;});
+  return`<div class="lg">${ser.map(s=>`<span><i class="sw" style="background:${s.c}"></i>${s.n}</span>`).join("")}</div><div class="scroll"><svg viewBox="0 0 ${Wd} ${H}" style="width:100%;min-width:${Math.min(Wd,360)}px;max-width:${Math.round(Wd*1.7)}px;height:auto" role="img" aria-label="${esc(label)}, litres">${g}</svg></div>`;
 }
 function renderActSummary(){
-  const PS=computePlans(),pl={day:0,night:0},pm={},am={},as={day:0,night:0};
-  PS.forEach(x=>{pl[x.s]=x.P.fuel;x.P.rows.forEach(r=>pm[r.id]=(pm[r.id]||0)+r.fuel);});
-  S.act.forEach(a=>{const f=aFuel(a);as[a.sh]+=f;(am[a.id]=am[a.id]||{day:0,night:0})[a.sh]+=f;});
-  const A=as.day+as.night,Pn=pl.day+pl.night,d=A-Pn;
-  $("#aRead").innerHTML=[["Actual fuel (estimate)",fmt(A),"L"],["Planned fuel",fmt(Pn),"L"],["Actual minus planned",(d>0?"+":d<0?"−":"")+fmt(Math.abs(d)),"L"]].map(([a,b,c])=>`<div><span>${a}</span><b>${b}</b> <small>${c}</small></div>`).join("");
-  const ac=Object.keys(am),all=[...new Set([...ac,...Object.keys(pm)])],G="var(--mut)",Y="var(--hi)";
-  $("#charts").innerHTML=[["Actual fuel per machine",chart(ac,[{n:"Day",c:"var(--hi)",v:ac.map(i=>am[i].day)},{n:"Night",c:"var(--nv)",v:ac.map(i=>am[i].night)}],"Actual fuel per machine")],
-    ["Fuel per shift, planned vs actual",chart(["Day","Night"],[{n:"Planned",c:G,v:[pl.day,pl.night]},{n:"Actual",c:Y,v:[as.day,as.night]}],"Fuel per shift")],
-    ["Fuel per machine, planned vs actual",chart(all,[{n:"Planned",c:G,v:all.map(i=>pm[i]||0)},{n:"Actual",c:Y,v:all.map(i=>am[i]?am[i].day+am[i].night:0)}],"Planned vs actual per machine")]]
-    .map(([t,h])=>`<section class="card"><h2>${t}</h2>${h}</section>`).join("");
+  const d=S.adate,x=dayStats(d),A=x.as.day+x.as.night,Pn=x.pl.day+x.pl.night,df=A-Pn;
+  $("#aRead").innerHTML=[["Planned fuel",fmt(Pn),"L"],["Actual fuel (estimate)",fmt(A),"L"],["Actual minus planned",(df>0?"+":df<0?"−":"")+fmt(Math.abs(df)),"L"]].map(([a,b,c])=>`<div><span>${a}</span><b>${b}</b> <small>${c}</small></div>`).join("");
+  ["day","night"].forEach(s=>{const e=$("#ft-"+s);if(e)e.textContent=fmt(x.as[s])+" L actual";});
+  const k=(new Date(d+"T00:00:00").getDay()+6)%7,wk0=addDays(d,-k),days=[...Array(7)].map((_,i)=>addDays(wk0,i)),ws=days.map(dayStats);
+  const am=Object.keys(x.am),all=[...new Set([...am,...Object.keys(x.pm)])];
+  const G="var(--mut)",Y="var(--hi)",N="var(--nv)",tot=ws.reduce((a,w)=>[a[0]+w.pl.day+w.pl.night,a[1]+w.as.day,a[2]+w.as.night],[0,0,0]);
+  const sgn=v=>(v>0?"+":v<0?"−":"")+fmt(Math.abs(v));
+  $("#charts").innerHTML=`<section class="card wide"><h2>Week of ${dl(wk0)} to ${dl(days[6])}</h2>`+chart(days.map(z=>dl(z,{weekday:"short",day:"numeric"})),[{n:"Planned",c:G,v:ws.map(w=>w.pl.day+w.pl.night)},{n:"Actual day",c:Y,v:ws.map(w=>w.as.day)},{n:"Actual night",c:N,v:ws.map(w=>w.as.night)}],"Fuel per day this week")+`<div class="scroll" style="margin-top:12px"><table><thead><tr><th>Date</th><th class="n">Planned (L)</th><th class="n">Actual day (L)</th><th class="n">Actual night (L)</th><th class="n">Actual total (L)</th><th class="n">Difference (L)</th></tr></thead><tbody>`+days.map((z,i)=>{const w=ws[i],pn=w.pl.day+w.pl.night,a=w.as.day+w.as.night;return`<tr${z===d?' class="sel"':""}><td>${dl(z)}</td><td class="n">${fmt(pn)}</td><td class="n">${fmt(w.as.day)}</td><td class="n">${fmt(w.as.night)}</td><td class="n">${fmt(a)}</td><td class="n">${sgn(a-pn)}</td></tr>`;}).join("")+`</tbody><tfoot><tr><td>Week total</td><td class="n">${fmt(tot[0])}</td><td class="n">${fmt(tot[1])}</td><td class="n">${fmt(tot[2])}</td><td class="n">${fmt(tot[1]+tot[2])}</td><td class="n">${sgn(tot[1]+tot[2]-tot[0])}</td></tr></tfoot></table></div></section>`
+   +`<section class="card"><h2>${dl(d)}: fuel per shift</h2>`+chart(["Day","Night"],[{n:"Planned",c:G,v:[x.pl.day,x.pl.night]},{n:"Actual",c:Y,v:[x.as.day,x.as.night]}],"Planned and actual fuel per shift")+`</section>`
+   +`<section class="card"><h2>${dl(d)}: fuel per machine</h2>`+chart(all,[{n:"Planned",c:G,v:all.map(i=>x.pm[i]||0)},{n:"Actual day",c:Y,v:all.map(i=>(x.am[i]||{}).day||0)},{n:"Actual night",c:N,v:all.map(i=>(x.am[i]||{}).night||0)}],"Planned and actual fuel per machine")+`</section>`;
 }
-function renderModels(){
-  const ks=Object.keys(S.models);
-  $("#modelList").innerHTML=ks.map(k=>`<option value="${esc(k)}">`).join("");
-  $("#nType").innerHTML=TYPES.map(t=>`<option>${t}</option>`).join("");
-  $("#aId").innerHTML=S.fleet.map(m=>`<option value="${esc(m.id)}">${esc(m.id)} (${esc(m.model)})</option>`).join("");
-  $("#rtbl").innerHTML=`<thead><tr><th>Model</th><th>Type</th><th class="n">L/hr</th><th class="n">Units</th></tr></thead><tbody>`+ks.map(k=>`<tr><td><b>${esc(k)}</b></td><td><select data-mt="${esc(k)}" aria-label="Type of ${esc(k)}">${TYPES.map(t=>`<option${S.models[k].type===t?" selected":""}>${t}</option>`).join("")}</select></td><td class="n"><input type="number" min="0" step="0.5" value="${S.models[k].rate}" data-mr="${esc(k)}" aria-label="Burn rate of ${esc(k)}"></td><td class="n">${S.fleet.filter(m=>m.model===k).length}</td></tr>`).join("")+"</tbody>";
+const renderAct=()=>{$("#aDate").value=S.adate;renderActTables();renderActSummary();};
+/* ---------- Reports (CSV and PDF) ---------- */
+const vsign=v=>{const r=Math.round(v);return(r>0?"+":r<0?"−":"")+fmt(Math.abs(r));};
+const vpct=(v,p)=>p>0?(Math.round(v)>0?"+":Math.round(v)<0?"−":"")+fmt(Math.abs(v)/p*100,1)+"%":"–";
+function range(){const f=$("#eFrom").value,t=$("#eTo").value,m=$("#expMsg");
+  if(!f||!t){m.textContent="Choose a from date and a to date.";return null;}
+  if(f>t){m.textContent="The from date must be on or before the to date.";return null;}
+  if(addDays(f,366)<t){m.textContent="Choose a period of one year or less.";return null;}
+  m.textContent="";return[f,t];}
+function rng(k){const d=S.adate,x=new Date(d+"T00:00:00");let f=d,t=d;
+  if(k==="week"){f=addDays(d,-((x.getDay()+6)%7));t=addDays(f,6);}
+  if(k==="month"){f=ymd(new Date(x.getFullYear(),x.getMonth(),1));t=ymd(new Date(x.getFullYear(),x.getMonth()+1,0));}
+  $("#eFrom").value=f;$("#eTo").value=t;}
+function rep(from,to){
+  const days=[];for(let d=from;d<=to;d=addDays(d,1))days.push(d);
+  const rows=[],daily=[],mm={};
+  days.forEach(d=>{const x=dayStats(d);daily.push({d,pn:x.pl.day+x.pl.night,ad:x.as.day,an:x.as.night});
+    if(!S.plans[d]&&!S.act[d])return;
+    ["day","night"].forEach(s=>actRows(d,s).forEach(({m,ph,hrs})=>{const rt=rateOf(m),pf=(ph||0)*rt,af=hrs*rt;
+      rows.push({d,s,m,t:typeOf(m),rt,ph,hrs,pf,af});
+      const k=mm[m.id]||(mm[m.id]={m,t:typeOf(m),ph:0,hrs:0,pf:0,af:0});k.ph+=ph||0;k.hrs+=hrs;k.pf+=pf;k.af+=af;}));});
+  const sum=k=>daily.reduce((a,x)=>a+x[k],0);
+  return{days,rows,daily,mach:Object.values(mm).sort((a,b)=>b.af-a.af||b.pf-a.pf),P:sum("pn"),AD:sum("ad"),AN:sum("an"),A:sum("ad")+sum("an"),H:rows.reduce((a,r)=>a+r.hrs,0)};
 }
-function init(){
-  $("#win").value=S.win;$("#capD").value=S.capD;$("#capN").value=S.capN;
-  document.querySelectorAll("input[name=mode]").forEach(r=>r.checked=r.value===S.mode);
-  document.querySelectorAll("input[name=shift]").forEach(r=>r.checked=r.value===S.shift);
-  renderModels();renderFleet();renderPlan();renderActTable();renderActSummary();
+function saveFile(text,mime,name){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type:mime}));a.download=name;document.body.appendChild(a);a.click();a.remove();}
+function exportCsv(){
+  const r=range();if(!r)return;const R=rep(r[0],r[1]);
+  if(!R.rows.length){$("#expMsg").textContent="No plan or actuals are recorded in this period.";return;}
+  const q=v=>typeof v==="number"?String(v):'"'+String(v).replace(/"/g,'""')+'"',n1=v=>Math.round(v*10)/10;
+  const hd=["Date","Weekday","Shift","Fleet No","Make","Model","Type","Planned Ready Hrs","Actual Ready Hrs","Burn Rate (L/hr)","Planned Fuel (L)","Estimated Fuel (L)","Variance (L)"];
+  const L=[hd.map(q).join(",")].concat(R.rows.map(x=>[x.d,dl(x.d,{weekday:"long"}),NAME[x.s],x.m.id,x.m.make,x.m.model,x.t,x.ph==null?"":n1(x.ph),n1(x.hrs),x.rt,n1(x.pf),n1(x.af),n1(x.af-x.pf)].map(v=>v===""?"":q(v)).join(",")));
+  saveFile("\ufeff"+L.join("\r\n")+"\r\n","text/csv;charset=utf-8","fleet-fuel-report_"+r[0]+"_to_"+r[1]+".csv");
 }
-const refresh=()=>{save();renderFleet();renderPlan();renderActSummary();};
+function reportHTML(R,from,to,name){
+  const e=esc,fo={day:"numeric",month:"long",year:"numeric"},per=from===to?dl(from,{weekday:"long",...fo}):dl(from,fo)+" to "+dl(to,fo);
+  const gen=new Date().toLocaleString(undefined,{dateStyle:"long",timeStyle:"short"}),v=R.A-R.P;
+  const G="#8fa1ae",Y="#f7c600",N="#3b5b8c",SR=[["Planned",G,"pn"],["Actual day",Y,"ad"],["Actual night",N,"an"]];let cats,ser;
+  if(R.days.length<=14){cats=R.daily.map(x=>dl(x.d,{day:"numeric",month:"short"}));ser=SR.map(([n,c,k])=>({n,c,v:R.daily.map(x=>x[k])}));}
+  else{const wk={};R.daily.forEach(x=>{const k=addDays(x.d,-((new Date(x.d+"T00:00:00").getDay()+6)%7)),w=wk[k]||(wk[k]={pn:0,ad:0,an:0});w.pn+=x.pn;w.ad+=x.ad;w.an+=x.an;});
+    const ks=Object.keys(wk).sort();cats=ks.map(k=>"Wk "+dl(k,{day:"numeric",month:"short"}));ser=SR.map(([n,c,k])=>({n,c,v:ks.map(z=>wk[z][k])}));}
+  const ty={};R.mach.forEach(x=>{const k=ty[x.t]||(ty[x.t]={n:0,hrs:0,pf:0,af:0});k.n++;k.hrs+=x.hrs;k.pf+=x.pf;k.af+=x.af;});
+  const vc=x=>Math.round(x)>0?"bad":Math.round(x)<0?"ok":"",V=x=>`<span class="${vc(x)}">${vsign(x)}</span>`,VP=(x,p)=>`<span class="${vc(x)}">${vpct(x,p)}</span>`;
+  const T=(h,r,f)=>`<table><thead><tr>${h.map(([t,n])=>`<th${n?' class="n"':""}>${t}</th>`).join("")}</tr></thead><tbody>${r.map(c=>`<tr>${c.map((x,i)=>`<td${h[i][1]?' class="n"':""}>${x}</td>`).join("")}</tr>`).join("")}</tbody>${f?`<tfoot><tr>${f.map((x,i)=>`<td${h[i][1]?' class="n"':""}>${x}</td>`).join("")}</tr></tfoot>`:""}</table>`;
+  const top=R.mach[0],over=[...R.mach].sort((a,b)=>(b.af-b.pf)-(a.af-a.pf))[0];
+  const txt=(R.P>0?"Estimated fuel use was "+fmt(R.A)+" L against a plan of "+fmt(R.P)+" L, "+(Math.round(v)===0?"in line with plan":fmt(Math.abs(v))+" L ("+fmt(Math.abs(v)/R.P*100,1)+"%) "+(v>0?"over":"under")+" plan")+". ":"Estimated fuel use was "+fmt(R.A)+" L; no planned fuel was recorded for this period. ")
+    +"Day shift used "+fmt(R.AD)+" L and night shift "+fmt(R.AN)+" L over "+fmt(R.H,1)+" ready hours"+(R.H>0?" (average "+fmt(R.A/R.H,1)+" L per ready hour)":"")+"."
+    +(top&&top.af>0?" Highest consumer: "+e(top.m.id)+" ("+e(top.m.make)+" "+e(top.m.model)+") at "+fmt(top.af)+" L.":"")
+    +(over&&over.af-over.pf>=1?" Largest overrun: "+e(over.m.id)+" at "+vsign(over.af-over.pf)+" L against plan.":"");
+  const kp=[["Planned fuel",fmt(R.P)+" L",""],["Estimated actual fuel",fmt(R.A)+" L","Day "+fmt(R.AD)+" L, night "+fmt(R.AN)+" L"],["Variance to plan",vsign(v)+" L",vpct(v,R.P)+(R.P>0?" of plan":"")],["Ready hours worked",fmt(R.H,1)+" hr",R.H>0?fmt(R.A/R.H,1)+" L per ready hour":""]];
+  const dayRows=R.daily.filter(x=>x.pn>0||x.ad>0||x.an>0),dt=dayRows.reduce((a,x)=>[a[0]+x.pn,a[1]+x.ad,a[2]+x.an],[0,0,0]);
+  const css=`:root{--ink:#0f1b24;--mut:#5b6872;--line:#d7dde2;--hi:#f7c600}@page{size:A4;margin:15mm 13mm 17mm;@bottom-left{content:"Fleet Fuel Report  |  ${per}";font:8pt Arial,sans-serif;color:#5b6872}@bottom-right{content:"Page " counter(page) " of " counter(pages);font:8pt Arial,sans-serif;color:#5b6872}}*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}body{margin:0;color:var(--ink);font:9.5pt/1.45 "Segoe UI","Helvetica Neue",Arial,sans-serif}header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid var(--hi);padding-bottom:8px;margin-bottom:12px}h1{font-size:22pt;margin:0;line-height:1.1}.sub{color:var(--mut);margin-top:3px}.brand{text-align:right;font-weight:700;font-size:9pt;color:var(--mut)}.brand i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--hi);margin-right:5px}.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 12px}.kpi{border:1px solid var(--line);border-top:3px solid var(--ink);border-radius:4px;padding:7px 9px}.kpi span{display:block;color:var(--mut);font-size:8pt}.kpi b{font-size:14.5pt;line-height:1.25}.kpi small{display:block;color:var(--mut);font-size:7.6pt;min-height:1em}.sum{background:#f4f6f8;border-left:3px solid var(--hi);padding:8px 12px;margin-bottom:6px}h2{font-size:11.5pt;margin:16px 0 6px;padding-bottom:3px;border-bottom:1px solid var(--ink);break-after:avoid}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:8.6pt}thead{display:table-header-group}th{background:#101a22;color:#fff;text-align:left;padding:5px 6px;font-weight:600}td{padding:4px 6px;border-bottom:1px solid var(--line)}tbody tr:nth-child(even) td{background:#f7f9fa}tr{break-inside:avoid}.n{text-align:right}tfoot td{font-weight:700;border-top:2px solid var(--ink);border-bottom:0;background:#fff!important}.bad{color:#b42318}.ok{color:#1b7447}.note{color:var(--mut);font-size:8pt;margin-top:10px}.pb{break-before:page}.lg{display:flex;gap:12px;margin-bottom:4px;font-size:8.5pt}.sw{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}.ax{fill:#5b6872;font:10px Arial,sans-serif}svg{display:block;margin:0 auto}`;
+  return`<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${e(name)}</title><style>${css}</style></head><body>
+<header><div><h1>Fleet Fuel Report</h1><div class="sub">${per}</div></div><div class="brand"><i></i>Fleet Fuel Planner<div style="font-weight:400">Generated ${e(gen)}</div></div></header>
+<div class="kpis">${kp.map(([a,b,c])=>`<div class="kpi"><span>${a}</span><b>${b}</b><small>${c}</small></div>`).join("")}</div>
+<div class="sum">${txt}</div>
+<h2>Fuel by ${R.days.length<=14?"day":"week"}</h2>${chart(cats,ser,"Planned and actual fuel")}
+${T([["Date"],["Planned (L)",1],["Actual day (L)",1],["Actual night (L)",1],["Actual total (L)",1],["Variance (L)",1],["Variance %",1]],dayRows.map(x=>[dl(x.d),fmt(x.pn),fmt(x.ad),fmt(x.an),fmt(x.ad+x.an),V(x.ad+x.an-x.pn),VP(x.ad+x.an-x.pn,x.pn)]),["Total",fmt(dt[0]),fmt(dt[1]),fmt(dt[2]),fmt(dt[1]+dt[2]),V(dt[1]+dt[2]-dt[0]),VP(dt[1]+dt[2]-dt[0],dt[0])])}
+<h2>Fuel by machine type</h2>
+${T([["Type"],["Machines",1],["Ready hours",1],["Planned (L)",1],["Actual (L)",1],["Share of actual",1]],Object.keys(ty).map(k=>[e(k),ty[k].n,fmt(ty[k].hrs,1),fmt(ty[k].pf),fmt(ty[k].af),R.A>0?fmt(ty[k].af/R.A*100,1)+"%":"–"]))}
+<h2>Fuel by machine</h2>
+${T([["Fleet no."],["Machine"],["Type"],["Planned hr",1],["Ready hr",1],["Planned (L)",1],["Actual (L)",1],["Variance (L)",1],["Var %",1]],R.mach.map(x=>[`<b>${e(x.m.id)}</b>`,e(x.m.make)+" "+e(x.m.model),e(x.t),fmt(x.ph,1),fmt(x.hrs,1),fmt(x.pf),fmt(x.af),V(x.af-x.pf),VP(x.af-x.pf,x.pf)]),["Total","","",fmt(R.mach.reduce((a,x)=>a+x.ph,0),1),fmt(R.H,1),fmt(R.P),fmt(R.A),V(v),VP(v,R.P)])}
+<h2 class="pb">Detailed log</h2>
+${T([["Date"],["Shift"],["Fleet no."],["Machine"],["Planned hr",1],["Ready hr",1],["L/hr",1],["Est. fuel (L)",1]],R.rows.map(x=>[dl(x.d),NAME[x.s],`<b>${e(x.m.id)}</b>`,e(x.m.make)+" "+e(x.m.model),x.ph==null?"–":fmt(x.ph,1),fmt(x.hrs,1),x.rt,fmt(x.af)]))}
+<p class="note">Fuel figures are estimates, not metered consumption: ready hours multiplied by each model’s burn rate. Variance is actual minus planned, so a positive figure means fuel use above plan. Planned figures come from the fuel ceiling and hour-sharing method set for each date.</p>
+</body></html>`;
+}
+function exportPdf(){
+  const r=range();if(!r)return;const R=rep(r[0],r[1]);
+  if(!R.rows.length){$("#expMsg").textContent="No plan or actuals are recorded in this period.";return;}
+  const name="Fleet Fuel Report "+r[0]+" to "+r[1],f=document.createElement("iframe"),old=document.title;
+  f.style.cssText="position:fixed;right:0;bottom:0;width:0;height:0;border:0";f.setAttribute("aria-hidden","true");
+  f.onload=()=>setTimeout(()=>{document.title=name;const w=f.contentWindow;w.onafterprint=()=>{document.title=old;f.remove();};w.focus();w.print();setTimeout(()=>{document.title=old;},60000);},350);
+  f.srcdoc=reportHTML(R,r[0],r[1],name);document.body.appendChild(f);
+}
 
-function tab(act){$("#pPlan").hidden=act;$("#pAct").hidden=!act;$("#tPlan").setAttribute("aria-selected",!act);$("#tAct").setAttribute("aria-selected",act);if(act){renderActTable();renderActSummary();}}
-$("#tPlan").onclick=()=>tab(false);$("#tAct").onclick=()=>tab(true);
-for(const [id,k] of [["#win","win"],["#capD","capD"],["#capN","capN"]])$(id).oninput=e=>{S[k]=parseFloat(e.target.value)||0;save();renderPlan();};
-document.querySelectorAll("input[name=mode]").forEach(r=>r.onchange=()=>{S.mode=r.value;save();renderPlan();});
-document.querySelectorAll("input[name=shift]").forEach(r=>r.onchange=()=>{S.shift=r.value;refresh();});
+/* ---------- Machine status and burn rates ---------- */
+let shownS=[],rdir=1,pend=null;
+const dots=id=>["up","standby","down"].map(k=>`<button class="dot ${k}${st(id)===k?" on":""}" data-st="${k}" data-id="${esc(id)}" title="${k}" aria-label="Set ${esc(id)} ${k}" aria-pressed="${st(id)===k}"></button>`).join("");
+function renderStatus(){
+  const q=$("#sq").value.trim().toLowerCase(),f=$("#sf").value,c=k=>S.fleet.filter(m=>st(m.id)===k).length;
+  shownS=S.fleet.filter(m=>(f==="all"||st(m.id)===f)&&(m.id+" "+m.make+" "+m.model).toLowerCase().includes(q));
+  $("#sCnt").textContent=c("up")+" up, "+c("standby")+" standby, "+c("down")+" down";
+  $("#stTbl").innerHTML=`<thead><tr><th>Fleet no.</th><th>Make</th><th>Model</th><th>Type</th><th class="n">L/hr</th><th>Status</th></tr></thead><tbody>`+(shownS.map(m=>`<tr><td><b>${esc(m.id)}</b></td><td>${esc(m.make)}</td><td>${esc(m.model)}</td><td>${esc(typeOf(m))}</td><td class="n">${rateOf(m)}</td><td><span class="stg">${dots(m.id)}</span> ${st(m.id)}</td></tr>`).join("")||`<tr><td class="empty" colspan="6">No machines match.</td></tr>`)+"</tbody>";
+}
+function fillSel(el,vals,all){const v=el.value;el.innerHTML=`<option value="">${all}</option>`+vals.map(x=>`<option>${esc(x)}</option>`).join("");if(vals.includes(v))el.value=v;}
+function renderRates(){
+  fillSel($("#rt"),TYPES,"All types");fillSel($("#rmk"),[...new Set(S.fleet.map(m=>m.make))].sort(),"All makes");
+  $("#nType").innerHTML=TYPES.map(t=>`<option>${t}</option>`).join("");
+  $("#makeList").innerHTML=[...new Set(S.fleet.map(m=>m.make))].map(k=>`<option value="${esc(k)}">`).join("");
+  $("#modelList").innerHTML=Object.keys(S.models).map(k=>`<option value="${esc(k)}">`).join("");
+  const q=$("#rq").value.trim().toLowerCase(),t=$("#rt").value,mk=$("#rmk").value,key=$("#rs").value;
+  const K={id:m=>m.id,make:m=>m.make,model:m=>m.model,type:typeOf,rate:rateOf};
+  const rows=S.fleet.filter(m=>(!t||typeOf(m)===t)&&(!mk||m.make===mk)&&(m.id+" "+m.make+" "+m.model).toLowerCase().includes(q))
+    .sort((a,b)=>{const x=K[key](a),y=K[key](b);return rdir*(typeof x==="number"?x-y:String(x).localeCompare(String(y),undefined,{numeric:true}));});
+  $("#rdir").textContent=rdir>0?"Ascending":"Descending";$("#rCnt").textContent=rows.length+" of "+S.fleet.length+" machines";
+  $("#rtbl").innerHTML=`<thead><tr><th>Make</th><th>Model</th><th>Fleet no.</th><th>Type</th><th class="n">Burn rate (L/hr)</th><th></th></tr></thead><tbody>`+(rows.map(m=>`<tr><td>${esc(m.make)}</td><td>${esc(m.model)}</td><td><b>${esc(m.id)}</b></td><td><select data-mt="${esc(m.model)}" aria-label="Type of ${esc(m.model)}">${TYPES.map(x=>`<option${typeOf(m)===x?" selected":""}>${x}</option>`).join("")}</select></td><td class="n"><input type="number" min="0" step="0.5" value="${rateOf(m)}" data-mr="${esc(m.model)}" aria-label="Burn rate of ${esc(m.model)}"></td><td><button class="x${pend===m.id?" sure":""}" data-rm="${esc(m.id)}">${pend===m.id?"Confirm remove":"Remove"}</button></td></tr>`).join("")||`<tr><td class="empty" colspan="6">No machines match.</td></tr>`)+"</tbody>";
+}
+function removeMachine(id){
+  const m=byId(id);if(!m)return;
+  S.fleet=S.fleet.filter(x=>x.id!==id);delete S.st[id];
+  Object.values(S.plans).forEach(p=>{delete p.ops[id];delete p.prio[id];});
+  Object.values(S.act).forEach(a=>["day","night"].forEach(s=>a[s]&&delete a[s][id]));
+  if(!S.fleet.some(x=>x.model===m.model))delete S.models[m.model];
+}
+
+/* ---------- wiring ---------- */
+let cur="plan";
+const R={plan:renderPlan,act:renderAct,mach:renderStatus,rates:renderRates};
+const refresh=()=>{save();R[cur]();};
+function tab(n){cur=n;pend=null;$$(".tab").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===n));["plan","act","mach","rates"].forEach(k=>$("#p_"+k).hidden=k!==n);R[n]();}
+$$(".tab").forEach(b=>b.onclick=()=>tab(b.dataset.tab));
+const setDate=d=>{if(!d)return;S.date=d;pl();save();renderPlan();};
+$("#pDate").onchange=e=>setDate(e.target.value);$("#dPrev").onclick=()=>setDate(addDays(S.date,-1));$("#dNext").onclick=()=>setDate(addDays(S.date,1));$("#dToday").onclick=()=>setDate(TODAY);
+const setA=d=>{if(!d)return;S.adate=d;rng("week");save();renderAct();};
+$("#aDate").onchange=e=>setA(e.target.value);$("#aPrev").onclick=()=>setA(addDays(S.adate,-1));$("#aNext").onclick=()=>setA(addDays(S.adate,1));$("#aToday").onclick=()=>setA(TODAY);
+for(const [id,k] of [["#win","win"],["#capD","capD"],["#capN","capN"]])$(id).oninput=e=>{pl()[k]=parseFloat(e.target.value)||0;save();renderShifts();};
+$$("input[name=mode]").forEach(r=>r.onchange=()=>{pl().mode=r.value;save();renderShifts();});
+$$("input[name=shift]").forEach(r=>r.onchange=()=>{pl().shift=r.value;save();renderPlan();});
 $("#q").oninput=renderFleet;
-$("#fleetList").onclick=e=>{const b=e.target.closest("[data-st]");if(b){S.st[b.dataset.id]=b.dataset.st;refresh();}};
-$("#fleetList").onchange=e=>{const c=e.target.closest("[data-sh]");if(c){const [id,s]=c.dataset.sh.split(":");S.sh[id]=Object.assign({},shOf(id),{[s]:c.checked});refresh();}};
-$("#addAll").onclick=()=>{shown.forEach(m=>{if(st(m.id)!=="down")S.st[m.id]="up";});refresh();};
-$("#clr").onclick=()=>{shown.forEach(m=>{if(st(m.id)==="up")S.st[m.id]="standby";});refresh();};
-$("#shifts").onchange=e=>{const s=e.target.closest("[data-pr]");if(s){S.prio[s.dataset.pr]=s.value;save();renderPlan();}};
-$("#rtbl").oninput=e=>{const i=e.target.closest("[data-mr]");if(i){S.models[i.dataset.mr].rate=parseFloat(i.value)||0;refresh();}};
-$("#rtbl").onchange=e=>{const s=e.target.closest("[data-mt]");if(s){S.models[s.dataset.mt].type=s.value;refresh();}};
+$("#fleetList").onchange=e=>{const c=e.target.closest("[data-op]");if(!c)return;const [s,id]=split(c.dataset.op),p=pl();p.ops[id]=Object.assign({},p.ops[id],{[s]:c.checked});save();renderFleet();renderShifts();};
+$("#addAll").onclick=()=>{const p=pl();shown.forEach(m=>{p.ops[m.id]=Object.assign({},p.ops[m.id]);shifts(p).forEach(s=>p.ops[m.id][s]=true);});save();renderFleet();renderShifts();};
+$("#clr").onclick=()=>{const p=pl();Object.keys(p.ops).forEach(id=>shifts(p).forEach(s=>{if(p.ops[id])p.ops[id][s]=false;}));save();renderFleet();renderShifts();};
+$("#shifts").onchange=e=>{const s=e.target.closest("[data-pr]");if(s){pl().prio[s.dataset.pr]=s.value;save();renderShifts();}};
+$("#cpy").onclick=async()=>{const t=promptText(),m=$("#cpyMsg"),b=$("#cpyBox");b.hidden=true;
+  try{await navigator.clipboard.writeText(t);m.textContent="Copied. Paste it into your AI chat.";}
+  catch(e){b.value=t;b.hidden=false;b.select();m.textContent="Your browser blocked copying. Select the text below and copy it.";}};
+$("#aShifts").oninput=e=>{const i=e.target.closest("[data-ah]");if(!i)return;const [s,id]=split(i.dataset.ah),d=S.adate,a=S.act[d]||(S.act[d]={day:{},night:{}});
+  a[s]=a[s]||{};a[s][id]=parseFloat(i.value)||0;i.closest("tr").querySelector(".af").textContent=fmt(a[s][id]*rateOf(byId(id)));save();renderActSummary();};
+$("#aShifts").onclick=e=>{const d=S.adate,a=S.act[d]||(S.act[d]={day:{},night:{}});
+  const x=e.target.closest("[data-xa]"),r=e.target.closest("[data-ar]");
+  if(x){const s=x.dataset.xa,v=$(`select[data-xs="${s}"]`).value;if(v){a[s]=a[s]||{};a[s][v]=0;save();renderAct();}}
+  if(r){const [s,id]=split(r.dataset.ar);if(a[s])delete a[s][id];save();renderAct();}};
+$("#csv").onclick=exportCsv;$("#pdf").onclick=exportPdf;$$("[data-ep]").forEach(b=>b.onclick=()=>rng(b.dataset.ep));
+$("#sq").oninput=renderStatus;$("#sf").onchange=renderStatus;
+$("#stTbl").onclick=e=>{const b=e.target.closest("[data-st]");if(b){S.st[b.dataset.id]=b.dataset.st;refresh();}};
+$("#sUp").onclick=()=>{shownS.forEach(m=>S.st[m.id]="up");refresh();};$("#sSb").onclick=()=>{shownS.forEach(m=>S.st[m.id]="standby");refresh();};
+["#rq"].forEach(i=>$(i).oninput=renderRates);["#rt","#rmk","#rs"].forEach(i=>$(i).onchange=renderRates);
+$("#rdir").onclick=()=>{rdir=-rdir;renderRates();};
+$("#rtbl").onchange=e=>{const i=e.target.closest("[data-mr]"),s=e.target.closest("[data-mt]");
+  if(i&&S.models[i.dataset.mr]){S.models[i.dataset.mr].rate=parseFloat(i.value)||0;refresh();}
+  if(s&&S.models[s.dataset.mt]){S.models[s.dataset.mt].type=s.value;refresh();}};
+$("#rtbl").onclick=e=>{const b=e.target.closest("[data-rm]");if(!b)return;const id=b.dataset.rm;if(pend===id){pend=null;removeMachine(id);refresh();}else{pend=id;renderRates();}};
 $("#nModel").oninput=e=>{const k=Object.keys(S.models).find(x=>x.toLowerCase()===e.target.value.trim().toLowerCase());if(k){$("#nRate").value=S.models[k].rate;$("#nType").value=S.models[k].type;}};
 $("#addBtn").onclick=()=>{
-  const id=$("#nId").value.trim(),name=$("#nModel").value.trim(),rate=parseFloat($("#nRate").value),type=$("#nType").value,msg=$("#addMsg");
-  if(!id||!name){msg.textContent="Enter a fleet number and a model.";return;}
-  if(byId(id)||S.fleet.some(m=>m.id.toLowerCase()===id.toLowerCase())){msg.textContent="That fleet number is already in the fleet.";return;}
+  const make=$("#nMake").value.trim(),name=$("#nModel").value.trim(),id=$("#nId").value.trim(),rate=parseFloat($("#nRate").value),type=$("#nType").value,msg=$("#addMsg");
+  if(!make||!name||!id){msg.textContent="Enter the make, model and fleet number.";return;}
+  if(S.fleet.some(m=>m.id.toLowerCase()===id.toLowerCase())){msg.textContent="That fleet number already exists.";return;}
   const key=Object.keys(S.models).find(x=>x.toLowerCase()===name.toLowerCase())||name;
   if(!(rate>0)&&!S.models[key]){msg.textContent="Enter a burn rate for this new model.";return;}
-  S.models[key]={rate:rate>0?rate:S.models[key].rate,type};S.fleet.push({id,model:key});S.st[id]="up";
-  $("#nId").value="";msg.textContent="Added "+id+" as up.";renderModels();refresh();
+  S.models[key]={rate:rate>0?rate:S.models[key].rate,type};S.fleet.push({id,make,model:key});S.st[id]="up";
+  ["#nId","#nMake","#nModel","#nRate"].forEach(i=>$(i).value="");msg.textContent="Added "+id+" as up.";refresh();
 };
-$("#aAdd").onclick=()=>{
-  const id=$("#aId").value,sh=$("#aSh").value,hrs=parseFloat($("#aHr").value),msg=$("#aMsg");
-  if(!id){msg.textContent="Add machines to the fleet first.";return;}
-  if(!(hrs>0)){msg.textContent="Enter the hours the machine operated.";return;}
-  const e=S.act.find(a=>a.id===id&&a.sh===sh);e?e.hrs=(+e.hrs||0)+hrs:S.act.push({id,sh,hrs});
-  $("#aHr").value="";msg.textContent="Added "+hrs+" hr for "+id+" on "+NAME[sh]+".";save();renderActTable();renderActSummary();
-};
-$("#aTbl").oninput=e=>{const i=e.target.closest("[data-ah]");if(i){S.act[+i.dataset.ah].hrs=parseFloat(i.value)||0;i.closest("tr").querySelector(".af").textContent=fmt(aFuel(S.act[+i.dataset.ah]));save();renderActSummary();}};
-$("#aTbl").onclick=e=>{const b=e.target.closest("[data-ar]");if(b){S.act.splice(+b.dataset.ar,1);save();renderActTable();renderActSummary();}};
-$("#reset").onclick=()=>{S=clone(DEF);save();init();};
-/* AI suggestions: calls go straight from this device to the provider */
-const AIK="fleetfuel_ai";
-let AI={p:"claude",claude:{key:"",model:"claude-sonnet-5-5"},gemini:{key:"",model:"gemini-flash-latest"},custom:{key:"",model:"",url:"",auth:"Bearer"}};
-try{const x=JSON.parse(localStorage.getItem(AIK)||"null");if(x)AI=Object.assign(AI,x);}catch(e){}
-const aiSave=()=>{try{localStorage.setItem(AIK,JSON.stringify(AI));}catch(e){}};
-const HELP={claude:"Key from console.anthropic.com (API keys are billed separately from a Claude chat plan).",gemini:"Key from Google AI Studio. Change the model name if Google retires this one.",custom:"For Copilot-style access use an Azure OpenAI chat completions URL or any OpenAI-compatible endpoint. Consumer Copilot has no public API, and the service must allow browser requests."};
-function aiFields(){
-  const c=AI[AI.p];$("#aiP").value=AI.p;$("#aiKey").value=c.key||"";$("#aiModel").value=c.model||"";
-  $("#aiUrlL").hidden=$("#aiAuthL").hidden=AI.p!=="custom";
-  if(AI.p==="custom"){$("#aiUrl").value=c.url||"";$("#aiAuth").value=c.auth||"Bearer";}
-  $("#aiHelp").textContent=HELP[AI.p];
-}
-function aiInit(){
-  aiFields();
-  $("#aiP").onchange=e=>{AI.p=e.target.value;aiSave();aiFields();};
-  $("#aiKey").oninput=e=>{AI[AI.p].key=e.target.value.trim();aiSave();};
-  $("#aiModel").oninput=e=>{AI[AI.p].model=e.target.value.trim();aiSave();};
-  $("#aiUrl").oninput=e=>{AI.custom.url=e.target.value.trim();aiSave();};
-  $("#aiAuth").onchange=e=>{AI.custom.auth=e.target.value;aiSave();};
-  $("#aiGo").onclick=aiAsk;
-}
-function aiContext(){
-  const PS=computePlans(),L=[],g=k=>S.fleet.filter(m=>st(m.id)===k).map(m=>m.id+" ("+m.model+", "+rateOf(m)+" L/hr)").join(", ")||"none";
-  L.push("Shift view: "+S.shift+". Hours per shift: "+S.win+". Hour-sharing mode: "+S.mode+".");
-  L.push("Up (planned to operate): "+g("up")+"\nStandby (available, not operating): "+g("standby")+"\nDown (unavailable): "+g("down"));
-  PS.forEach(({name,P})=>L.push(name+" shift: fuel ceiling "+P.cap+" L, planned "+Math.round(P.fuel)+" L, "+P.mh.toFixed(1)+" machine-hours. Machines: "+(P.rows.map(r=>r.id+" "+r.model+" ("+r.type+", "+r.rate+" L/hr) ready "+r.h.toFixed(1)+" hr, "+Math.round(r.fuel)+" L").join("; ")||"none")));
-  if(S.act.length){const t={day:0,night:0};S.act.forEach(a=>t[a.sh]+=aFuel(a));
-    L.push("Actuals (estimated as hours x burn rate): "+S.act.map(a=>a.id+" "+a.sh+" shift "+a.hrs+" hr, "+Math.round(aFuel(a))+" L").join("; ")+". Totals: day "+Math.round(t.day)+" L, night "+Math.round(t.night)+" L.");}
-  return L.join("\n");
-}
-const md=t=>{const b=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");let h="",ul=false;
-  t.split("\n").forEach(l=>{l=l.trim();const m=l.match(/^(?:[-*•]|\d+[.)])\s+(.*)/);
-    if(m){if(!ul){h+="<ul>";ul=true;}h+="<li>"+b(m[1])+"</li>";}else{if(ul){h+="</ul>";ul=false;}if(l)h+="<p>"+b(l.replace(/^#+\s*/,""))+"</p>";}});
-  return h+(ul?"</ul>":"");};
-async function aiAsk(){
-  const out=$("#aiOut"),c=AI[AI.p],sys="You are a fuel-efficiency advisor for a mining and heavy-equipment fleet. Using only the data given, write 4 to 6 concrete, prioritised suggestions to cut fuel use or gain productive hours under the fuel ceiling. Name machine IDs and quote litres or hours. Respect machine status: never use down machines, and treat standby machines as available. Say so when data is missing instead of guessing. Plain text, short bullet lines, under 250 words.";
-  const usr="Fleet plan:\n"+aiContext()+"\n\nWhat should I change?";
-  const fail=m=>{out.innerHTML='<p class="err">'+esc(m)+"</p>";};
-  if(!c.key)return fail("Add your API key under Provider settings first.");
-  if(AI.p==="custom"&&!c.url)return fail("Add the endpoint URL under Provider settings first.");
-  if(AI.p!=="custom"&&!c.model)return fail("Add a model name under Provider settings first.");
-  $("#aiGo").disabled=true;out.innerHTML='<p class="mut">Asking…</p>';
-  try{
-    let r,d,t;
-    if(AI.p==="claude"){
-      r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":c.key,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:c.model,max_tokens:1200,system:sys,messages:[{role:"user",content:usr}]})});
-      d=await r.json();if(!r.ok)throw new Error((d.error&&d.error.message)||"Request failed ("+r.status+")");t=d.content.map(x=>x.text||"").join("");
-    }else if(AI.p==="gemini"){
-      r=await fetch("https://generativelanguage.googleapis.com/v1beta/models/"+encodeURIComponent(c.model)+":generateContent",{method:"POST",headers:{"content-type":"application/json","x-goog-api-key":c.key},body:JSON.stringify({systemInstruction:{parts:[{text:sys}]},contents:[{role:"user",parts:[{text:usr}]}]})});
-      d=await r.json();if(!r.ok)throw new Error((d.error&&d.error.message)||"Request failed ("+r.status+")");t=d.candidates[0].content.parts.map(x=>x.text||"").join("");
-    }else{
-      const hd={"content-type":"application/json"};c.auth==="api-key"?hd["api-key"]=c.key:hd.Authorization="Bearer "+c.key;
-      const body={messages:[{role:"system",content:sys},{role:"user",content:usr}]};if(c.model)body.model=c.model;
-      r=await fetch(c.url,{method:"POST",headers:hd,body:JSON.stringify(body)});
-      d=await r.json();if(!r.ok)throw new Error((d.error&&d.error.message)||"Request failed ("+r.status+")");t=d.choices[0].message.content;
-    }
-    out.innerHTML=t.trim()?md(t):'<p class="mut">The model returned no text.</p>';
-  }catch(e){fail(e instanceof TypeError?"Could not reach the service. Check your connection, the key and URL, and that the provider allows browser requests.":e.message);}
-  $("#aiGo").disabled=false;
-}
-aiInit();
-init();
+$("#reset").onclick=()=>{S=mkDef();save();R[cur]();};
+rng("week");renderPlan();
 if("serviceWorker" in navigator&&location.protocol!=="file:")navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
 </body>
