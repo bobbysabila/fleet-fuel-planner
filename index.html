@@ -16,58 +16,73 @@ html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *,*::before,*::after{box-sizing:border-box}
 [hidden]{display:none!important}
 body{margin:0;background:var(--bg);color:var(--ink);font:14.5px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-.top{background:var(--bar);color:#fff;display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px;padding:10px clamp(12px,2vw,28px)}
-.brand{font-weight:700;font-size:1.15rem}
+.top{background:var(--bar);color:#fff;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:8px clamp(10px,2vw,24px);padding:10px clamp(8px,2vw,28px)}
+.brand{font-weight:700;font-size:clamp(.98rem,4.6vw,1.15rem);white-space:nowrap}
 .brand i{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--hi);margin-right:8px}
-.tabs{display:flex;gap:4px;flex-wrap:wrap}
-.tab{font:inherit;font-weight:600;color:#c5d0d8;background:transparent;border:0;padding:7px 14px;border-radius:999px;cursor:pointer}
+.tabs{display:flex;gap:4px;flex-wrap:nowrap;min-width:0}
+.org{justify-self:end;font-size:clamp(.62rem,1.2vw,.78rem);font-weight:700;letter-spacing:.06em;color:#e6ebef;white-space:nowrap}
+.tab{font:inherit;font-size:clamp(.7rem,3.3vw,.95rem);font-weight:600;color:#c5d0d8;background:transparent;border:0;padding:7px clamp(5px,1.6vw,14px);border-radius:999px;cursor:pointer;white-space:nowrap}
 .tab[aria-selected=true]{background:var(--hi);color:var(--hi-ink)}
 .tab:focus-visible{outline:2px solid #fff;outline-offset:2px}
-main{padding:16px clamp(12px,2vw,28px) 36px}
-h2{font-size:1.05rem;margin:0 0 10px;font-weight:700}
+main{padding:16px clamp(8px,2vw,28px) 36px}
+h2{font-size:clamp(.92rem,4vw,1.05rem);margin:0 0 10px;font-weight:700}
 p{margin:0}.mut{color:var(--mut)}.note{font-size:.88rem;margin-top:6px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;min-width:0}
-.bar{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:end}
-.bar>*{flex:1 1 150px}.bar>.datebox,.bar>.grow{flex:2 1 290px}
-.datebox{display:flex;gap:6px;flex-wrap:wrap}.datebox input{width:auto;flex:1 1 140px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:clamp(10px,3.4vw,14px);min-width:0;container-type:inline-size}
+.pbar,.abar,.expgrid{display:grid;gap:12px 18px;align-items:end}
+.pbar{grid-template-columns:minmax(0,2.2fr) minmax(0,.8fr) minmax(0,1.1fr) minmax(0,2.4fr)}
+.pnote{grid-column:1/-1;margin:0}
+.abar{grid-template-columns:minmax(0,1.3fr) minmax(0,2.7fr)}
+.expgrid{grid-template-columns:minmax(0,3fr) minmax(130px,.8fr) minmax(0,2fr)}
+.expnote{margin:10px 0 0}
+.dnav{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:6px}
+.rangebox{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto auto auto;gap:6px}
+@media (max-width:1260px){.pbar{grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1.2fr)}.pmode{grid-column:1/-1}.expgrid{grid-template-columns:minmax(0,1fr) minmax(130px,.5fr)}.expgrid .acts{grid-column:1/-1}}
+@media (max-width:1000px){.top{grid-template-columns:minmax(0,1fr) auto}.tabs{grid-column:1/-1;grid-row:2}.tab{flex:1;text-align:center}.abar{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:760px){.pbar{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.pdate{grid-column:1/-1}}
+@media (max-width:640px){.rangebox{grid-template-columns:repeat(6,minmax(0,1fr))}.rangebox input{grid-column:span 3}.rangebox .btn{grid-column:span 2}}
+@media (max-width:520px){.top{grid-template-columns:minmax(0,1fr)}.org{grid-row:2;justify-self:start}.tabs{grid-row:3}.pbar{grid-template-columns:minmax(0,1fr)}.expgrid{grid-template-columns:minmax(0,1fr)}}
 label,.lbl{display:grid;grid-template-columns:minmax(0,1fr);gap:4px;font-weight:600;min-width:0}
 input,select{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:6px;padding:7px 9px;width:100%;min-width:0}
 input:focus-visible,select:focus-visible,button:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .seg{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
-.seg label{position:relative;flex:1 1 0;min-width:0;display:block;font-weight:500}
+.seg label{position:relative;flex:1 1 auto;min-width:0;display:block;font-weight:500}
 .seg input{position:absolute;opacity:0;width:1px;height:1px}
-.seg span{display:block;height:100%;padding:8px 8px;text-align:center;overflow-wrap:anywhere;cursor:pointer;border-right:1px solid var(--line)}
+.seg span{display:block;height:100%;padding:8px clamp(3px,1.2vw,12px);text-align:center;white-space:nowrap;font-size:clamp(.6rem,.7vw + .5rem,.92rem);cursor:pointer;border-right:1px solid var(--line)}
 .seg label:last-child span{border-right:0}
 .seg input:checked+span{background:var(--hi);color:var(--hi-ink);font-weight:700}
 .seg input:focus-visible+span{outline:2px solid var(--ink);outline-offset:-3px}
-.btn{font:inherit;font-weight:600;background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px 12px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn{font:inherit;font-weight:600;background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px 12px;cursor:pointer;text-decoration:none;display:inline-block;white-space:nowrap;min-width:0}
 .btn:hover{border-color:var(--ink)}.btn.hi{background:var(--hi);color:var(--hi-ink);border-color:var(--hi)}
-.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.cols{display:grid;gap:16px;grid-template-columns:minmax(250px,1fr) minmax(0,2.5fr) minmax(270px,1.1fr);align-items:start;margin-top:16px}
+.acts{display:grid;grid-template-columns:repeat(auto-fit,minmax(var(--acw,150px),1fr));gap:8px;margin-top:10px}
+.cols{display:grid;gap:16px;grid-template-columns:minmax(290px,1fr) minmax(0,2.5fr) minmax(270px,1.1fr);align-items:start;margin-top:16px}
 .stack{display:grid;gap:16px;min-width:0}
 @media (min-width:1181px){.colR{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto}}
-@media (max-width:1180px){.cols{grid-template-columns:minmax(250px,1fr) minmax(0,2fr)}.colR{grid-column:1/-1}}
-@media (max-width:760px){.cols{grid-template-columns:1fr}}
-.rowh{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 8px}
+@media (max-width:1180px){.cols{grid-template-columns:minmax(290px,1fr) minmax(0,2fr)}.colR{grid-column:1/-1}}
+@media (max-width:900px){.cols{grid-template-columns:minmax(0,1fr)}}
+.rowh{display:flex;flex-wrap:nowrap;justify-content:space-between;align-items:center;gap:8px;min-width:0}.rowh h2{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rowh .chip{flex:none}
 .chip{background:var(--tint);border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-weight:600;white-space:nowrap}
 .fleet{list-style:none;margin:10px 0 0;padding:0 14px 0 0;scrollbar-gutter:stable;max-height:max(320px,calc(100vh - 330px));overflow:auto;border-top:1px solid var(--line)}
-.fl{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:7px 6px;border-bottom:1px solid var(--line)}
+.fl{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 8px;align-items:center;padding:7px 6px;border-bottom:1px solid var(--line)}
+.fl .sub{grid-column:1/-1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.fid{white-space:nowrap;min-width:0}
 .fl.on{background:var(--tint)}.fl b{font-size:1rem}.sub{display:block;color:var(--mut);font-size:.84rem}
-.sbx{display:flex;gap:10px}.sbx label{display:inline-flex;gap:5px;align-items:center;font-weight:500}.sbx input{width:auto}
+.sbx{display:flex;gap:10px}.sbx label{display:inline-flex;gap:5px;align-items:center;font-weight:500;white-space:nowrap}.sbx input{width:auto}
 .empty{color:var(--mut);padding:12px 6px}
 .grp{display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:1;background:var(--card);padding:8px 6px 6px;border-bottom:1px solid var(--ink);font-weight:700}
 .stg{display:inline-flex;gap:9px;align-items:center;vertical-align:middle}
-.stl{margin-left:3px}
+.stl{margin-left:3px;white-space:nowrap}
 th.stc,td.stc{padding-left:36px}
 th.rmc,td.rmc{padding-left:18px}
-.tg{display:inline-block;font-size:.72rem;font-weight:600;line-height:1.5;color:var(--sb);border:1px solid var(--sb);border-radius:999px;padding:0 7px;margin-left:6px;vertical-align:middle}
+.tg{white-space:nowrap;display:inline-block;font-size:.72rem;font-weight:600;line-height:1.5;color:var(--sb);border:1px solid var(--sb);border-radius:999px;padding:0 7px;margin-left:6px;vertical-align:middle}
 .cv{min-width:0}
 .dot{--c:var(--up);width:20px;height:20px;border-radius:50%;border:2px solid var(--c);background:transparent;padding:0;cursor:pointer}
 .dot.standby{--c:var(--sb)}.dot.down{--c:var(--dn)}
 .dot.on{background:var(--c);box-shadow:0 0 0 2px var(--card),0 0 0 4px var(--c)}
-.read{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:12px}
+.read{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.read.r3{grid-template-columns:minmax(0,1fr)}
+@container (min-width:430px){.read.r3{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@container (min-width:560px){.read.r4{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .read>div{background:var(--tint);border-radius:8px;padding:8px 12px}
-.read span{display:block;color:var(--mut);font-size:.85rem}.read b{font-size:1.5rem;line-height:1.2}.read small{color:var(--mut);font-weight:600}
+.read span{display:block;color:var(--mut);font-size:.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.read b{font-size:clamp(1.15rem,2.4vw,1.5rem);line-height:1.2;white-space:nowrap}.read small{white-space:nowrap}.read small{color:var(--mut);font-weight:600}
 .tank{display:flex;height:22px;background:var(--tint);border:1px solid var(--line);border-radius:6px;overflow:hidden}
 .tank i{display:block;height:100%;border-right:2px solid var(--card)}
 .tank-lbl{display:flex;justify-content:space-between;color:var(--mut);font-size:.85rem;margin:4px 0 12px}
@@ -86,8 +101,8 @@ td input{width:90px;text-align:right}td select{width:auto}
 .sg.good{border-color:var(--good)}.sg.warn{border-color:var(--warn)}.sg span{color:var(--mut)}
 .two{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));margin-top:16px}
 .charts{display:flex;flex-wrap:wrap;gap:16px;margin-top:16px}.charts>section{flex:1 1 340px;min-width:0}.charts>.wide{flex-basis:100%}.charts>.w2{flex:2 1 520px}
-.lg{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:6px}.ax{fill:var(--mut);font:11px system-ui,sans-serif}
-.tools{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}.tools>*{flex:1 1 140px;width:auto}
+.lg{display:flex;gap:14px;flex-wrap:nowrap;margin-bottom:6px;white-space:nowrap;overflow:hidden}.ax{fill:var(--mut);font:11px system-ui,sans-serif}
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:12px}.tools>*{width:auto}
 .form{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-top:10px;align-items:end}
 details>summary{cursor:pointer;font-weight:600}
 textarea{width:100%;height:120px;margin-top:8px;font:12px/1.4 ui-monospace,monospace;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:6px}
@@ -102,30 +117,31 @@ textarea{width:100%;height:120px;margin-top:8px;font:12px/1.4 ui-monospace,monos
     <button class="tab" role="tab" data-tab="act" aria-selected="false">Actuals</button>
     <button class="tab" role="tab" data-tab="rates" aria-selected="false">Burn rates by model</button>
   </nav>
+  <div class="org">CAPITAL MINING LTD | EWRD PROJECT</div>
 </header>
 <main>
 
 <section id="p_plan">
-  <div class="card bar">
-    <div class="lbl datebox">Date
-      <div class="datebox" style="width:100%"><button class="btn" id="dPrev" aria-label="Previous day">‹</button><input type="date" id="pDate" aria-label="Plan date"><button class="btn" id="dNext" aria-label="Next day">›</button><button class="btn" id="dToday">Today</button></div>
+  <div class="card pbar">
+    <div class="lbl pdate">Date
+      <div class="dnav"><button class="btn" id="dPrev" aria-label="Previous day">‹</button><input type="date" id="pDate" aria-label="Plan date"><button class="btn" id="dNext" aria-label="Next day">›</button><button class="btn" id="dToday">Today</button></div>
     </div>
     <label>Hours per shift<input id="win" type="number" min="0" step="0.5" inputmode="decimal"></label>
     <label>Fuel ceiling, 24 hr (L)<input id="cap" type="number" min="0" step="50" inputmode="decimal" placeholder="Enter litres"></label>
-    <div class="lbl grow" id="mdLbl">How hours are shared
+    <div class="lbl pmode" id="mdLbl">How hours are shared
       <div class="seg" role="radiogroup" aria-labelledby="mdLbl">
         <label><input type="radio" name="mode" value="eq"><span>Equal hours</span></label>
         <label><input type="radio" name="mode" value="prio"><span>By priority</span></label>
         <label><input type="radio" name="mode" value="eff"><span>Max machine-hours</span></label>
       </div>
     </div>
-    <p id="winTxt" class="mut note" style="flex:1 1 100%;margin:0"></p>
+    <p id="winTxt" class="mut note pnote"></p>
   </div>
   <div class="cols">
     <section class="card" aria-label="Machines for this date">
       <div class="rowh"><h2>Machines</h2><span id="cnt" class="chip"></span></div>
       <p class="mut note" style="margin:0 0 8px">Up and standby machines. Tick the shifts each one works in this 24 hr window. Change status on the Burn rates by model tab.</p>
-      <input id="q" type="search" placeholder="Search fleet no., make or model" aria-label="Search machines">
+      <input id="q" type="search" placeholder="Search machines" aria-label="Search fleet no., make or model">
       <div class="acts"><button class="btn" id="addAll">Add all shown</button><button class="btn" id="clr">Clear this date</button></div>
       <ul id="fleetList" class="fleet"></ul>
     </section>
@@ -137,20 +153,22 @@ textarea{width:100%;height:120px;margin-top:8px;font:12px/1.4 ui-monospace,monos
 </section>
 
 <section id="p_act" hidden>
-  <div class="card bar">
-    <div class="lbl datebox">Date
-      <div class="datebox" style="width:100%"><button class="btn" id="aPrev" aria-label="Previous day">‹</button><input type="date" id="aDate" aria-label="Actuals date"><button class="btn" id="aNext" aria-label="Next day">›</button><button class="btn" id="aToday">Today</button></div>
+  <div class="card abar">
+    <div class="lbl">Date
+      <div class="dnav"><button class="btn" id="aPrev" aria-label="Previous day">‹</button><input type="date" id="aDate" aria-label="Actuals date"><button class="btn" id="aNext" aria-label="Next day">›</button><button class="btn" id="aToday">Today</button></div>
     </div>
-    <div class="read grow" id="aRead" style="margin:0"></div>
-    <span hidden></span>
+    <div class="read r3" id="aRead" style="margin:0"></div>
   </div>
-  <div class="card bar" id="exp" style="margin-top:16px">
-    <div class="lbl grow">Export report
-      <div class="datebox" style="width:100%"><input type="date" id="eFrom" aria-label="Report from date"><input type="date" id="eTo" aria-label="Report to date"><button class="btn" data-ep="day">Day</button><button class="btn" data-ep="week">Week</button><button class="btn" data-ep="month">Month</button></div>
+  <div class="card" id="exp" style="margin-top:16px">
+   <div class="expgrid">
+    <div class="lbl">Export report
+      <div class="rangebox"><input type="date" id="eFrom" aria-label="Report from date"><input type="date" id="eTo" aria-label="Report to date"><button class="btn" data-ep="day">Day</button><button class="btn" data-ep="week">Week</button><button class="btn" data-ep="month">Month</button></div>
     </div>
-    <div class="acts" style="margin:0;flex:0 1 auto;max-width:100%"><button class="btn" id="xlsx">Download Excel</button><button class="btn" id="csv">Download CSV</button><button class="btn hi" id="pdf">Download PDF</button></div>
-    <p class="mut note" style="flex:1 1 100%;margin:0">Excel (.xlsx) has the same sections, colours and tables as the PDF. CSV is plain data with no formatting. PDF opens your browser’s print dialog: choose Save as PDF as the destination.</p>
-    <p id="expMsg" class="note" role="status" style="flex:1 1 100%;margin:0;color:var(--warn)"></p>
+    <label>PDF orientation<select id="orient"><option value="portrait">Portrait</option><option value="landscape">Landscape</option></select></label>
+    <div class="acts" style="margin:0;--acw:140px"><button class="btn" id="xlsx">Download Excel</button><button class="btn" id="csv">Download CSV</button><button class="btn hi" id="pdf">Download PDF</button></div>
+   </div>
+    <p class="mut note expnote">Excel (.xlsx) has the same sections, colours and tables as the PDF. CSV is plain data with no formatting. PDF opens your browser’s print dialog: choose Save as PDF as the destination.</p>
+    <p id="expMsg" class="note" role="status" style="margin:6px 0 0;color:var(--warn)"></p>
   </div>
   <p class="mut note">Machines planned for this date appear here automatically (planned fuel is the fuel ceiling entered for the date). Enter the ready hours each one actually worked. Fuel is estimated as hours multiplied by burn rate.</p>
   <div class="two" id="aShifts"></div>
@@ -173,17 +191,17 @@ textarea{width:100%;height:120px;margin-top:8px;font:12px/1.4 ui-monospace,monos
     </details>
   </div>
   <div class="card" style="margin-top:16px">
-    <div class="rowh"><h2>Burn rates by model</h2><span id="rCnt" class="mut"></span></div>
+    <h2 style="margin-bottom:2px">Burn rates by model</h2><p id="rCnt" class="mut note" style="margin:0 0 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></p>
     <div class="tools">
-      <input id="rq" type="search" placeholder="Search fleet no., make or model" aria-label="Search">
+      <input id="rq" type="search" placeholder="Search machines" aria-label="Search fleet no., make or model">
       <select id="rt" aria-label="Filter by type"></select>
       <select id="rmk" aria-label="Filter by make"></select>
       <select id="rst" aria-label="Filter by status"><option value="">All statuses</option><option value="up">Up</option><option value="standby">Standby</option><option value="down">Down</option></select>
       <select id="rs" aria-label="Sort by"><option value="id">Sort: fleet no.</option><option value="make">Sort: make</option><option value="model">Sort: model</option><option value="type">Sort: type</option><option value="rate">Sort: burn rate</option><option value="status">Sort: status</option></select>
-      <button class="btn" id="rdir" style="flex:0 0 auto">Ascending</button>
+      <button class="btn" id="rdir">Ascending</button>
     </div>
     <p class="mut note" style="margin:0 0 8px">Green circle is up (can be planned), blue is standby (available, can be added to a plan), red is down (unavailable, left out of plans).</p>
-    <div class="acts" style="margin:0 0 10px"><button class="btn" id="sUp">Set shown to up</button><button class="btn" id="sSb">Set shown to standby</button></div>
+    <div class="acts" style="margin:0 0 10px;--acw:200px"><button class="btn" id="sUp">Set shown to up</button><button class="btn" id="sSb">Set shown to standby</button></div>
     <div class="scroll"><table id="rtbl"></table></div>
     <p class="mut note">A burn rate and type apply to every machine of that model. Removing a machine also removes it from plans and actuals.</p>
   </div>
@@ -202,7 +220,7 @@ const TODAY=ymd(new Date());
 const WO={weekday:"short",day:"numeric",month:"short",year:"numeric"};
 const dl=(s,o)=>new Date(s+"T00:00:00").toLocaleDateString(undefined,o||{weekday:"short",day:"numeric",month:"short"});
 const RAW=[["Caterpillar","785D","MD011",150,"Haul truck"],["Caterpillar","785D","MD012",150,"Haul truck"],["XCMG","XDE130","MD017",70,"Haul truck"],["XCMG","XDE130","MD018",70,"Haul truck"],["Caterpillar","777F","MD032",56,"Haul truck"],["Caterpillar","777F","MD033",56,"Haul truck"],["Caterpillar","777D","HT90",75,"Haul truck"],["Caterpillar","777D","HT92",75,"Haul truck"],["Caterpillar","6015B","EX104",82,"Excavator"],["XCMG","XE2000","EX105",105,"Excavator"],["Hitachi","1200-6","EX92",90,"Excavator"],["XCMG","XE335C","HE018",18,"Excavator"],["Komatsu","D375A-6","DZ57",57,"Dozer"]];
-const mkDef=()=>{const models={},fleet=[],st={};RAW.forEach(([make,model,id,rate,type])=>{models[model]={rate,type};fleet.push({id,make,model});st[id]="up";});return{models,fleet,st,plans:{},act:{},date:TODAY,adate:TODAY,capFix:2};};
+const mkDef=()=>{const models={},fleet=[],st={};RAW.forEach(([make,model,id,rate,type])=>{models[model]={rate,type};fleet.push({id,make,model});st[id]="up";});return{models,fleet,st,plans:{},act:{},date:TODAY,adate:TODAY,capFix:2,orient:"portrait"};};
 let S=mkDef(),STORED=null;
 try{const x=JSON.parse(localStorage.getItem(KEY)||"null");if(x&&x.fleet&&x.models){STORED=x;S=Object.assign(mkDef(),x);}}catch(e){}
 Object.values(S.plans).forEach(p=>{if(p.cap===undefined){const d=+p.capD||0,n=+p.capN||0;p.cap=p.shift==="day"?d:p.shift==="night"?n:d+n;}});
@@ -285,12 +303,12 @@ function renderFleet(){
   const p=plView(),q=$("#q").value.trim().toLowerCase(),sh=shifts(p),ups=S.fleet.filter(m=>st(m.id)!=="down");
   shown=ups.filter(m=>(m.id+" "+m.make+" "+m.model).toLowerCase().includes(q));
   $("#cnt").textContent=ups.filter(m=>st(m.id)==="up").length+" up, "+ups.filter(m=>st(m.id)==="standby").length+" standby";
-  const GL={"Haul truck":"Haul trucks",Excavator:"Excavators",Dozer:"Dozers",Other:"Other"},row=m=>`<li class="fl${sh.some(s=>isOn(p,m.id,s))?" on":""}"><div><b>${esc(m.id)}</b>${st(m.id)==="standby"?`<span class="tg">Standby</span>`:""}<span class="sub">${esc(m.make)} ${esc(m.model)}, ${esc(typeOf(m).toLowerCase())}, ${rateOf(m)} L/hr</span></div><span class="sbx">${sh.map(s=>`<label><input type="checkbox" data-op="${s}:${esc(m.id)}"${isOn(p,m.id,s)?" checked":""}>${NAME[s]}</label>`).join("")}</span></li>`;
+  const GL={"Haul truck":"Haul trucks",Excavator:"Excavators",Dozer:"Dozers",Other:"Other"},row=m=>`<li class="fl${sh.some(s=>isOn(p,m.id,s))?" on":""}"><div class="fid"><b>${esc(m.id)}</b>${st(m.id)==="standby"?`<span class="tg">Standby</span>`:""}</div><span class="sbx">${sh.map(s=>`<label><input type="checkbox" data-op="${s}:${esc(m.id)}"${isOn(p,m.id,s)?" checked":""}>${NAME[s]}</label>`).join("")}</span><span class="sub">${esc(m.make)} ${esc(m.model)}, ${esc(typeOf(m).toLowerCase())}, ${rateOf(m)} L/hr</span></li>`;
   $("#fleetList").innerHTML=shown.length?TYPES.map(t=>{const g=shown.filter(m=>typeOf(m)===t);return g.length?`<li class="grp"><span>${GL[t]}</span><span class="chip">${g.length}</span></li>`+g.map(row).join(""):"";}).join(""):`<li class="empty">${ups.length?"No machines match your search.":"No machines are available. Set status on the Burn rates by model tab."}</li>`;
 }
 function winCard(W){
   const T=W.T,segs=T.cap>0?T.rows.map(r=>r.fuel>0?`<i title="${esc(r.id)} (${NAME[r.s]}): ${fmt(r.fuel)} L" style="width:${r.fuel/T.cap*100}%;background:${col(r.ci)}"></i>`:"").join(""):"";
-  return`<section class="card"><h2>24 hr plan: ${dl(S.date,WO)}, day shift then night shift</h2><div class="read">${[["Planned fuel (ceiling)",fmt(T.cap),"L"],["Allocated to machines",fmt(T.fuel),"L"],["Not allocated",fmt(Math.max(0,T.cap-T.fuel)),"L"],["Total ready hours",fmt(T.mh,1),"hr"]].map(([a,b,c])=>`<div><span>${a}</span><b>${b}</b> <small>${c}</small></div>`).join("")}</div><div class="tank" role="img" aria-label="${fmt(T.fuel)} litres allocated of a ${fmt(T.cap)} litre 24 hour ceiling">${segs}</div><div class="tank-lbl"><span>0 L</span><span>Ceiling ${fmt(T.cap)} L</span></div></section>`;
+  return`<section class="card"><h2>24 hr plan: ${dl(S.date)}</h2><div class="read r4">${[["Planned fuel",fmt(T.cap),"L"],["Allocated",fmt(T.fuel),"L"],["Not allocated",fmt(Math.max(0,T.cap-T.fuel)),"L"],["Ready hours",fmt(T.mh,1),"hr"]].map(([a,b,c])=>`<div><span>${a}</span><b>${b}</b> <small>${c}</small></div>`).join("")}</div><div class="tank" role="img" aria-label="${fmt(T.fuel)} litres allocated of a ${fmt(T.cap)} litre 24 hour ceiling">${segs}</div><div class="tank-lbl"><span>0 L</span><span>Ceiling ${fmt(T.cap)} L</span></div></section>`;
 }
 function block(W,s,p){
   const pr=p.mode==="prio",B=W.by[s],T=W.T,name=NAME[s],date=S.date;
@@ -361,10 +379,10 @@ function renderActSummary(){
   const ty={},addT=(id,key,v)=>{const m=byId(id);if(!m)return;const t=typeOf(m);(ty[t]=ty[t]||{p:0,a:0})[key]+=v;};
   Object.entries(x.pm).forEach(([id,v])=>addT(id,"p",v));Object.entries(x.am).forEach(([id,v])=>addT(id,"a",v.day+v.night));
   const tys=TYPES.filter(t=>ty[t]&&(ty[t].p>0||ty[t].a>0));
-  CH=[];$("#charts").innerHTML=`<section class="card wide"><h2>Week of ${dl(wk0)} to ${dl(days[6])}</h2>`+cv(days.map(z=>dl(z,{weekday:"short",day:"numeric"})),[{n:"Planned",c:G,v:ws.map(w=>w.pt)},{n:"Actual (day + night)",c:Y,v:ws.map(at)}],"Planned and actual fuel per day this week")+`<div class="scroll" style="margin-top:12px"><table><thead><tr><th>Date</th><th class="n">Planned (L)</th><th class="n">Actual day (L)</th><th class="n">Actual night (L)</th><th class="n">Actual total (L)</th><th class="n">Difference (L)</th></tr></thead><tbody>`+days.map((z,i)=>{const w=ws[i],pn=w.pt,a=at(w);return`<tr${z===d?' class="sel"':""}><td>${dl(z)}</td><td class="n">${fmt(pn)}</td><td class="n">${fmt(w.as.day)}</td><td class="n">${fmt(w.as.night)}</td><td class="n">${fmt(a)}</td><td class="n">${sgn(a-pn)}</td></tr>`;}).join("")+`</tbody><tfoot><tr><td>Week total</td><td class="n">${fmt(tot[0])}</td><td class="n">${fmt(tot[1])}</td><td class="n">${fmt(tot[2])}</td><td class="n">${fmt(tot[1]+tot[2])}</td><td class="n">${sgn(tot[1]+tot[2]-tot[0])}</td></tr></tfoot></table></div></section>`
-   +`<section class="card"><h2>${dl(d)}: fuel per shift</h2>`+cv(["Day","Night"],[{n:"Planned",c:G,v:[x.pl.day,x.pl.night]},{n:"Actual",c:Y,v:[x.as.day,x.as.night]}],"Planned and actual fuel per shift")+`</section>`
-   +`<section class="card"><h2>${dl(d)}: fuel by machine type</h2>`+cv(tys.map(t=>({"Haul truck":"Haul trucks",Excavator:"Excavators",Dozer:"Dozers"}[t]||t)),[{n:"Planned",c:G,v:tys.map(t=>ty[t].p)},{n:"Actual",c:Y,v:tys.map(t=>ty[t].a)}],"Planned and actual fuel by machine type")+`</section>`
-   +`<section class="card w2"><h2>${dl(d)}: fuel per machine</h2>`+cv(all,[{n:"Planned",c:G,v:all.map(i=>x.pm[i]||0)},{n:"Actual (day + night)",c:Y,v:all.map(i=>x.am[i]?x.am[i].day+x.am[i].night:0)}],"Planned and actual fuel per machine")+`</section>`;
+  CH=[];$("#charts").innerHTML=`<section class="card wide"><h2>Week of ${dl(wk0,{day:"numeric",month:"short"})} to ${dl(days[6],{day:"numeric",month:"short"})}</h2>`+cv(days.map(z=>dl(z,{weekday:"short",day:"numeric"})),[{n:"Planned",c:G,v:ws.map(w=>w.pt)},{n:"Actual",c:Y,v:ws.map(at)}],"Planned and actual fuel per day this week")+`<div class="scroll" style="margin-top:12px"><table><thead><tr><th>Date</th><th class="n">Planned (L)</th><th class="n">Actual day (L)</th><th class="n">Actual night (L)</th><th class="n">Actual total (L)</th><th class="n">Difference (L)</th></tr></thead><tbody>`+days.map((z,i)=>{const w=ws[i],pn=w.pt,a=at(w);return`<tr${z===d?' class="sel"':""}><td>${dl(z)}</td><td class="n">${fmt(pn)}</td><td class="n">${fmt(w.as.day)}</td><td class="n">${fmt(w.as.night)}</td><td class="n">${fmt(a)}</td><td class="n">${sgn(a-pn)}</td></tr>`;}).join("")+`</tbody><tfoot><tr><td>Week total</td><td class="n">${fmt(tot[0])}</td><td class="n">${fmt(tot[1])}</td><td class="n">${fmt(tot[2])}</td><td class="n">${fmt(tot[1]+tot[2])}</td><td class="n">${sgn(tot[1]+tot[2]-tot[0])}</td></tr></tfoot></table></div></section>`
+   +`<section class="card"><h2 style="margin-bottom:0">Fuel per shift</h2><p class="mut note" style="margin:0 0 6px">${dl(d)}</p>`+cv(["Day","Night"],[{n:"Planned",c:G,v:[x.pl.day,x.pl.night]},{n:"Actual",c:Y,v:[x.as.day,x.as.night]}],"Planned and actual fuel per shift")+`</section>`
+   +`<section class="card"><h2 style="margin-bottom:0">Fuel by machine type</h2><p class="mut note" style="margin:0 0 6px">${dl(d)}</p>`+cv(tys.map(t=>({"Haul truck":"Haul trucks",Excavator:"Excavators",Dozer:"Dozers"}[t]||t)),[{n:"Planned",c:G,v:tys.map(t=>ty[t].p)},{n:"Actual",c:Y,v:tys.map(t=>ty[t].a)}],"Planned and actual fuel by machine type")+`</section>`
+   +`<section class="card w2"><h2 style="margin-bottom:0">Fuel per machine</h2><p class="mut note" style="margin:0 0 6px">${dl(d)}</p>`+cv(all,[{n:"Planned",c:G,v:all.map(i=>x.pm[i]||0)},{n:"Actual",c:Y,v:all.map(i=>x.am[i]?x.am[i].day+x.am[i].night:0)}],"Planned and actual fuel per machine")+`</section>`;
   drawCharts();
 }
 const renderAct=()=>{$("#aDate").value=S.adate;renderActTables();renderActSummary();};
@@ -395,11 +413,12 @@ function saveFile(text,mime,name){const a=document.createElement("a");a.href=URL
 function exportCsv(){
   const r=range();if(!r)return;const R=rep(r[0],r[1]);
   if(!R.rows.length){$("#expMsg").textContent="No plan or actuals are recorded in this period.";return;}
-  const q=v=>typeof v==="number"?String(v):'"'+String(v).replace(/"/g,'""')+'"',n1=v=>Math.round(v*10)/10;
+  const M0=reportModel(R,r[0],r[1]),q=v=>typeof v==="number"?String(v):'"'+String(v).replace(/"/g,'""')+'"',n1=v=>Math.round(v*10)/10;
   const hd=["Date","Weekday","Shift","Fleet No","Make","Model","Type","Planned Ready Hrs","Actual Ready Hrs","Burn Rate (L/hr)","Planned Fuel (L)","Estimated Fuel (L)","Variance (L)"];
   const L=[hd.map(q).join(",")].concat(R.rows.map(x=>[x.d,dl(x.d,{weekday:"long"}),NAME[x.s],x.m.id,x.m.make,x.m.model,x.t,x.ph==null?"":n1(x.ph),n1(x.hrs),x.rt,n1(x.pf),n1(x.af),n1(x.af-x.pf)].map(v=>v===""?"":q(v)).join(",")));
-  saveFile("\ufeff"+L.join("\r\n")+"\r\n","text/csv;charset=utf-8","fleet-fuel-report_"+r[0]+"_to_"+r[1]+".csv");
+  saveFile("\ufeff"+[q(ORG),q("Fleet Fuel Report"),q(M0.per),""].join("\r\n")+"\r\n"+L.join("\r\n")+"\r\n","text/csv;charset=utf-8","fleet-fuel-report_"+r[0]+"_to_"+r[1]+".csv");
 }
+const ORG="CAPITAL MINING LTD | EWRD PROJECT";
 function reportModel(R,from,to){
   const fo={day:"numeric",month:"long",year:"numeric"},per=from===to?dl(from,{weekday:"long",...fo}):dl(from,fo)+" to "+dl(to,fo);
   const gen=new Date().toLocaleString(undefined,{dateStyle:"long",timeStyle:"short"}),v=R.A-R.P;
@@ -413,7 +432,7 @@ function reportModel(R,from,to){
   const dayRows=R.daily.filter(x=>x.pn>0||x.ad>0||x.an>0),dt=dayRows.reduce((a,x)=>[a[0]+x.pn,a[1]+x.ad,a[2]+x.an],[0,0,0]);
   return{per,gen,v,ty,pfs,top,over,txt,kp,dayRows,dt};
 }
-function reportHTML(R,from,to,name){
+function reportHTML(R,from,to,name,orient){
   const e=esc,M=reportModel(R,from,to),{per,gen,v,ty,pfs,top,over,kp,dayRows,dt}=M,txt=e(M.txt);
   const G="#8fa1ae",Y="#f7c600",N="#3b5b8c",SR=[["Planned",G,"pn"],["Actual",Y,"at"]];let cats,ser;
   if(R.days.length<=14){cats=R.daily.map(x=>dl(x.d,{day:"numeric",month:"short"}));ser=SR.map(([n,c,k])=>({n,c,v:R.daily.map(x=>x[k])}));}
@@ -421,9 +440,9 @@ function reportHTML(R,from,to,name){
     const ks=Object.keys(wk).sort();cats=ks.map(k=>"Wk "+dl(k,{day:"numeric",month:"short"}));ser=SR.map(([n,c,k])=>({n,c,v:ks.map(z=>wk[z][k])}));}
   const vc=x=>Math.round(x)>0?"bad":Math.round(x)<0?"ok":"",V=x=>`<span class="${vc(x)}">${vsign(x)}</span>`,VP=(x,p)=>`<span class="${vc(x)}">${vpct(x,p)}</span>`;
   const T=(h,r,f)=>`<table><thead><tr>${h.map(([t,n])=>`<th${n?' class="n"':""}>${t}</th>`).join("")}</tr></thead><tbody>${r.map(c=>`<tr>${c.map((x,i)=>`<td${h[i][1]?' class="n"':""}>${x}</td>`).join("")}</tr>`).join("")}</tbody>${f?`<tfoot><tr>${f.map((x,i)=>`<td${h[i][1]?' class="n"':""}>${x}</td>`).join("")}</tr></tfoot>`:""}</table>`;
-  const css=`:root{--ink:#0f1b24;--mut:#5b6872;--line:#d7dde2;--hi:#f7c600}@page{size:A4;margin:15mm 13mm 17mm;@bottom-left{content:"Fleet Fuel Report  |  ${per}";font:8pt Arial,sans-serif;color:#5b6872}@bottom-right{content:"Page " counter(page) " of " counter(pages);font:8pt Arial,sans-serif;color:#5b6872}}*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}body{margin:0;color:var(--ink);font:9.5pt/1.45 "Segoe UI","Helvetica Neue",Arial,sans-serif}header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid var(--hi);padding-bottom:8px;margin-bottom:12px}h1{font-size:22pt;margin:0;line-height:1.1}.sub{color:var(--mut);margin-top:3px}.brand{text-align:right;font-weight:700;font-size:9pt;color:var(--mut)}.brand i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--hi);margin-right:5px}.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 12px}.kpi{border:1px solid var(--line);border-top:3px solid var(--ink);border-radius:4px;padding:7px 9px}.kpi span{display:block;color:var(--mut);font-size:8pt}.kpi b{font-size:14.5pt;line-height:1.25}.kpi small{display:block;color:var(--mut);font-size:7.6pt;min-height:1em}.sum{background:#f4f6f8;border-left:3px solid var(--hi);padding:8px 12px;margin-bottom:6px}h2{font-size:11.5pt;margin:16px 0 6px;padding-bottom:3px;border-bottom:1px solid var(--ink);break-after:avoid}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:8.6pt}thead{display:table-header-group}th{background:#101a22;color:#fff;text-align:left;padding:5px 6px;font-weight:600}td{padding:4px 6px;border-bottom:1px solid var(--line)}tbody tr:nth-child(even) td{background:#f7f9fa}tr{break-inside:avoid}.n{text-align:right}tfoot td{font-weight:700;border-top:2px solid var(--ink);border-bottom:0;background:#fff!important}.bad{color:#b42318}.ok{color:#1b7447}.note{color:var(--mut);font-size:8pt;margin-top:10px}.pb{break-before:page}.lg{display:flex;gap:12px;margin-bottom:4px;font-size:8.5pt}.sw{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}.ax{fill:#5b6872;font:10px Arial,sans-serif}svg{display:block;margin:0 auto}`;
+  const css=`:root{--ink:#0f1b24;--mut:#5b6872;--line:#d7dde2;--hi:#f7c600}@page{size:A4 ${orient==="landscape"?"landscape":"portrait"};margin:15mm 13mm 17mm;@bottom-left{content:"${ORG}  |  Fleet Fuel Report  |  ${per}";font:8pt Arial,sans-serif;color:#5b6872}@bottom-right{content:"Page " counter(page) " of " counter(pages);font:8pt Arial,sans-serif;color:#5b6872}}*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}body{margin:0;color:var(--ink);font:9.5pt/1.45 "Segoe UI","Helvetica Neue",Arial,sans-serif}header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid var(--hi);padding-bottom:8px;margin-bottom:12px}h1{font-size:22pt;margin:0;line-height:1.1}.sub{color:var(--mut);margin-top:3px}.brand{text-align:right;font-weight:700;font-size:9pt;color:var(--mut)}.brand i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--hi);margin-right:5px}.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 12px}.kpi{border:1px solid var(--line);border-top:3px solid var(--ink);border-radius:4px;padding:7px 9px}.kpi span{display:block;color:var(--mut);font-size:8pt}.kpi b{font-size:14.5pt;line-height:1.25}.kpi small{display:block;color:var(--mut);font-size:7.6pt;min-height:1em}.sum{background:#f4f6f8;border-left:3px solid var(--hi);padding:8px 12px;margin-bottom:6px}h2{font-size:11.5pt;margin:16px 0 6px;padding-bottom:3px;border-bottom:1px solid var(--ink);break-after:avoid}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:8.6pt}thead{display:table-header-group}th{background:#101a22;color:#fff;text-align:left;padding:5px 6px;font-weight:600}td{padding:4px 6px;border-bottom:1px solid var(--line)}tbody tr:nth-child(even) td{background:#f7f9fa}tr{break-inside:avoid}.n{text-align:right}tfoot td{font-weight:700;border-top:2px solid var(--ink);border-bottom:0;background:#fff!important}.bad{color:#b42318}.ok{color:#1b7447}.note{color:var(--mut);font-size:8pt;margin-top:10px}.pb{break-before:page}.lg{display:flex;gap:12px;margin-bottom:4px;font-size:8.5pt}.sw{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}.ax{fill:#5b6872;font:10px Arial,sans-serif}svg{display:block;margin:0 auto}`;
   return`<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${e(name)}</title><style>${css}</style></head><body>
-<header><div><h1>Fleet Fuel Report</h1><div class="sub">${per}</div></div><div class="brand"><i></i>Fleet Fuel Planner<div style="font-weight:400">Generated ${e(gen)}</div></div></header>
+<header><div><h1>Fleet Fuel Report</h1><div class="sub">${per}</div></div><div class="brand"><i></i>Fleet Fuel Planner<div style="color:var(--ink);letter-spacing:.05em">${e(ORG)}</div><div style="font-weight:400">Generated ${e(gen)}</div></div></header>
 <div class="kpis">${kp.map(([a,b,c])=>`<div class="kpi"><span>${a}</span><b>${b}</b><small>${c}</small></div>`).join("")}</div>
 <div class="sum">${txt}</div>
 <h2>Fuel by ${R.days.length<=14?"day":"week"}</h2>${chart(cats,ser,"Planned and actual fuel",0,30)}
@@ -443,7 +462,7 @@ function exportPdf(){
   const name="Fleet Fuel Report "+r[0]+" to "+r[1],f=document.createElement("iframe"),old=document.title;
   f.style.cssText="position:fixed;right:0;bottom:0;width:0;height:0;border:0";f.setAttribute("aria-hidden","true");
   f.onload=()=>setTimeout(()=>{document.title=name;const w=f.contentWindow;w.onafterprint=()=>{document.title=old;f.remove();};w.focus();w.print();setTimeout(()=>{document.title=old;},60000);},350);
-  f.srcdoc=reportHTML(R,r[0],r[1],name);document.body.appendChild(f);
+  f.srcdoc=reportHTML(R,r[0],r[1],name,$("#orient").value);document.body.appendChild(f);
 }
 
 /* ---------- Burn rates and machine status ---------- */
@@ -532,8 +551,8 @@ function exportXlsx(){
   const mrg=(row,c0,c1)=>merges.push(`${xc(c0)}${row+1}:${xc(c1)}${row+1}`);
   const fill=(row,c0,c1,s)=>{for(let c=c0;c<=c1;c++)if(!(rows[row]&&rows[row][c]))put(row,c,null,s);};
   // header
-  put(0,0,"Fleet Fuel Report",S({sz:22,b:1}));fill(0,1,4,S());mrg(0,0,4);put(0,5,"Fleet Fuel Planner",S({b:1,sz:9,c:MUT,h:"right"}));fill(0,6,8,S());mrg(0,5,8);hts[0]=34;
-  put(1,0,M.per,S({c:MUT}));fill(1,1,4,S());mrg(1,0,4);put(1,5,"Generated "+M.gen,S({sz:9,c:MUT,h:"right"}));fill(1,6,8,S());mrg(1,5,8);
+  put(0,0,"Fleet Fuel Report",S({sz:22,b:1}));fill(0,1,3,S());mrg(0,0,3);put(0,4,ORG,S({b:1,sz:10,h:"right"}));fill(0,5,8,S());mrg(0,4,8);hts[0]=34;
+  put(1,0,M.per,S({c:MUT}));fill(1,1,3,S());mrg(1,0,3);put(1,4,"Fleet Fuel Planner  |  Generated "+M.gen,S({sz:9,c:MUT,h:"right"}));fill(1,5,8,S());mrg(1,4,8);
   fill(2,0,8,S({fill:HI}));hts[2]=4;hts[3]=8;
   // KPI boxes
   M.kp.forEach(([a,b,c],k)=>{const c0=k*2,wl=k?["thick","FFFFFF"]:null;
@@ -581,7 +600,7 @@ function exportXlsx(){
     return typeof o.v==="number"?`<c r="${ref}" s="${o.s}"><v>${isFinite(o.v)?o.v:0}</v></c>`:`<c r="${ref}" s="${o.s}" t="inlineStr"><is><t xml:space="preserve">${xe(o.v)}</t></is></c>`;};
   let sd="";for(let row=0;row<rc;row++){const rr=rows[row]||[];let cs="";for(let c=0;c<NC;c++)if(rr[c])cs+=cellXml(row,c,rr[c]);sd+=`<row r="${row+1}"${hts[row]?` ht="${hts[row]}" customHeight="1"`:""}>${cs}</row>`;}
   const NS='xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"',H='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
-  const sheet=H+`<worksheet ${NS}><sheetPr><pageSetUpPr fitToPage="1"/></sheetPr><sheetViews><sheetView showGridLines="0" workbookViewId="0"/></sheetViews><sheetFormatPr defaultRowHeight="15"/><cols>${W.map((w,i)=>`<col min="${i+1}" max="${i+1}" width="${w}" customWidth="1"/>`).join("")}</cols><sheetData>${sd}</sheetData><mergeCells count="${merges.length}">${merges.map(m=>`<mergeCell ref="${m}"/>`).join("")}</mergeCells><pageMargins left="0.5" right="0.5" top="0.6" bottom="0.7" header="0.3" footer="0.3"/><pageSetup paperSize="9" orientation="landscape" fitToWidth="1" fitToHeight="0"/><headerFooter><oddFooter>${xe("&LFleet Fuel Report  |  "+M.per+"&RPage &P of &N")}</oddFooter></headerFooter></worksheet>`;
+  const sheet=H+`<worksheet ${NS}><sheetPr><pageSetUpPr fitToPage="1"/></sheetPr><sheetViews><sheetView showGridLines="0" workbookViewId="0"/></sheetViews><sheetFormatPr defaultRowHeight="15"/><cols>${W.map((w,i)=>`<col min="${i+1}" max="${i+1}" width="${w}" customWidth="1"/>`).join("")}</cols><sheetData>${sd}</sheetData><mergeCells count="${merges.length}">${merges.map(m=>`<mergeCell ref="${m}"/>`).join("")}</mergeCells><pageMargins left="0.5" right="0.5" top="0.6" bottom="0.7" header="0.3" footer="0.3"/><pageSetup paperSize="9" orientation="landscape" fitToWidth="1" fitToHeight="0"/><headerFooter><oddFooter>${xe("&L"+ORG+"  |  Fleet Fuel Report  |  "+M.per+"&RPage &P of &N")}</oddFooter></headerFooter></worksheet>`;
   const blob=zipStore([
     {name:"[Content_Types].xml",text:H+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>'},
     {name:"_rels/.rels",text:H+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'},
@@ -591,6 +610,7 @@ function exportXlsx(){
     {name:"xl/worksheets/sheet1.xml",text:sheet}]);
   const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="fleet-fuel-report_"+r[0]+"_to_"+r[1]+".xlsx";document.body.appendChild(a);a.click();a.remove();$("#expMsg").textContent="";
 }
+$("#orient").value=S.orient==="landscape"?"landscape":"portrait";$("#orient").onchange=e=>{S.orient=e.target.value;save();};
 $("#xlsx").onclick=exportXlsx;$("#csv").onclick=exportCsv;$("#pdf").onclick=exportPdf;$$("[data-ep]").forEach(b=>b.onclick=()=>rng(b.dataset.ep));
 ["#rq"].forEach(i=>$(i).oninput=renderRates);["#rt","#rmk","#rst","#rs"].forEach(i=>$(i).onchange=renderRates);
 $("#sUp").onclick=()=>{shownR.forEach(m=>S.st[m.id]="up");refresh();};$("#sSb").onclick=()=>{shownR.forEach(m=>S.st[m.id]="standby");refresh();};$("#rdir").onclick=()=>{rdir=-rdir;renderRates();};
@@ -608,7 +628,7 @@ $("#addBtn").onclick=()=>{
   S.models[key]={rate:rate>0?rate:S.models[key].rate,type};S.fleet.push({id,make,model:key});S.st[id]="up";
   ["#nId","#nMake","#nModel","#nRate"].forEach(i=>$(i).value="");msg.textContent="Added "+id+" as up.";refresh();
 };
-$("#reset").onclick=()=>{S=mkDef();save();R[cur]();};
+$("#reset").onclick=()=>{S=mkDef();save();$("#orient").value="portrait";R[cur]();};
 rng("week");renderPlan();
 if("serviceWorker" in navigator&&location.protocol!=="file:")navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
