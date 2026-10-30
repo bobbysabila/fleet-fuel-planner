@@ -7,7 +7,7 @@ Plan fuel use for a heavy equipment fleet.
 - Record actual hours per shift and compare estimated fuel for the date (both shifts) against the planned fuel
 - Built-in suggestions to cut fuel use, with no API key or AI service needed
 - Light and dark themes
-- Export reports from the Actuals tab as Excel (same layout and colours as the PDF), CSV (plain data), PDF (choose portrait or landscape when downloading) or an interactive HTML report where every chart can be switched between bar, line, area and horizontal bar
+- Export reports from the Actuals tab as Excel (same layout and colours as the PDF) or PDF (choose portrait or landscape when downloading)
 
 Live app: https://bobbysabila.github.io/fleet-fuel-planner/
 

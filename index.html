@@ -199,10 +199,9 @@ dialog::backdrop{background:rgba(8,12,20,.55);backdrop-filter:blur(3px)}
     <div class="lbl">Export report
       <div class="rangebox"><input type="date" id="eFrom" aria-label="Report from date"><input type="date" id="eTo" aria-label="Report to date"><button class="btn" data-ep="day">Day</button><button class="btn" data-ep="week">Week</button><button class="btn" data-ep="month">Month</button></div>
     </div>
-    <div class="acts" style="margin:0;--acw:170px"><button class="btn" id="xlsx">Download Excel</button><button class="btn" id="csv">Download CSV</button><button class="btn hi" id="pdf">Download PDF</button><button class="btn" id="html">Interactive report</button></div>
+    <div class="acts" style="margin:0;--acw:170px"><button class="btn" id="xlsx">Download Excel</button><button class="btn hi" id="pdf">Download PDF</button></div>
    </div>
-    <p class="mut note expnote">Excel (.xlsx) has the same sections, colours and tables as the PDF. CSV is plain data with no formatting. PDF opens your browser’s print dialog: choose Save as PDF as the destination.</p>
-    <p class="mut note" style="margin:6px 0 0">Interactive report (.html) opens in any browser and lets you switch each chart between bar, line, area and horizontal bar. PDFs are static, so use it when you want to explore the charts.</p>
+    <p class="mut note expnote">Excel (.xlsx) has the same sections, colours and tables as the PDF. PDF opens your browser’s print dialog: choose Save as PDF as the destination.</p>
     <p id="expMsg" class="note" role="status" style="margin:6px 0 0;color:var(--warn)"></p>
   </div>
   <p class="mut note">Machines planned for this date appear here automatically (planned fuel is the fuel ceiling entered for the date). Enter the ready hours each one actually worked. Fuel is estimated as hours multiplied by burn rate.</p>
@@ -722,10 +721,10 @@ function setTheme(t,persist){document.documentElement.dataset.theme=t;$("#thL").
 let t0=null;try{t0=localStorage.getItem(THK);}catch(e){}
 setTheme(t0==="dark"||t0==="light"?t0:(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"),false);
 $("#thL").onclick=()=>setTheme("light",true);$("#thD").onclick=()=>setTheme("dark",true);
-$("#xlsx").onclick=exportXlsx;$("#html").onclick=exportInteractive;
+$("#xlsx").onclick=exportXlsx;
 $("#pdfCancel").onclick=()=>$("#pdfDlg").close();
 $("#pdfOk").onclick=()=>{const v=($("input[name=po]:checked")||{}).value||"portrait";S.orient=v;save();$("#pdfDlg").close();exportPdf(v);};
-$("#pdfDlg").addEventListener("click",e=>{if(e.target===$("#pdfDlg"))$("#pdfDlg").close();});$("#csv").onclick=exportCsv;$("#pdf").onclick=askPdf;$$("[data-ep]").forEach(b=>b.onclick=()=>rng(b.dataset.ep));
+$("#pdfDlg").addEventListener("click",e=>{if(e.target===$("#pdfDlg"))$("#pdfDlg").close();});$("#pdf").onclick=askPdf;$$("[data-ep]").forEach(b=>b.onclick=()=>rng(b.dataset.ep));
 ["#rq"].forEach(i=>$(i).oninput=renderRates);["#rt","#rmk","#rst","#rs"].forEach(i=>$(i).onchange=renderRates);
 $("#sUp").onclick=()=>{shownR.forEach(m=>S.st[m.id]="up");refresh();};$("#sSb").onclick=()=>{shownR.forEach(m=>S.st[m.id]="standby");refresh();};$("#rdir").onclick=()=>{rdir=-rdir;renderRates();};
 $("#rtbl").onchange=e=>{const i=e.target.closest("[data-mr]"),s=e.target.closest("[data-mt]");
