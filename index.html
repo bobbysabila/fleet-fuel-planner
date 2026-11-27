@@ -140,24 +140,85 @@ dialog::backdrop{background:rgba(8,12,20,.55);backdrop-filter:blur(3px)}
 .pgi.pt{width:34px;height:46px}.pgi.ls{width:46px;height:34px}
 .oc input:checked~.pgi{border-color:var(--co);background:rgba(21,88,201,.16)}
 .dact{display:flex;justify-content:flex-end;gap:8px}
+/* ---- navigation ---- */
+.tabs .tab{display:inline-flex;align-items:center;gap:7px}.tabs .tab svg{width:16px;height:16px;flex:none}
+@media (max-width:1280px){.tabs .tab svg{display:none}}
+@media (max-width:1100px){.top{grid-template-columns:minmax(0,1fr) auto}.tabs{grid-column:1/-1;grid-row:2;justify-self:stretch}.tab{flex:1;justify-content:center}}
+.bnav{display:none}
+@media (max-width:760px){.tabs{display:none}.bnav{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--bar);border-top:1px solid rgba(255,255,255,.12);padding:5px 2px calc(5px + env(safe-area-inset-bottom,0px))}.bnav button{display:grid;justify-items:center;gap:2px;background:none;border:0;color:#9fb0c3;font:inherit;font-size:clamp(.56rem,2.7vw,.66rem);font-weight:600;padding:3px 0;cursor:pointer;white-space:nowrap;min-width:0}.bnav svg{width:21px;height:21px}.bnav button[aria-current=page]{color:var(--hi)}main{padding-bottom:88px}}
+.ph{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 16px;min-width:0}.ph h1{font-size:clamp(1.25rem,5vw,1.7rem);margin:0;letter-spacing:-.02em;white-space:nowrap}.ph p{margin-top:2px;font-size:.9rem}.phr{flex:none}
+.ell{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.livebar{display:flex;align-items:center;gap:10px;background:var(--hi);color:#030407;border-radius:12px;padding:9px 14px;margin-bottom:14px;font-weight:600;text-decoration:none;white-space:nowrap;overflow:hidden}.livebar .go{margin-left:auto;font-weight:700;flex:none}
+.pulse{width:10px;height:10px;border-radius:50%;background:#030407;flex:none;animation:pl 1.4s infinite}@keyframes pl{0%{box-shadow:0 0 0 0 rgba(3,4,7,.5)}70%{box-shadow:0 0 0 8px rgba(3,4,7,0)}100%{box-shadow:0 0 0 0 rgba(3,4,7,0)}}
+.btn.sm{padding:4px 11px;font-size:.82rem}
+.chip.st-live{background:var(--hi);color:#030407;border-color:transparent}.chip.st-closed{background:var(--tint)}.chip.st-n{color:var(--mut)}
+/* ---- dashboard ---- */
+.kg{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:14px;margin-bottom:16px}
+.kg4{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0 0 12px}@container (min-width:620px){.kg4{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.kt{display:grid;gap:2px;padding:13px 16px;border-radius:14px;background:var(--card);border:1px solid var(--line);border-top:3px solid var(--a,var(--co));box-shadow:var(--shadow);min-width:0}
+.kg4 .kt{box-shadow:none;background:var(--tint)}
+.kt .l{color:var(--mut);font-size:.78rem;font-weight:600;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.kt .v{font-size:clamp(1.25rem,2.6vw,1.65rem);letter-spacing:-.02em;white-space:nowrap}.kt .s{color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.8rem}
+.dg{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}.dg>.s7{grid-column:span 7}.dg>.s5{grid-column:span 5}@media (max-width:1100px){.dg>.s7,.dg>.s5{grid-column:1/-1}}
+.snap{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}@container (min-width:560px){.snap{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}}
+.snd{display:flex;align-items:center;gap:16px}.dnut{width:118px;height:118px;flex:none}.dnv{font-size:17px;font-weight:700;fill:var(--ink)}.dns{font-size:6.5px;font-weight:600;fill:var(--mut)}
+.dl{list-style:none;margin:0;padding:0;display:grid;gap:6px;min-width:0;flex:1}.dl li{display:flex;align-items:center;gap:8px;white-space:nowrap}.dl li span{flex:1}
+.sh3{font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--mut);margin:0 0 6px;font-weight:700}
+.arow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}.at{display:flex;align-items:center;gap:7px;min-width:0}
+.inl{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}.ti{width:18px;height:18px;flex:none}.tt{margin-right:8px}
+.dempty{text-align:center;padding:18px 8px;display:grid;gap:10px;justify-items:center}.dei{width:54px;height:54px;border-radius:16px;background:var(--tint);display:grid;place-items:center;color:var(--co);margin:0 auto}.dei svg{width:28px;height:28px}
+.tyl{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.al{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:9px 2px;font:inherit;color:var(--ink);cursor:pointer}.al:hover{background:var(--tint)}
+.ql{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+.qt{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto auto;column-gap:10px;align-items:center;text-align:left;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--card);cursor:pointer;color:var(--ink);font:inherit;min-width:0}.qt svg{grid-row:1/3;width:24px;height:24px;color:var(--co)}.qt .qn{font-weight:700}.qt .sub{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.qt:hover{border-color:var(--co);background:var(--tint)}
+/* ---- dispatch ---- */
+.dbar{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1.2fr) minmax(0,.8fr);gap:12px 18px;align-items:end}.dsr{grid-column:1/-1;display:flex;align-items:center;gap:12px;min-width:0}.dsr .mut{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}.dacts{grid-column:1/-1;margin:0}
+@media (max-width:760px){.dbar{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.dbar>.lbl:first-child{grid-column:1/-1}}@media (max-width:520px){.dbar{grid-template-columns:minmax(0,1fr)}}
+.dgrid{display:grid;gap:16px;grid-template-columns:minmax(270px,330px) minmax(0,1fr);align-items:start;margin-top:16px}.dgrid.ro1{grid-template-columns:minmax(0,1fr)}@media (max-width:1000px){.dgrid{grid-template-columns:minmax(0,1fr)}}
+.dmain{display:grid;gap:16px;min-width:0}.dtray{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto}@media (max-width:1000px){.dtray{position:static;max-height:430px}}.dtl{margin-top:8px}.dtl .mc{margin:5px 0}
+.excs{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:12px}.oth{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:8px}
+.hint{color:var(--mut);padding:12px;border:1.5px dashed var(--line2);border-radius:10px;text-align:center;font-size:.88rem}.exc .hint{margin:0}
+.exc{border:1px solid var(--line);border-left:5px solid var(--c);border-radius:12px;background:var(--card);overflow:hidden;min-width:0}.exc>.mc{border:0;border-radius:0;background:var(--tint)}.trs{display:grid;gap:6px;padding:8px}
+.exf{display:flex;justify-content:space-between;gap:10px;padding:7px 12px;border-top:1px solid var(--line);color:var(--mut);font-size:.8rem;white-space:nowrap}.warnt{color:var(--warn);font-weight:700}
+.mc{display:grid;grid-template-columns:auto auto minmax(0,1fr) minmax(0,1.25fr) auto auto;gap:8px;align-items:center;padding:7px 8px;border:1px solid var(--line);border-left:4px solid var(--c,var(--line2));border-radius:10px;background:var(--card);min-width:0}.mc:not(.ro){cursor:grab}.mc.tr2{grid-template-columns:auto auto minmax(0,1fr) auto auto}.mc.off{opacity:.6}
+.grip{color:var(--mut);display:grid;place-items:center;width:14px;touch-action:none}.mic{display:grid;place-items:center;width:30px;height:30px;border-radius:8px;background:var(--tint);color:var(--ink)}.mic .ti{width:19px;height:19px}
+.mi{min-width:0;line-height:1.25}.mi b{display:block;white-space:nowrap}.mi .sub{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stc{display:flex;align-items:center;gap:7px;min-width:0;width:100%;background:var(--tint);border:1px solid var(--line);border-radius:999px;padding:4px 10px;font:inherit;font-size:.78rem;color:var(--ink);cursor:pointer;text-align:left}.stc:hover{border-color:var(--mut)}.stc .sl{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.stc b{margin-right:3px}
+.sdot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--c);flex:none;box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)}.sdot.big{width:18px;height:18px}
+.tm{font-variant-numeric:tabular-nums;color:var(--mut);font-size:.8rem;white-space:nowrap}.mm{background:none;border:0;color:var(--mut);cursor:pointer;padding:4px;border-radius:8px;display:grid;place-items:center}.mm:hover{background:var(--tint);color:var(--ink)}
+.tgs{display:flex;gap:4px}.tgs .tg{margin:0}.tg.dn{color:var(--dn);border-color:var(--dn)}.tg.pl{color:#030407;background:var(--hi);border-color:var(--hi)}
+@container (max-width:440px){.mc:not(.tr2){grid-template-columns:auto auto minmax(0,1fr) auto;grid-template-areas:"g i m x" "s s s t"}.mc:not(.tr2) .grip{grid-area:g}.mc:not(.tr2) .mic{grid-area:i}.mc:not(.tr2) .mi{grid-area:m}.mc:not(.tr2) .mm{grid-area:x}.mc:not(.tr2) .stc{grid-area:s}.mc:not(.tr2) .tm{grid-area:t}}
+.dragsrc{opacity:.35}.ghost{position:fixed!important;z-index:200;pointer-events:none;opacity:.95;box-shadow:0 12px 30px rgba(0,0,0,.35);transform:rotate(1.2deg);background:var(--card)}body.dragging{user-select:none;cursor:grabbing}.dzon{outline:2px dashed var(--co);outline-offset:-3px;background:rgba(21,88,201,.08)!important}
+.ctx{position:fixed;z-index:120;min-width:210px;max-width:min(92vw,300px);background:var(--card);border:1px solid var(--line2);border-radius:12px;box-shadow:0 18px 40px rgba(2,6,23,.35);padding:6px;display:grid;gap:2px}.ctx[hidden]{display:none}
+.ctx button{background:none;border:0;text-align:left;padding:8px 10px;border-radius:8px;font:inherit;color:var(--ink);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ctx button:hover,.ctx button:focus{background:var(--tint);outline:none}.ctx button.dg{color:var(--warn)}.ch{padding:6px 10px;font-size:.75rem;font-weight:700;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-bottom:1px solid var(--line);margin-bottom:2px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--bar);color:#fff;border-radius:12px;padding:10px 16px;font-weight:600;z-index:150;max-width:min(92vw,520px);box-shadow:0 12px 30px rgba(0,0,0,.35);transition:opacity .2s,transform .2s;border-left:4px solid var(--hi)}.toast.on{opacity:1;transform:translate(-50%,0)}@media (max-width:760px){.toast{bottom:92px}}
+#stDlg,#asDlg{width:min(94vw,560px)}#cfDlg{width:min(92vw,420px)}#stDlg .dlg{display:flex;flex-direction:column;max-height:86vh;padding:0}#stDlg .dh{padding:20px 22px 8px}#pkL{overflow:auto;padding:4px 14px 10px;min-height:120px}
+.pk{display:grid;grid-template-columns:auto 38px minmax(0,1fr) auto;align-items:center;gap:10px;width:100%;padding:8px 10px;border:0;border-radius:9px;background:none;text-align:left;font:inherit;color:var(--ink);cursor:pointer}.pk:hover{background:var(--tint)}.pk.on{background:var(--tint);box-shadow:inset 0 0 0 2px var(--co)}.pk .pd{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pk .pt{font-size:.72rem;font-weight:700;color:var(--mut);border:1px solid var(--line2);border-radius:999px;padding:0 7px}
+.pgh{font-size:.75rem;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.05em;padding:8px 6px 2px}details.pg>summary{display:flex;align-items:center;gap:8px;padding:8px 6px;list-style:none;font-weight:700;border-bottom:1px solid var(--line);margin-top:4px}details.pg>summary::-webkit-details-marker{display:none}details.pg>summary span{flex:1;white-space:nowrap}details.pg>summary .chip{flex:none}
+.dfoot{display:flex;justify-content:flex-end;gap:8px;padding:12px 18px;border-top:1px solid var(--line)}
+.asr{display:grid;grid-template-columns:auto auto auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 6px;border-bottom:1px solid var(--line);font-weight:500}.asr input{width:auto;accent-color:var(--co)}.asr .sub{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#asL{max-height:50vh;overflow:auto;margin:10px 0}
+.gscroll{overflow-x:auto}.sh3{margin:16px 0 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pars{display:grid;gap:2px}.par{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,2fr) auto;gap:10px;align-items:center;padding:5px 0;font-size:.88rem}.pl2{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pl2 .sdot{margin-right:6px;vertical-align:-1px}.ptr{display:block;height:10px;background:var(--tint);border-radius:999px;overflow:hidden}.ptr i{display:block;height:100%;border-radius:999px}.pv{color:var(--mut);white-space:nowrap}
+.clg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}.cl{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--tint);min-width:0}.cl b{display:block;white-space:nowrap}.cl .sub{white-space:nowrap}
 </style>
 </head>
 <body>
 <header class="top">
   <div class="brand"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2S5 9.4 5 14.6a7 7 0 0 0 14 0C19 9.4 12 2.2 12 2.2z"/></svg></i>Fleet Fuel Planner<span class="proto">Prototype</span></div>
-  <nav class="tabs" role="tablist" aria-label="Sections">
-    <button class="tab" role="tab" data-tab="plan" aria-selected="true">Plan</button>
-    <button class="tab" role="tab" data-tab="act" aria-selected="false">Actuals</button>
-    <button class="tab" role="tab" data-tab="rates" aria-selected="false">Burn rates by model</button>
-  </nav>
+  <nav class="tabs" id="topNav" role="tablist" aria-label="Sections"></nav>
   <div class="theme" role="group" aria-label="Colour theme">
     <button id="thL" type="button" aria-label="Light theme" title="Light theme" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
     <button id="thD" type="button" aria-label="Dark theme" title="Dark theme" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
   </div>
 </header>
 <main>
+<a id="liveBar" class="livebar" href="#/disp" hidden></a>
 
-<section id="p_plan">
+<section id="p_dash" hidden>
+  <div class="ph"><div><h1>Dashboard</h1><p class="mut" id="dSub"></p></div></div>
+  <div id="dashBody"></div>
+</section>
+
+<section id="p_plan" hidden>
   <div class="card pbar">
     <div class="lbl pdate">Date
       <div class="dnav"><button class="btn" id="dPrev" aria-label="Previous day">‹</button><input type="date" id="pDate" aria-label="Plan date"><button class="btn" id="dNext" aria-label="Next day">›</button><button class="btn" id="dToday">Today</button></div>
@@ -188,6 +249,24 @@ dialog::backdrop{background:rgba(8,12,20,.55);backdrop-filter:blur(3px)}
   </div>
 </section>
 
+<section id="p_disp" hidden>
+  <div class="ph"><div><h1>Dispatch</h1><p class="mut">Monitor and control the fleet during a shift.</p></div></div>
+  <div class="card dbar">
+    <div class="lbl">Date
+      <div class="dnav"><button class="btn" id="xPrev" aria-label="Previous day">‹</button><input type="date" id="dDate" aria-label="Shift date"><button class="btn" id="xNext" aria-label="Next day">›</button><button class="btn" id="dNow" title="Jump to the current shift">Now</button></div>
+    </div>
+    <div class="lbl" id="dshLbl">Shift
+      <div class="seg" role="radiogroup" aria-labelledby="dshLbl"><label><input type="radio" name="dsh" value="day"><span>Day</span></label><label><input type="radio" name="dsh" value="night"><span>Night</span></label></div>
+    </div>
+    <label>Day shift starts<select id="dStart"></select></label>
+    <div class="dsr"><span id="dState" class="chip"></span><span id="dWin" class="mut"></span></div>
+    <div class="acts dacts" style="--acw:170px"><button class="btn hi" id="dStartBtn">Start shift</button><button class="btn" id="dEndBtn" hidden>End shift</button><button class="btn" id="dPlanBtn" hidden>Add planned machines</button><button class="btn" id="dAllBtn" hidden>Set status for all</button></div>
+  </div>
+  <div id="dBoard"></div>
+  <section class="card" id="dLive" style="margin-top:16px" hidden></section>
+  <section class="card" id="dSum" style="margin-top:16px" hidden></section>
+</section>
+
 <section id="p_act" hidden>
   <div class="card abar">
     <div class="lbl">Date
@@ -208,6 +287,23 @@ dialog::backdrop{background:rgba(8,12,20,.55);backdrop-filter:blur(3px)}
   <p class="mut note">Machines planned for this date appear here automatically (planned fuel is the fuel ceiling entered for the date). Enter the ready hours each one actually worked. Fuel is estimated as hours multiplied by burn rate.</p>
   <div class="two" id="aShifts"></div>
   <div class="charts" id="charts"></div>
+</section>
+
+<section id="p_hist" hidden>
+  <div class="ph"><div><h1>Shifts</h1><p class="mut">Saved dispatch shifts with timelines and summaries.</p></div><div class="phr"><button class="btn" id="hSample">Create sample shift</button></div></div>
+  <div class="card" id="hList"></div>
+  <div id="hDetail"></div>
+</section>
+
+<section id="p_codes" hidden>
+  <div class="ph"><div><h1>Status codes</h1><p class="mut">Time usage model (TUM) codes from the OK Tedi Operations Metrics BoOK, appendices A to F. Dispatch only offers each machine the codes that apply to its type.</p></div></div>
+  <div class="card">
+    <div id="cLegend"></div>
+    <div class="tools"><input id="cq" type="search" placeholder="Search code or description" aria-label="Search codes"><select id="cc" aria-label="Filter by category"></select><select id="ct" aria-label="Filter by machine type"></select></div>
+    <p id="cCnt" class="mut note" style="margin:0 0 8px"></p>
+    <div class="scroll"><table id="cTbl"></table></div>
+    <p class="mut note">Codes the TUM does not limit to particular machine types are set by dispatch and can be used on any machine.</p>
+  </div>
 </section>
 
 <section id="p_rates" hidden>
@@ -242,6 +338,23 @@ dialog::backdrop{background:rgba(8,12,20,.55);backdrop-filter:blur(3px)}
   </div>
 </section>
 <p class="foot"><button class="lnk" id="reset">Reset all saved data</button></p>
+<dialog id="stDlg" aria-labelledby="pkT"><div class="dlg">
+  <div class="dh"><h2 id="pkT">Change status</h2><p class="mut" id="pkS"></p><input id="pkQ" type="search" placeholder="Search code or description" aria-label="Search status codes" style="margin-top:10px"></div>
+  <div id="pkL"></div>
+  <div class="dfoot"><button class="btn" id="pkCancel" type="button">Cancel</button></div>
+</div></dialog>
+<dialog id="asDlg" aria-labelledby="asT"><div class="dlg">
+  <h2 id="asT">Assign haul trucks</h2><p class="mut">Tick the trucks that should haul for this excavator. Trucks not yet on the shift are added to it.</p>
+  <div id="asL"></div>
+  <div class="dact"><button class="btn" id="asCancel" type="button">Cancel</button><button class="btn hi" id="asOk" type="button">Apply</button></div>
+</div></dialog>
+<dialog id="cfDlg" aria-labelledby="cfT"><div class="dlg">
+  <h2 id="cfT"></h2><p class="mut" id="cfP"></p>
+  <div class="dact" style="margin-top:18px"><button class="btn" id="cfCancel" type="button">Cancel</button><button class="btn hi" id="cfOk" type="button">Confirm</button></div>
+</div></dialog>
+<div id="ctx" class="ctx" role="menu" hidden></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<nav class="bnav" id="botNav" aria-label="Main navigation"></nav>
 <dialog id="pdfDlg" aria-labelledby="pdfT"><div class="dlg">
   <h2 id="pdfT">Download PDF</h2>
   <p class="mut">Choose the page orientation for this report.</p>
@@ -255,7 +368,7 @@ dialog::backdrop{background:rgba(8,12,20,.55);backdrop-filter:blur(3px)}
 
 <script>
 const W_PRI={High:3,Normal:2,Low:1};
-const KEY="fleetfuel_v3",TYPES=["Haul truck","Excavator","Dozer","Other"],W={High:3,Normal:2,Low:1},NAME={day:"Day",night:"Night"};
+const KEY="fleetfuel_v3",TYPES=["Haul truck","Excavator","Dozer","Grader","Drill","Aux","Other"],W={High:3,Normal:2,Low:1},NAME={day:"Day",night:"Night"};
 const NOTES={eq:"Every machine works the same hours; the ceiling decides how many.",prio:"Hours scale with priority (High 3×, Normal 2×, Low 1×) until the ceiling is used.",eff:"The leanest machines run full hours first and the thirstiest get the rest, maximising total machine-hours."};
 const clone=o=>JSON.parse(JSON.stringify(o)),pad=n=>String(n).padStart(2,"0");
 const ymd=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
@@ -264,7 +377,7 @@ const TODAY=ymd(new Date());
 const WO={weekday:"short",day:"numeric",month:"short",year:"numeric"};
 const dl=(s,o)=>new Date(s+"T00:00:00").toLocaleDateString(undefined,o||{weekday:"short",day:"numeric",month:"short"});
 const RAW=[["Caterpillar","785D","MD011",150,"Haul truck"],["Caterpillar","785D","MD012",150,"Haul truck"],["XCMG","XDE130","MD017",70,"Haul truck"],["XCMG","XDE130","MD018",70,"Haul truck"],["Caterpillar","777F","MD032",56,"Haul truck"],["Caterpillar","777F","MD033",56,"Haul truck"],["Caterpillar","777D","HT90",75,"Haul truck"],["Caterpillar","777D","HT92",75,"Haul truck"],["Caterpillar","6015B","EX104",82,"Excavator"],["XCMG","XE2000","EX105",105,"Excavator"],["Hitachi","1200-6","EX92",90,"Excavator"],["XCMG","XE335C","HE018",18,"Excavator"],["Komatsu","D375A-6","DZ57",57,"Dozer"]];
-const mkDef=()=>{const models={},fleet=[],st={};RAW.forEach(([make,model,id,rate,type])=>{models[model]={rate,type};fleet.push({id,make,model});st[id]="up";});return{models,fleet,st,plans:{},act:{},date:TODAY,adate:TODAY,capFix:2,orient:"portrait"};};
+const mkDef=()=>{const models={},fleet=[],st={};RAW.forEach(([make,model,id,rate,type])=>{models[model]={rate,type};fleet.push({id,make,model});st[id]="up";});return{models,fleet,st,plans:{},act:{},date:TODAY,adate:TODAY,capFix:2,orient:"portrait",shifts:{},dayStart:6};};
 let S=mkDef(),STORED=null;
 try{const x=JSON.parse(localStorage.getItem(KEY)||"null");if(x&&x.fleet&&x.models){STORED=x;S=Object.assign(mkDef(),x);}}catch(e){}
 Object.values(S.plans).forEach(p=>{if(p.cap===undefined){const d=+p.capD||0,n=+p.capN||0;p.cap=p.shift==="day"?d:p.shift==="night"?n:d+n;}});
@@ -347,7 +460,7 @@ function renderFleet(){
   const p=plView(),q=$("#q").value.trim().toLowerCase(),sh=shifts(p),ups=S.fleet.filter(m=>st(m.id)!=="down");
   shown=ups.filter(m=>(m.id+" "+m.make+" "+m.model).toLowerCase().includes(q));
   $("#cnt").textContent=ups.filter(m=>st(m.id)==="up").length+" up, "+ups.filter(m=>st(m.id)==="standby").length+" standby";
-  const GL={"Haul truck":"Haul trucks",Excavator:"Excavators",Dozer:"Dozers",Other:"Other"},row=m=>`<li class="fl${sh.some(s=>isOn(p,m.id,s))?" on":""}"><div class="fid"><b>${esc(m.id)}</b></div><span class="sbx">${sh.map(s=>`<label><input type="checkbox" data-op="${s}:${esc(m.id)}"${isOn(p,m.id,s)?" checked":""}>${NAME[s]}</label>`).join("")}</span><span class="sub">${st(m.id)==="standby"?`<span class="tg">Standby</span>`:""}${esc(m.make)} ${esc(m.model)}, ${esc(typeOf(m).toLowerCase())}, ${rateOf(m)} L/hr</span></li>`;
+  const GL=PLURAL,row=m=>`<li class="fl${sh.some(s=>isOn(p,m.id,s))?" on":""}"><div class="fid"><b>${esc(m.id)}</b></div><span class="sbx">${sh.map(s=>`<label><input type="checkbox" data-op="${s}:${esc(m.id)}"${isOn(p,m.id,s)?" checked":""}>${NAME[s]}</label>`).join("")}</span><span class="sub">${st(m.id)==="standby"?`<span class="tg">Standby</span>`:""}${esc(m.make)} ${esc(m.model)}, ${esc(typeOf(m).toLowerCase())}, ${rateOf(m)} L/hr</span></li>`;
   $("#fleetList").innerHTML=shown.length?TYPES.map(t=>{const g=shown.filter(m=>typeOf(m)===t);return g.length?`<li class="grp"><span>${GL[t]}</span><span class="chip">${g.length}</span></li>`+g.map(row).join(""):"";}).join(""):`<li class="empty">${ups.length?"No machines match your search.":"No machines are available. Set status on the Burn rates by model tab."}</li>`;
 }
 function winCard(W){
@@ -433,15 +546,12 @@ function chart(cats,ser,label,W,ms=40,o={}){
   const sty=o.fluid?`display:block;width:100%;max-width:${Wd}px;height:auto`:W?`display:block;width:${Wd}px;max-width:none;height:auto`:`width:100%;max-width:${Math.round(Wd*1.7)}px;height:auto`;
   return`<div class="lg">${leg.map(s=>`<span><i class="sw" style="background:${s.c}"></i>${esc(s.n)}</span>`).join("")}</div><div class="scroll"><svg viewBox="0 0 ${Wd} ${H}" style="${sty}" role="img" aria-label="${esc(label)}, ${unit==="L"?"litres":unit}">${g}</svg></div>`;
 }
-let CH=[],lastCW=0;
-function cv(cats,ser,label,o,id,ms){ms=ms||40;const t=((S.ctypes||{})[id])||(o&&o.type)||"bar",oo={...(o||{}),type:t};CH.push({cats,ser,label,o:oo,id,base:o||{},ms});
-  return`<div class="tsw" data-id="${id}" role="group" aria-label="Chart type for ${esc(label)}">${Object.keys(CT).map(k=>`<button type="button" data-t="${k}" aria-pressed="${k===t}"${k===t?' class="on"':""}>${CT[k]}</button>`).join("")}</div><div class="cv" data-ci="${CH.length-1}">${chart(cats,ser,label,0,ms,oo)}</div>`;}
-function drawCharts(){const box=$("#charts");lastCW=box.clientWidth;if(!lastCW)return;$$(".cv").forEach(el=>{const c=CH[+el.dataset.ci],w=el.clientWidth;if(c&&w>0)el.innerHTML=chart(c.cats,c.ser,c.label,w,c.ms,c.o);});}
-if(window.ResizeObserver)new ResizeObserver(()=>{const w=$("#charts").clientWidth;if(w&&w!==lastCW)drawCharts();}).observe($("#charts"));
+let CHM={},lastCW=0;
+function cv(cats,ser,label,o,id,ms){ms=ms||40;const t=((S.ctypes||{})[id])||(o&&o.type)||"bar",oo={...(o||{}),type:t};CHM[id]={cats,ser,label,o:oo,base:o||{},ms};
+  return`<div class="tsw" data-id="${id}" role="group" aria-label="Chart type for ${esc(label)}">${Object.keys(CT).map(k=>`<button type="button" data-t="${k}" aria-pressed="${k===t}"${k===t?' class="on"':""}>${CT[k]}</button>`).join("")}</div><div class="cv" data-cid="${id}">${chart(cats,ser,label,0,ms,oo)}</div>`;}
+function drawCharts(){$$(".cv").forEach(el=>{const c=CHM[el.dataset.cid],w=el.clientWidth;if(c&&w>0)el.innerHTML=chart(c.cats,c.ser,c.label,w,c.ms,c.o);});}
+if(window.ResizeObserver)new ResizeObserver(()=>{const w=document.querySelector("main").clientWidth;if(w&&w!==lastCW){lastCW=w;drawCharts();}}).observe(document.querySelector("main"));
 else window.addEventListener("resize",drawCharts);
-$("#charts").addEventListener("click",e=>{const b=e.target.closest(".tsw button");if(!b)return;const g=b.parentElement,id=g.dataset.id;S.ctypes=S.ctypes||{};S.ctypes[id]=b.dataset.t;save();
-  g.querySelectorAll("button").forEach(x=>{const on=x===b;x.classList.toggle("on",on);x.setAttribute("aria-pressed",String(on));});
-  const i=CH.findIndex(c=>c.id===id);if(i<0)return;CH[i].o={...CH[i].base,type:b.dataset.t};const el=$('.cv[data-ci="'+i+'"]');el.innerHTML=chart(CH[i].cats,CH[i].ser,CH[i].label,el.clientWidth,CH[i].ms,CH[i].o);});
 function renderActSummary(){
   const d=S.adate,x=dayStats(d),A=x.as.day+x.as.night,Pn=x.pt,df=A-Pn;
   $("#aRead").innerHTML=[["Planned fuel",fmt(Pn),"L"],["Actual fuel (estimate)",fmt(A),"L"],["Actual minus planned",(df>0?"+":df<0?"−":"")+fmt(Math.abs(df)),"L"]].map(([a,b,c])=>`<div><span>${a}</span><b>${b}</b> <small>${c}</small></div>`).join("");
@@ -456,11 +566,11 @@ function renderActSummary(){
   const WR=rep(wk0,days[6]),WM=reportModel(WR,wk0,days[6]),WC=reportCharts(WR,WM,{Y:"var(--co)",N:"var(--ink)"}),wb=Object.fromEntries(WC.map(c=>[c.id,c]));
   const card=(c,cls)=>`<section class="card ${cls||""}"><h2 style="margin-bottom:0">${esc(c.title)}</h2><p class="mut note" style="margin:0 0 6px">${esc(c.note)}</p>`+cv(c.cats,c.ser,c.title,c.o,"w-"+c.id,c.cats.length>4&&!/wide/.test(cls||"")?18:40)+`</section>`;
   const head=(t,n)=>`<h2 style="margin-bottom:0">${t}</h2><p class="mut note" style="margin:0 0 6px">${n}</p>`;
-  CH=[];$("#charts").innerHTML=`<section class="card wide"><h2>Week of ${dl(wk0,{day:"numeric",month:"short"})} to ${dl(days[6],{day:"numeric",month:"short"})}</h2>`+cv(wb.fuel.cats,wb.fuel.ser,wb.fuel.title,wb.fuel.o,"w-fuel")+`<div class="scroll" style="margin-top:12px"><table><thead><tr><th>Date</th><th class="n">Planned (L)</th><th class="n">Actual day (L)</th><th class="n">Actual night (L)</th><th class="n">Actual total (L)</th><th class="n">Difference (L)</th></tr></thead><tbody>`+days.map((z,i)=>{const w=ws[i],pn=w.pt,a=at(w);return`<tr${z===d?' class="sel"':""}><td>${dl(z)}</td><td class="n">${fmt(pn)}</td><td class="n">${fmt(w.as.day)}</td><td class="n">${fmt(w.as.night)}</td><td class="n">${fmt(a)}</td><td class="n">${sgn(a-pn)}</td></tr>`;}).join("")+`</tbody><tfoot><tr><td>Week total</td><td class="n">${fmt(tot[0])}</td><td class="n">${fmt(tot[1])}</td><td class="n">${fmt(tot[2])}</td><td class="n">${fmt(tot[1]+tot[2])}</td><td class="n">${sgn(tot[1]+tot[2]-tot[0])}</td></tr></tfoot></table></div></section>`
+  $("#charts").innerHTML=`<section class="card wide"><h2>Week of ${dl(wk0,{day:"numeric",month:"short"})} to ${dl(days[6],{day:"numeric",month:"short"})}</h2>`+cv(wb.fuel.cats,wb.fuel.ser,wb.fuel.title,wb.fuel.o,"w-fuel")+`<div class="scroll" style="margin-top:12px"><table><thead><tr><th>Date</th><th class="n">Planned (L)</th><th class="n">Actual day (L)</th><th class="n">Actual night (L)</th><th class="n">Actual total (L)</th><th class="n">Difference (L)</th></tr></thead><tbody>`+days.map((z,i)=>{const w=ws[i],pn=w.pt,a=at(w);return`<tr${z===d?' class="sel"':""}><td>${dl(z)}</td><td class="n">${fmt(pn)}</td><td class="n">${fmt(w.as.day)}</td><td class="n">${fmt(w.as.night)}</td><td class="n">${fmt(a)}</td><td class="n">${sgn(a-pn)}</td></tr>`;}).join("")+`</tbody><tfoot><tr><td>Week total</td><td class="n">${fmt(tot[0])}</td><td class="n">${fmt(tot[1])}</td><td class="n">${fmt(tot[2])}</td><td class="n">${fmt(tot[1]+tot[2])}</td><td class="n">${sgn(tot[1]+tot[2]-tot[0])}</td></tr></tfoot></table></div></section>`
    +`<div class="chh">This week: ${dl(wk0,{day:"numeric",month:"short"})} to ${dl(days[6],{day:"numeric",month:"short"})}</div>`+["cum","var","shift","type"].filter(id=>wb[id]).map(id=>card(wb[id])).join("")+card(wb.top,"wide")
    +`<div class="chh">Selected date: ${dl(d)}</div>`
    +`<section class="card">`+head("Fuel per shift",dl(d))+cv(["Day","Night"],[{n:"Planned",c:G,v:[x.pl.day,x.pl.night]},{n:"Actual",c:Y,v:[x.as.day,x.as.night]}],"Planned and actual fuel per shift",{},"d-shift")+`</section>`
-   +`<section class="card">`+head("Fuel by machine type",dl(d))+cv(tys.map(t=>({"Haul truck":"Haul trucks",Excavator:"Excavators",Dozer:"Dozers"}[t]||t)),[{n:"Planned",c:G,v:tys.map(t=>ty[t].p)},{n:"Actual",c:Y,v:tys.map(t=>ty[t].a)}],"Planned and actual fuel by machine type",{},"d-type")+`</section>`
+   +`<section class="card">`+head("Fuel by machine type",dl(d))+cv(tys.map(t=>PLURAL[t]||t),[{n:"Planned",c:G,v:tys.map(t=>ty[t].p)},{n:"Actual",c:Y,v:tys.map(t=>ty[t].a)}],"Planned and actual fuel by machine type",{},"d-type")+`</section>`
    +`<section class="card w2">`+head("Fuel per machine",dl(d))+cv(all,[{n:"Planned",c:G,v:all.map(i=>x.pm[i]||0)},{n:"Actual",c:Y,v:all.map(i=>x.am[i]?x.am[i].day+x.am[i].night:0)}],"Planned and actual fuel per machine",{},"d-mach")+`</section>`;
   drawCharts();
 }
@@ -568,18 +678,14 @@ ${inter?interScript(CHS):""}</body></html>`;
 function checkExport(){const r=range();if(!r)return null;const R=rep(r[0],r[1]);if(!R.rows.length){$("#expMsg").textContent="No plan or actuals are recorded in this period.";return null;}$("#expMsg").textContent="";return{r,R};}
 function exportPdf(orient){
   const c=checkExport();if(!c)return;const{r,R}=c;
-  const name="Fleet Fuel Report "+r[0]+" to "+r[1],f=document.createElement("iframe"),old=document.title;
-  f.style.cssText="position:fixed;right:0;bottom:0;width:0;height:0;border:0";f.setAttribute("aria-hidden","true");
-  f.onload=()=>setTimeout(()=>{document.title=name;const w=f.contentWindow;w.onafterprint=()=>{document.title=old;f.remove();};w.focus();w.print();setTimeout(()=>{document.title=old;},60000);},350);
-  f.srcdoc=reportHTML(R,r[0],r[1],name,orient);document.body.appendChild(f);
+  const name="Fleet Fuel Report "+r[0]+" to "+r[1];printDoc(reportHTML(R,r[0],r[1],name,orient),name);
 }
 function exportInteractive(){
   const c=checkExport();if(!c)return;const{r,R}=c,name="Fleet Fuel Report "+r[0]+" to "+r[1];
   const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([reportHTML(R,r[0],r[1],name,"portrait",true)],{type:"text/html;charset=utf-8"}));
   a.download="fleet-fuel-report_"+r[0]+"_to_"+r[1]+"_interactive.html";document.body.appendChild(a);a.click();a.remove();
 }
-function askPdf(){const d=$("#pdfDlg");if(!checkExport())return;if(!d.showModal){exportPdf(S.orient||"portrait");return;}
-  $$("input[name=po]").forEach(i=>i.checked=i.value===(S.orient==="landscape"?"landscape":"portrait"));d.showModal();}
+function askPdf(){if(!checkExport())return;openPdfDialog(exportPdf);}
 
 /* ---------- Burn rates and machine status ---------- */
 let shownR=[],rdir=1,pend=null;
@@ -606,12 +712,359 @@ function removeMachine(id){
   if(!S.fleet.some(x=>x.model===m.model))delete S.models[m.model];
 }
 
+/* ====================== Dispatch: TUM status codes (OK Tedi Operations Metrics BoOK, appendices A to F) ====================== */
+const ALLT="DTZGRA",TL={"Haul truck":"T",Excavator:"D",Dozer:"Z",Grader:"G",Drill:"R",Aux:"A",Other:"A"};
+const CATS={OT:{n:"Ready",tc:"OT",c:"#92D050"},OD:{n:"Delay",tc:"OD",c:"#FFC000"},DS:{n:"Delay",tc:"OS",c:"#FFC000"},SB:{n:"Standby",tc:"OS",c:"#8DB4E2"},BLO:{n:"Down",tc:"BLO",c:"#B1A0C7"},BL:{n:"Down",tc:"BL",c:"#E6B8B7"},PL:{n:"Down",tc:"PL",c:"#D99694"}};
+const CAT_ORDER=["OT","OD","DS","SB","BLO","BL","PL"];
+const mkc=(cat,arr,pre="")=>arr.map(([code,d,ty])=>({code,d:pre+d,cat,ty:ty||"*"}));
+const CODES=[
+ ...mkc("OT",[[100,"PRODUCTION",ALLT],[101,"RE-DRILLING","R"],[102,"MOVE NEXT HOLE","R"]]),
+ ...mkc("OD",[[200,"TRIMMING","D"],[201,"CLEAN UP","D"],[202,"RE-POSITION","DR"],[203,"RE-LOCATE","DZR"],[204,"WAIT DIG UNIT","T"],[205,"HELD UP","DT"],[206,"WAIT DUMP","DT"],[207,"WAIT CRUSHER","DT"],[208,"WEATHER",ALLT],[209,"DISCUSSION","DZGRA"],[210,"REFILL WATER","R"],[211,"BIT CHANGE","R"],[212,"TRAVEL FUEL","T"]]),
+ ...mkc("DS",[[230,"REFUEL/LUBE",ALLT],[231,"SHIFT CHANGE",ALLT],[232,"CRIB",ALLT],[233,"SHORT BREAK",ALLT],[234,"OPERATOR SWAP",ALLT],[235,"PRE-START CHECK",ALLT],[236,"BLASTING",ALLT],[237,"RC BATTERY FLAT","Z"]]),
+ ...mkc("SB",[[300,"WAIT FUEL/LUBE/WATER",ALLT],[301,"NO OPERATOR",ALLT],[302,"NOT REQUIRED"],[303,"RELEASED BY MAINT"],[304,"STANDBY WEATHER",ALLT],[305,"NO TRUCKS"],[306,"NO TIP LOCATION"],[307,"NO SHOT/PATTERN","R"],[308,"MEETING",ALLT],[309,"INCIDENT"],[310,"OPERATIONAL ERROR"],[311,"OPS SHUTDOWN"]]),
+ ...mkc("BLO",[[400,"ACCIDENT DAMAGE"],[401,"TYRE DAMAGE/RETORQUE"],[402,"DISPATCH HARDWARE"],[403,"WALK FOR MAINTENANCE","DZR"],[404,"CHANGE ROD/SUB/BUSH","R"],[405,"WASH MACHINE",ALLT],[406,"WAIT FREIGHT"],[407,"WAIT CRANE"],[408,"WAIT FLOAT"],[409,"WAIT LABOUR"],[410,"WAIT REPAIRS"],[411,"WAIT PARTS"],[412,"WAIT P/O"],[413,"WAIT POWER/LIGHTING"],[414,"WAIT FREIGHT"],[415,"WAIT WATERCART"],[416,"WAIT WORKSPACE"],[417,"CRUSHER BLOCKED"],[418,"CRUSHER BELT"],[419,"CRUSHER METAL DETECT"]]),
+ ...mkc("BL",[[500,"WAIT MAINTENANCE",ALLT],[501,"MAINT ARRIVED"],[510,"BRAKES EMERG BRAKE"],[511,"BRAKES FAIL STALL TEST"],[512,"BRAKES HOSE"],[513,"BRAKES LEAKING"],[514,"BRAKES PARK BRAKE"],[515,"BRAKES SERVICE BRAKE"],[520,"DRVTRAIN CYLINDER"],[521,"DRVTRAIN DIFF"],[522,"DRVTRAIN FINAL DRV"],[523,"DRVTRAIN FRONT HUB"],[524,"DRVTRAIN HOSES"],[525,"DRVTRAIN OIL SYS"],[526,"DRVTRAIN TRANNY"],[527,"DRVTRAIN T-CONVRTR"],[528,"DRVTRAIN U-CARRIAGE"],[529,"DRVTRAIN UNI JOINTS"],[530,"ELECT ACCESSORIES"],[531,"ELECT AIRCON"],[532,"ELECT ALTERNATOR"],[533,"ELECT BATTERIES"],[534,"ELECT LIGHTS"],[535,"ELECT RC UNIT"],[536,"ELECT STARTER MOTOR"],[537,"ELECT WIRE-HARNESS"],[538,"ELECT INTERFACE"],[540,"GET"],[541,"GET STRUCTURAL"],[550,"HYDSYS CYLINDER"],[551,"HYDSYS HOSE"],[552,"HYDSYS PUMP"],[553,"HYDSYS ORING"],[554,"HYDSYS PTO"],[555,"HYDSYS MOTOR"],[556,"HYDSYS VALVE"],[557,"HYDSYS TANK"],[558,"HYDSYS ROTARY HEAD"],[560,"MECH ENGINE"],[561,"MECH AIR SYSTEM"],[562,"MECH COOLING SYS"],[563,"MECH EXHAUST SYS"],[564,"MECH FUEL SYSTEM"],[565,"MECH INDUCTION"],[570,"STRUCT TRAY"],[571,"STRUCT CHASSIS"],[572,"STRUCT WEAR PACK"],[573,"STRUCT BUCKET"],[574,"STRUCT MAIN STRUCT"],[580,"TYRE FAILURE/RUNOUT"],[590,"WARRANTY BRAKES"],[591,"WARRANTY DRV-TRAIN"],[592,"WARRANTY ELECT"],[593,"WARRANTY HYD SYS"],[594,"WARRANTY MECH"],[595,"WARRANTY STRUCT"]],"BL "),
+ ...mkc("PL",[[600,"BRAKES PARK BRAKE"],[610,"BRAKES SERVICE BRAKE"],[611,"BRAKES EMERG BRAKE"],[612,"BRAKES HOSE"],[620,"DRVTRAIN CYLINDER"],[621,"DRVTRAIN DIFF"],[622,"DRVTRAIN FINAL DRV"],[623,"DRVTRAIN FRONT HUB"],[624,"DRVTRAIN HOSES"],[625,"DRVTRAIN OIL SYS"],[626,"DRVTRAIN TRANNY"],[627,"DRVTRAIN T-CONVRTR"],[628,"DRVTRAIN U-CARRIAGE"],[629,"DRVTRAIN UNI JOINTS"],[630,"ELECT ACCESSORIES"],[631,"ELECT AIRCON"],[632,"ELECT ALTERNATOR"],[633,"ELECT BATTERIES"],[634,"ELECT LIGHTS"],[635,"ELECT RC UNIT"],[636,"ELECT STARTR MOTOR"],[637,"ELECT WIRE-HARNESS"],[638,"ELECT INTERFACE"],[640,"HYDSYS CYLINDER"],[641,"HYDSYS HOSE"],[642,"HYDSYS PUMP"],[643,"HYDSYS ORING"],[644,"HYDSYS PTO"],[645,"HYDSYS MOTOR"],[646,"HYDSYS VALVE"],[647,"HYDSYS TANK"],[648,"HYDSYS ROTARY HEAD"],[650,"MECH ENGINE"],[651,"MECH AIR SYSTEM"],[652,"MECH COOLING SYS"],[653,"MECH EXHAUST SYS"],[654,"MECH FUEL SYSTEM"],[655,"MECH INDUCTION"],[660,"SERVICE 250HRS"],[661,"SERVICE 500HRS"],[662,"SERVICE 1000HRS"],[663,"SERVICE COMMISSION"],[664,"SERVICE CHANGE OUT"],[665,"SERVICE MIDLIFE"],[666,"SERVICE"],[667,"SERVICE REBUILD"],[668,"SERVICE OVERRUN"],[670,"STRUCT TRAY"],[671,"STRUCT CHASSIS"],[672,"STRUCT BUCKET"],[673,"STRUCT MAIN STRUCT"],[674,"STRUCT WEAR PACK"],[680,"TYRE MAINTENANCE"]],"PL ")
+];
+const CODE={};CODES.forEach(o=>{if(!CODE[o.code])CODE[o.code]=o;});
+const appl=(o,type)=>o.ty==="*"||o.ty.includes(TL[type]||"A");
+const codesFor=types=>CODES.filter(o=>types.every(t=>appl(o,t)));
+const catLabel=cat=>CATS[cat].n+" · "+CATS[cat].tc;
+const PLURAL={"Haul truck":"Haul trucks",Excavator:"Excavators",Dozer:"Dozers",Grader:"Graders",Drill:"Drills",Aux:"Auxiliary",Other:"Other"};
+
+/* machine icons by type */
+const ICN={
+ T:'<path d="M3 8.5l10-2v7.5H3z"/><path d="M13 9.5h4.2l2.3 3.2V14H13z"/><circle cx="7" cy="17" r="2.2"/><circle cx="16.5" cy="17" r="2.2"/>',
+ D:'<rect x="3" y="16" width="11" height="4" rx="2"/><path d="M5 16v-3.5h6V16"/><path d="M8.5 12.5 13.5 5l5.5 3"/><path d="M19 8l1.8 5.5h-4.3"/>',
+ Z:'<rect x="3" y="15" width="12" height="4.5" rx="2.2"/><path d="M5.5 15v-4.5h6V15"/><path d="M11.5 12.5H18"/><path d="M19.5 8v11"/>',
+ G:'<circle cx="5.5" cy="17" r="2"/><circle cx="11" cy="17" r="2"/><circle cx="19" cy="17" r="2"/><path d="M3.5 14.5h14l3 1.5"/><path d="M13 14.5V8.5h4v6"/><path d="M8 20.2h7"/>',
+ R:'<path d="M10 3h4l-1 12h-2z"/><rect x="5" y="16" width="14" height="4" rx="2"/><path d="M12 15v-3"/>',
+ A:'<rect x="3" y="8" width="11" height="6.5" rx="3"/><path d="M14 10h4l2.2 3.2V15H14z"/><circle cx="7" cy="17.5" r="2"/><circle cx="17" cy="17.5" r="2"/>'
+};
+const icon=(type,cls)=>`<svg class="ti ${cls||""}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICN[TL[type]||"A"]}</svg>`;
+const GRIP='<svg viewBox="0 0 10 16" width="10" height="16" fill="currentColor" aria-hidden="true"><circle cx="2.5" cy="3" r="1.3"/><circle cx="7.5" cy="3" r="1.3"/><circle cx="2.5" cy="8" r="1.3"/><circle cx="7.5" cy="8" r="1.3"/><circle cx="2.5" cy="13" r="1.3"/><circle cx="7.5" cy="13" r="1.3"/></svg>';
+const DOTS='<svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true"><circle cx="3" cy="8" r="1.4"/><circle cx="8" cy="8" r="1.4"/><circle cx="13" cy="8" r="1.4"/></svg>';
+const NAVI={dash:'<rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>',plan:'<rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4M16 3v4M4 10h16M8 14h4"/>',disp:'<circle cx="12" cy="12" r="2"/><path d="M7.8 7.8a6 6 0 0 0 0 8.4M16.2 7.8a6 6 0 0 1 0 8.4M4.9 4.9a10 10 0 0 0 0 14.2M19.1 4.9a10 10 0 0 1 0 14.2"/>',act:'<path d="M5 20V11M11 20V4M17 20v-6M3 20h18"/>',hist:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',codes:'<path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/>',rates:'<path d="M12 3s6 6.2 6 10.5a6 6 0 0 1-12 0C6 9.2 12 3 12 3z"/>'};
+const PAGES=[["dash","Dashboard","Home"],["plan","Plan","Plan"],["disp","Dispatch","Dispatch"],["act","Actuals","Actuals"],["hist","Shifts","Shifts"],["codes","Codes","Codes"],["rates","Burn rates","Rates"]];
+const navIcon=k=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${NAVI[k]}</svg>`;
+
+/* ====================== Dispatch: shift data ====================== */
+const HRS=3600e3,NOWF=()=>window.__now?window.__now():Date.now();
+const clk=t=>new Date(t).toLocaleTimeString(undefined,{hour:"2-digit",minute:"2-digit",hour12:false});
+const fmtDur=ms=>{ms=Math.max(0,Math.floor(ms/1000));const h=Math.floor(ms/3600),m=Math.floor(ms%3600/60),s=ms%60;return h?h+":"+pad(m)+":"+pad(s):m+":"+pad(s);};
+const hh=ms=>fmt(ms/HRS,1),pct1=x=>fmt(x*100,0)+"%";
+const dayStart=()=>Number.isFinite(+S.dayStart)?+S.dayStart:6;
+function shiftWin(date,shift){const d=new Date(date+"T00:00:00");d.setHours(dayStart()+(shift==="night"?12:0),0,0,0);return[d.getTime(),d.getTime()+12*HRS];}
+function nowShift(){const n=new Date(NOWF()),h=n.getHours()+n.getMinutes()/60,ds=dayStart();if(h>=ds&&h<ds+12)return{date:ymd(n),shift:"day"};return{date:h>=ds+12?ymd(n):addDays(ymd(n),-1),shift:"night"};}
+const SK=(d,s)=>d+"|"+s,getRec=(d,s)=>(S.shifts||{})[SK(d,s)]||null;
+function newRec(d,s){S.shifts=S.shifts||{};const r={date:d,shift:s,start:NOWF(),end:null,state:"live",units:{}};S.shifts[SK(d,s)]=r;return r;}
+const unitOf=(r,id)=>r.units[id]||(r.units[id]={ev:[],exc:null,asg:[]});
+const lastEv=(r,id)=>{const u=r.units[id];return u&&u.ev.length?u.ev[u.ev.length-1]:null;};
+const onShift=(r,id)=>{const e=lastEv(r,id);return!!e&&e.c!==0;};
+function setStatus(r,id,code,t){const u=unitOf(r,id),e=lastEv(r,id);if(e&&e.c===code)return;u.ev.push({t:t||NOWF(),c:code});}
+function addUnit(r,id){if(!onShift(r,id))setStatus(r,id,100);}
+function unassign(r,id){const u=r.units[id];if(u&&u.exc){u.exc=null;u.asg.push({t:NOWF(),e:null});}}
+function removeUnit(r,id){const u=r.units[id];if(!u||!onShift(r,id))return;setStatus(r,id,0);unassign(r,id);Object.keys(r.units).forEach(k=>{if(r.units[k].exc===id)unassign(r,k);});}
+function assign(r,truck,exc){addUnit(r,truck);const u=unitOf(r,truck);if(u.exc===exc)return;u.exc=exc;u.asg.push({t:NOWF(),e:exc});}
+const recEnd=r=>r.end||NOWF();
+const typeIs=(id,k)=>{const m=byId(id);return!!m&&TL[typeOf(m)]===k;};
+const unitsOn=r=>Object.keys(r.units).filter(id=>byId(id)&&onShift(r,id));
+const excOn=r=>unitsOn(r).filter(id=>typeIs(id,"D")).sort();
+const trucksOf=(r,exc)=>unitsOn(r).filter(id=>r.units[id].exc===exc).sort();
+const typeRank=id=>{const m=byId(id);return m?TYPES.indexOf(typeOf(m)):99;};
+const allUnits=r=>Object.keys(r.units).filter(id=>byId(id)&&r.units[id].ev.length).sort((a,b)=>typeRank(a)-typeRank(b)||a.localeCompare(b,undefined,{numeric:true}));
+function segs(r,id){const u=r.units[id];if(!u)return[];const out=[],end=recEnd(r);for(let i=0;i<u.ev.length;i++){const e=u.ev[i];if(e.c===0||!CODE[e.c])continue;const to=Math.min(i+1<u.ev.length?u.ev[i+1].t:end,Math.max(end,e.t));if(to>e.t)out.push({from:e.t,to,c:e.c});}return out;}
+function totals(r,id){const T={ms:0,cat:{OT:0,OD:0,DS:0,SB:0,BLO:0,BL:0,PL:0},code:{}};segs(r,id).forEach(s=>{const d=s.to-s.from,o=CODE[s.c];T.ms+=d;T.cat[o.cat]+=d;T.code[s.c]=(T.code[s.c]||0)+d;});return T;}
+function metrics(T){const op=T.cat.OT+T.cat.OD,os=T.cat.SB+T.cat.DS,dn=T.cat.BLO+T.cat.BL+T.cat.PL,av=op+os;return{ot:T.cat.OT,od:T.cat.OD,os,dn,op,total:T.ms,avail:T.ms?av/T.ms:0,util:av?op/av:0,prod:T.ms?T.cat.OT/T.ms:0};}
+function shiftModel(r){
+  const ids=allUnits(r),agg={ms:0,cat:{OT:0,OD:0,DS:0,SB:0,BLO:0,BL:0,PL:0},code:{}};
+  const units=ids.map(id=>{const m=byId(id),T=totals(r,id),M=metrics(T),u=r.units[id],last=[...u.asg].reverse().find(a=>a.e)||null;
+    agg.ms+=T.ms;CAT_ORDER.forEach(c=>agg.cat[c]+=T.cat[c]);Object.entries(T.code).forEach(([k,v])=>agg.code[k]=(agg.code[k]||0)+v);
+    return{id,m,type:typeOf(m),exc:u.exc||(last&&last.e)||"",T,M,fuel:M.op/HRS*rateOf(m)};});
+  const top=Object.entries(agg.code).filter(([k])=>CODE[k].cat!=="OT").map(([k,v])=>({code:+k,d:CODE[k].d,cat:CODE[k].cat,ms:v})).sort((a,b)=>b.ms-a.ms).slice(0,8);
+  const [ws,we]=shiftWin(r.date,r.shift);
+  return{r,units,agg,K:metrics(agg),top,fuel:units.reduce((a,u)=>a+u.fuel,0),ws,we,per:dl(r.date,{weekday:"long",day:"numeric",month:"long",year:"numeric"})+" · "+NAME[r.shift]+" shift",win:clk(ws)+" to "+clk(we)};
+}
+
+/* ---------- timeline (horizontal bars) ---------- */
+const GCSS=`.gwrap{min-width:var(--gmin,760px)}.grow{display:grid;grid-template-columns:var(--glw,136px) minmax(0,1fr);align-items:center}.gl{display:flex;align-items:center;gap:6px;padding:0 8px 0 0;min-width:0;position:sticky;left:0;background:var(--card,#fff);z-index:3;white-space:nowrap;font-size:.85rem;overflow:hidden}.gl b{font-weight:700}.gl .gx{color:var(--mut,#5b6672);font-size:.72rem;overflow:hidden;text-overflow:ellipsis}.gl .ti{width:17px;height:17px;flex:none}.gb{position:relative;height:28px;margin:3px 0;background:var(--tint,#f4f6f8);border-radius:6px;overflow:hidden}.gaxis{position:relative;height:20px}.gt{position:absolute;top:0;transform:translateX(-50%);font-size:.7rem;color:var(--mut,#5b6672);white-space:nowrap}.gt.f{transform:none}.gt.l{transform:translateX(-100%)}.gg{position:absolute;top:0;bottom:0;width:1px;background:var(--line,#d7dde2);opacity:.8}.gs{position:absolute;top:0;bottom:0;min-width:2px;border-right:1px solid rgba(255,255,255,.6);overflow:hidden}.gs em{display:block;font-style:normal;font-size:.68rem;line-height:28px;padding:0 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#10151c;font-weight:600}.gpre{position:absolute;top:0;bottom:0;left:0;background:repeating-linear-gradient(135deg,transparent 0 5px,rgba(120,130,145,.18) 5px 8px)}.gnow{position:absolute;top:0;bottom:0;width:2px;background:var(--co,#1558C9);z-index:2}.gnl{position:absolute;top:0;transform:translateX(-50%);font-size:.65rem;font-weight:700;background:var(--co,#1558C9);color:#fff;padding:0 5px;border-radius:5px;white-space:nowrap}.gleg{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font-size:.78rem;color:var(--mut,#5b6672)}.gleg span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}.gleg i{width:12px;height:12px;border-radius:50%;display:inline-block}`;
+function gantt(r,o={}){
+  const ids=allUnits(r);if(!ids.length)return`<p class="empty">No units have been added to this shift yet.</p>`;
+  const [ws,we]=shiftWin(r.date,r.shift),end=recEnd(r),a=Math.min(ws,r.start),b=Math.max(we,end),span=b-a,now=NOWF();
+  const P=t=>((t-a)/span*100).toFixed(3),d0=new Date(a);d0.setMinutes(0,0,0);const ticks=[];for(let t=d0.getTime()<a?d0.getTime()+HRS:d0.getTime();t<=b;t+=HRS)ticks.push(t);
+  const grid=ticks.map(t=>`<i class="gg" style="left:${P(t)}%"></i>`).join("");
+  let h=`<div class="gwrap"><div class="grow"><div></div><div class="gaxis">${ticks.map((t,i)=>`<span class="gt${i===0&&+P(t)<2?" f":i===ticks.length-1&&+P(t)>97?" l":""}" style="left:${P(t)}%">${clk(t)}</span>`).join("")}${o.live&&now>=a&&now<=b?`<span class="gnl" style="left:${P(now)}%">${clk(now)}</span>`:""}</div></div>`;
+  ids.forEach(id=>{const m=byId(id),u=r.units[id],last=[...u.asg].reverse().find(x=>x.e),ex=u.exc||(last?last.e:"");
+    const sg=segs(r,id).map(s=>{const c=CODE[s.c],pc=s.to-s.from,col=CATS[c.cat].c;return`<span class="gs" style="left:${P(s.from)}%;width:${(pc/span*100).toFixed(3)}%;background:${col}" title="${esc(c.code+" "+c.d+" · "+CATS[c.cat].n+" ("+CATS[c.cat].tc+") · "+clk(s.from)+" to "+clk(s.to)+" · "+fmtDur(pc))}"><em>${esc(c.d)}</em></span>`;}).join("");
+    h+=`<div class="grow"><div class="gl">${icon(typeOf(m))}<b>${esc(id)}</b>${ex?`<span class="gx">${esc(ex)}</span>`:""}</div><div class="gb">${r.start>a?`<i class="gpre" style="width:${P(r.start)}%"></i>`:""}${grid}${sg}${o.live&&now>=a&&now<=b?`<i class="gnow" style="left:${P(now)}%"></i>`:""}</div></div>`;});
+  return h+`</div>`+legend(ids.length?r:null);
+}
+function legend(r){const used=new Set();if(r)allUnits(r).forEach(id=>segs(r,id).forEach(s=>used.add(CODE[s.c].cat)));
+  return`<div class="gleg">${CAT_ORDER.map(c=>`<span><i style="background:${CATS[c].c}"></i>${CATS[c].n} (${CATS[c].tc}${c==="DS"?", codes 230 to 237":c==="SB"?", codes 300 to 311":c==="BLO"?", 400 to 419":c==="BL"?", 500 to 595":c==="PL"?", 600 to 680":c==="OD"?", 200 to 212":", 100 to 102"})</span>`).join("")}</div>`;}
+
+/* ====================== Dispatch page ====================== */
+const DSP={date:"",shift:"day",recent:[],tq:""};
+const dRec=()=>getRec(DSP.date,DSP.shift),dEdit=()=>{const r=dRec();return!!r&&r.state==="live";};
+const plannedIds=(d,s)=>{const p=S.plans[d];return p?S.fleet.filter(m=>st(m.id)!=="down"&&p.ops[m.id]&&p.ops[m.id][s]).map(m=>m.id):[];};
+function toast(msg){const t=$("#toast");t.textContent=msg;t.classList.add("on");clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove("on"),3400);}
+function askC(title,text,ok){return new Promise(res=>{const d=$("#cfDlg");$("#cfT").textContent=title;$("#cfP").textContent=text;$("#cfOk").textContent=ok||"Confirm";d._res=res;d.showModal();});}
+function stBtn(r,id){const e=lastEv(r,id),o=CODE[e.c];return`<button class="stc" data-pick="${esc(id)}" title="${esc(o.code+" "+o.d+" ("+CATS[o.cat].n+", "+CATS[o.cat].tc+")")}"><i class="sdot" style="--c:${CATS[o.cat].c}"></i><span class="sl"><b>${o.code}</b> ${esc(o.d)}</span></button>`;}
+function unitCard(r,id,edit,from){const m=byId(id),e=lastEv(r,id),o=CODE[e.c];
+  return`<div class="mc${edit?"":" ro"}" data-mid="${esc(id)}"${edit?` data-drag="${esc(id)}" data-from="${esc(from)}"`:""} style="--c:${CATS[o.cat].c}"><span class="grip" title="${edit?"Drag to move":""}">${edit?GRIP:""}</span><span class="mic">${icon(typeOf(m))}</span><div class="mi"><b>${esc(id)}</b><span class="sub">${esc(m.make)} ${esc(m.model)}</span></div>${stBtn(r,id)}<span class="tm"${r.end?"":` data-since="${e.t}"`}>${fmtDur((r.end||NOWF())-e.t)}</span><button class="mm" data-menu="${esc(id)}" aria-label="Actions for ${esc(id)}">${DOTS}</button></div>`;}
+function excCard(r,id,edit){const e=lastEv(r,id),o=CODE[e.c],ts=trucksOf(r,id),prod=ts.filter(t=>CODE[lastEv(r,t).c].cat==="OT").length,q=ts.filter(t=>lastEv(r,t).c===204).length;
+  return`<article class="exc" data-dz="exc:${esc(id)}" data-mid="${esc(id)}" style="--c:${CATS[o.cat].c}">${unitCard(r,id,edit,"ops")}<div class="trs">${ts.length?ts.map(t=>unitCard(r,t,edit,"exc:"+id)).join(""):`<p class="hint">${edit?"Drop haul trucks here, or right-click for options.":"No trucks were assigned."}</p>`}</div><footer class="exf"><span>${ts.length} truck${ts.length===1?"":"s"}</span><span>${prod} hauling</span><span class="${q?"warnt":""}">${q} waiting</span></footer></article>`;}
+function trayList(r,edit){const on=new Set(unitsOn(r)),plan=new Set(plannedIds(r.date,r.shift)),q=(DSP.tq||"").trim().toLowerCase();
+  const l=S.fleet.filter(m=>!on.has(m.id)&&(m.id+" "+m.make+" "+m.model).toLowerCase().includes(q));
+  if(!l.length)return`<p class="empty">${q?"No machines match.":"Every machine is on the shift."}</p>`;
+  return TYPES.map(t=>{const g=l.filter(m=>typeOf(m)===t);return g.length?`<div class="grp"><span>${PLURAL[t]}</span><span class="chip">${g.length}</span></div>`+g.map(m=>{const dn=st(m.id)==="down",can=edit&&!dn;
+    return`<div class="mc tr2${dn?" off":""}" data-mid="${esc(m.id)}"${can?` data-drag="${esc(m.id)}" data-from="tray"`:""}><span class="grip">${can?GRIP:""}</span><span class="mic">${icon(t)}</span><div class="mi"><b>${esc(m.id)}</b><span class="sub">${esc(m.make)} ${esc(m.model)}</span></div><span class="tgs">${dn?`<span class="tg dn">Down</span>`:plan.has(m.id)?`<span class="tg pl">Planned</span>`:st(m.id)==="standby"?`<span class="tg">Standby</span>`:""}</span><button class="mm" data-menu="${esc(m.id)}" aria-label="Actions for ${esc(m.id)}">${DOTS}</button></div>`;}).join(""):"";}).join("");}
+function renderBoard(){
+  const r=dRec(),box=$("#dBoard");
+  if(!r){box.innerHTML=`<div class="card dempty"><div class="dei">${NAVI.disp?navIcon("disp"):""}</div><h2>No shift started for ${esc(dl(DSP.date))}, ${NAME[DSP.shift]} shift</h2><p class="mut">Starting a shift loads the machines planned for it and begins timing every status. You can then drag machines onto the board, assign haul trucks to excavators and change status codes as work happens.</p><div class="acts" style="--acw:200px;justify-content:center"><button class="btn hi" data-act="start">Start shift</button></div></div>`;return;}
+  const edit=r.state==="live",exs=excOn(r),oth=unitsOn(r).filter(id=>!typeIs(id,"D")&&!(r.units[id].exc&&exs.includes(r.units[id].exc))).sort((a,b)=>typeRank(a)-typeRank(b)||a.localeCompare(b,undefined,{numeric:true}));
+  box.innerHTML=`<div class="dgrid${edit?"":" ro1"}">${edit?`<aside class="card dtray" data-dz="tray"><div class="rowh"><h2>Available fleet</h2><span class="chip">${S.fleet.length-unitsOn(r).length}</span></div><p class="mut note" style="margin:0 0 8px">Drag a machine onto the board to put it on the shift. Drop haul trucks on an excavator to assign them.</p><input id="dTq" type="search" placeholder="Search machines" aria-label="Search available fleet" value="${esc(DSP.tq)}"><div id="dTray" class="dtl">${trayList(r,edit)}</div></aside>`:""}<div class="dmain"><section class="card"><div class="rowh"><h2>Dig units</h2><span class="chip">${exs.length}</span></div>${exs.length?`<div class="excs">${exs.map(id=>excCard(r,id,edit)).join("")}</div>`:`<p class="hint">${edit?"Drag an excavator here to start loading.":"No dig units were on this shift."}</p>`}</section><section class="card dzone" data-dz="ops"><div class="rowh"><h2>Other operational units</h2><span class="chip">${oth.length}</span></div><p class="mut note" style="margin:0 0 8px">Dozers, graders, drills, auxiliary equipment and trucks not assigned to an excavator.</p>${oth.length?`<div class="oth">${oth.map(id=>unitCard(r,id,edit,"ops")).join("")}</div>`:`<p class="hint">${edit?"Drop machines here to put them on the shift.":"None."}</p>`}</section></div></div>`;
+}
+function renderBar(){
+  const r=dRec(),[ws,we]=shiftWin(DSP.date,DSP.shift);
+  $("#dDate").value=DSP.date;$$("input[name=dsh]").forEach(i=>i.checked=i.value===DSP.shift);$("#dStart").value=String(dayStart());
+  const sc=$("#dState");sc.textContent=!r?"Not started":r.state==="live"?"Live":"Closed";sc.className="chip st-"+(!r?"n":r.state);
+  $("#dWin").textContent=clk(ws)+" to "+clk(we)+(r?" · started "+clk(r.start)+(r.end?" · ended "+clk(r.end):""):"");
+  $("#dStartBtn").hidden=!!r&&r.state==="live";$("#dStartBtn").textContent=r&&r.state==="closed"?"Reopen shift":"Start shift";
+  ["#dEndBtn","#dPlanBtn","#dAllBtn"].forEach(i=>$(i).hidden=!(r&&r.state==="live"));
+}
+function renderLive(){
+  const r=dRec(),el=$("#dLive"),old=el.querySelector(".gscroll"),sl=old?old.scrollLeft:0;
+  if(!r){el.hidden=true;return;}el.hidden=false;
+  el.innerHTML=`<div class="rowh"><h2>${r.state==="live"?"Live timeline":"Shift timeline"}</h2><span class="chip ${r.state==="live"?"st-live":""}">${r.state==="live"?"Updating · "+clk(NOWF())+":"+pad(new Date(NOWF()).getSeconds()):"Closed"}</span></div><p class="mut note" style="margin:0 0 8px">Each bar shows the status codes a machine was under during the shift, using the TUM colours. Hover a bar for times and durations.</p><div class="gscroll">${gantt(r,{live:r.state==="live"})}</div>`;
+  const n=el.querySelector(".gscroll");if(n)n.scrollLeft=sl;
+}
+function renderDisp(){renderBar();renderBoard();renderLive();renderSum();}
+
+/* ---------- start, end, reopen ---------- */
+function startShift(){const d=DSP.date,s=DSP.shift;let r=getRec(d,s);if(r&&r.state==="live")return;
+  if(r&&r.state==="closed"){const now=NOWF(),end=r.end;Object.keys(r.units).forEach(id=>{const e=lastEv(r,id);if(e&&e.c!==0){const c=e.c;setStatus(r,id,0,end);setStatus(r,id,c,now);}});r.end=null;r.state="live";save();toast("Shift reopened. The time while it was closed is left blank.");renderDisp();return;}
+  r=newRec(d,s);const ids=plannedIds(d,s);ids.forEach(id=>addUnit(r,id));save();toast(ids.length?"Shift started with "+ids.length+" planned machine"+(ids.length===1?"":"s")+".":"Shift started. Drag machines onto the board.");renderDisp();}
+async function endShift(){const r=dRec();if(!r||r.state!=="live")return;if(!await askC("End this shift?","All open statuses close at "+clk(NOWF())+". You can still reopen the shift later.","End shift"))return;r.end=NOWF();r.state="closed";save();toast("Shift ended. The summary is below.");renderDisp();}
+function addPlanned(){const r=dRec();if(!r||r.state!=="live")return;let n=0;plannedIds(r.date,r.shift).forEach(id=>{if(!onShift(r,id)){addUnit(r,id);n++;}});save();toast(n?n+" planned machine"+(n===1?"":"s")+" added.":"Every planned machine is already on the shift.");renderDisp();}
+
+/* ---------- status picker ---------- */
+let PK={ids:[]};
+function openPicker(ids){const r=dRec();if(!r||r.state!=="live"){toast("Start the shift to change statuses.");return;}
+  ids=ids.filter(i=>onShift(r,i));if(!ids.length){toast("Put the machine on the shift first.");return;}
+  PK={ids};const types=[...new Set(ids.map(i=>typeOf(byId(i))))];PK.list=codesFor(types);
+  $("#pkT").textContent=ids.length===1?"Change status: "+ids[0]:"Set status for "+ids.length+" units";
+  $("#pkS").textContent=ids.length===1?typeOf(byId(ids[0]))+": only the codes the TUM allows for this machine type.":"Only codes that apply to every selected machine type are shown.";
+  $("#pkQ").value="";renderPicker();$("#stDlg").showModal();}
+function renderPicker(){const r=dRec(),q=$("#pkQ").value.trim().toLowerCase(),cur=PK.ids.length===1?(lastEv(r,PK.ids[0])||{}).c:null;
+  const f=o=>!q||String(o.code).includes(q)||o.d.toLowerCase().includes(q)||CATS[o.cat].n.toLowerCase().includes(q);
+  const item=o=>`<button class="pk${o.code===cur?" on":""}" data-code="${o.code}"><i class="sdot" style="--c:${CATS[o.cat].c}"></i><b>${o.code}</b><span class="pd">${esc(o.d)}</span><span class="pt">${CATS[o.cat].tc}</span></button>`;
+  const rec=DSP.recent.map(c=>CODE[c]).filter(o=>o&&PK.list.includes(o)&&f(o));
+  let h=rec.length?`<div class="pgh">Recent</div>`+rec.map(item).join(""):"";
+  CAT_ORDER.forEach(c=>{const l=PK.list.filter(o=>o.cat===c&&f(o));if(!l.length)return;const open=q||["OT","OD","DS","SB","BLO"].includes(c);h+=`<details class="pg"${open?" open":""}><summary><i class="sdot" style="--c:${CATS[c].c}"></i><span>${catLabel(c)}</span><span class="chip">${l.length}</span></summary>${l.map(item).join("")}</details>`;});
+  $("#pkL").innerHTML=h||`<p class="empty">No codes match "${esc(q)}".</p>`;}
+function applyCode(code){const r=dRec();if(!r||r.state!=="live")return;PK.ids.forEach(id=>setStatus(r,id,code));DSP.recent=[code,...DSP.recent.filter(c=>c!==code)].slice(0,6);save();$("#stDlg").close();toast((PK.ids.length===1?PK.ids[0]:PK.ids.length+" units")+": "+code+" "+CODE[code].d);renderDisp();}
+
+/* ---------- assign trucks to an excavator ---------- */
+let AS={exc:""};
+function openAssign(exc){const r=dRec();if(!r||r.state!=="live")return;AS={exc};
+  const trucks=S.fleet.filter(m=>TL[typeOf(m)]==="T"&&st(m.id)!=="down").map(m=>m.id).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+  $("#asT").textContent="Assign haul trucks to "+exc;
+  $("#asL").innerHTML=trucks.length?trucks.map(id=>{const m=byId(id),u=r.units[id],on=onShift(r,id),where=on?(u.exc&&u.exc!==exc?"On "+u.exc:u.exc===exc?"Assigned":"Unassigned"):"Not on shift";
+    return`<label class="asr"><input type="checkbox" value="${esc(id)}"${on&&u.exc===exc?" checked":""}><span class="mic">${icon(typeOf(m))}</span><b>${esc(id)}</b><span class="sub">${esc(m.make)} ${esc(m.model)}</span><span class="tg${on?"":" pl"}">${esc(where)}</span></label>`;}).join(""):`<p class="empty">There are no haul trucks available. Set a truck up on the Burn rates page first.</p>`;
+  $("#asDlg").showModal();}
+function applyAssign(){const r=dRec();if(!r||r.state!=="live")return;const want=new Set([...$$("#asL input:checked")].map(i=>i.value));
+  trucksOf(r,AS.exc).forEach(t=>{if(!want.has(t))unassign(r,t);});want.forEach(t=>assign(r,t,AS.exc));save();$("#asDlg").close();toast(want.size+" truck"+(want.size===1?"":"s")+" assigned to "+AS.exc+".");renderDisp();}
+
+/* ---------- right-click / more menu ---------- */
+function openMenu(id,x,y){const r=dRec();if(!r||r.state!=="live"){toast(r?"This shift is closed. Reopen it to use dispatch actions.":"Start the shift to use dispatch actions.");return;}
+  const m=byId(id);if(!m)return;const on=onShift(r,id),T=TL[typeOf(m)],u=r.units[id]||{},it=[];
+  const run=f=>()=>{f();save();renderDisp();};
+  it.push({h:id+" · "+m.make+" "+m.model});
+  if(!on){it.push({t:"Add to shift",a:run(()=>addUnit(r,id))});if(T==="T")excOn(r).forEach(e=>it.push({t:"Add and assign to "+e,a:run(()=>assign(r,id,e))}));}
+  else{it.push({t:"Change status…",a:()=>openPicker([id])});
+    if(T==="D"){it.push({t:"Assign haul trucks…",a:()=>openAssign(id)});it.push({t:"Set status for excavator and its trucks…",a:()=>openPicker([id,...trucksOf(r,id)])});}
+    if(T==="T"){excOn(r).forEach(e=>it.push({t:(u.exc===e?"✓ Assigned to ":"Assign to ")+e,a:run(()=>assign(r,id,e))}));if(u.exc)it.push({t:"Unassign from "+u.exc,a:run(()=>unassign(r,id))});}
+    it.push({t:"Remove from shift",a:run(()=>removeUnit(r,id)),d:1});}
+  const c=$("#ctx");c.innerHTML=it.map((o,i)=>o.h?`<div class="ch">${esc(o.h)}</div>`:`<button role="menuitem" data-i="${i}"${o.d?' class="dg"':""}>${esc(o.t)}</button>`).join("");c._it=it;c.hidden=false;
+  const w=c.offsetWidth,h=c.offsetHeight;c.style.left=Math.max(6,Math.min(x,innerWidth-w-6))+"px";c.style.top=Math.max(6,Math.min(y,innerHeight-h-6))+"px";const f=c.querySelector("button");if(f)f.focus();}
+const closeMenu=()=>{const c=$("#ctx");if(c)c.hidden=true;};
+
+/* ---------- drag and drop (mouse and touch) ---------- */
+let DR=null;
+function dropOn(el){const r=dRec();if(!r||r.state!=="live"||!DR)return;const id=DR.id,from=DR.from,z=el?el.dataset.dz:null;if(!z)return;const T=TL[typeOf(byId(id))];
+  if(z==="tray"){if(onShift(r,id)){removeUnit(r,id);toast(id+" removed from the shift.");}}
+  else if(z==="ops"){if(!onShift(r,id)){addUnit(r,id);toast(id+" added to the shift.");}else if(from.startsWith("exc:")){unassign(r,id);toast(id+" unassigned.");}}
+  else if(z.startsWith("exc:")){const ex=z.slice(4);if(T==="T"){assign(r,id,ex);toast(id+" assigned to "+ex+".");}else{if(!onShift(r,id))addUnit(r,id);toast("Only haul trucks can be assigned to an excavator.");}}
+  save();renderDisp();}
+document.addEventListener("pointerdown",e=>{if(e.button>0||!dEdit()||cur!=="disp")return;const g=e.target.closest("[data-drag]");if(!g)return;if(e.pointerType!=="mouse"&&!e.target.closest(".grip"))return;DR={id:g.dataset.drag,from:g.dataset.from||"",el:g,x:e.clientX,y:e.clientY,go:false};});
+document.addEventListener("pointermove",e=>{if(!DR)return;if(!DR.go){if(Math.hypot(e.clientX-DR.x,e.clientY-DR.y)<6)return;DR.go=true;const gh=DR.el.cloneNode(true);gh.classList.add("ghost");gh.style.width=Math.min(DR.el.offsetWidth,360)+"px";document.body.appendChild(gh);DR.gh=gh;DR.el.classList.add("dragsrc");document.body.classList.add("dragging");closeMenu();}
+  DR.gh.style.left=(e.clientX+12)+"px";DR.gh.style.top=(e.clientY+8)+"px";DR.gh.style.display="none";const el=document.elementFromPoint(e.clientX,e.clientY);DR.gh.style.display="";const z=el&&el.closest("[data-dz]");
+  $$(".dzon").forEach(n=>n!==z&&n.classList.remove("dzon"));if(z)z.classList.add("dzon");DR.z=z||null;});
+const endDrag=drop=>{if(!DR)return;const d=DR;DR=null;if(d.go){d.gh.remove();d.el.classList.remove("dragsrc");document.body.classList.remove("dragging");$$(".dzon").forEach(n=>n.classList.remove("dzon"));DR=d;if(drop)dropOn(d.z);DR=null;endDrag.skip=1;setTimeout(()=>endDrag.skip=0,0);}};
+document.addEventListener("pointerup",()=>endDrag(true));document.addEventListener("pointercancel",()=>endDrag(false));
+document.addEventListener("click",e=>{if(endDrag.skip){e.stopPropagation();e.preventDefault();}},true);
+
+/* ====================== Summary, history, codes ====================== */
+const KPI=(l,v,s,a)=>`<div class="kt" style="--a:${a||"var(--co)"}"><span class="l">${l}</span><b class="v">${v}</b><small class="s">${s}</small></div>`;
+function sumHTML(r,key){
+  const M=shiftModel(r);if(!M.units.length)return`<div class="rowh"><h2>Shift summary</h2></div><p class="empty">The summary appears once machines are on the shift.</p>`;
+  const K=M.K,on=unitsOn(r).length,tot=M.top.reduce((a,t)=>a+t.ms,0)||1;
+  return`<div class="rowh"><h2>Shift summary</h2><span class="chip">${esc(NAME[r.shift])} · ${esc(dl(r.date))}</span></div>
+<div class="kg kg4">${KPI("Units on shift",on+" of "+M.units.length,"now / ever on this shift")+KPI("Availability",pct1(K.avail),"time not down","var(--up)")+KPI("Utilisation",pct1(K.util),"operating ÷ available","#FFC000")+KPI("Production",pct1(K.prod),hh(K.ot)+" h in Ready (OT)","#92D050")}</div>
+<div class="scroll"><table><thead><tr><th>Unit</th><th>Type</th><th>Excavator</th><th class="n">Ready h</th><th class="n">Delay h</th><th class="n">Standby h</th><th class="n">Down h</th><th class="n">Avail.</th><th class="n">Util.</th><th class="n">Est. fuel (L)</th></tr></thead><tbody>${M.units.map(u=>`<tr><td><span class="inl">${icon(u.type)}<b>${esc(u.id)}</b></span></td><td>${esc(u.type)}</td><td>${esc(u.exc||"–")}</td><td class="n">${hh(u.M.ot)}</td><td class="n">${hh(u.M.od)}</td><td class="n">${hh(u.M.os)}</td><td class="n">${hh(u.M.dn)}</td><td class="n">${pct1(u.M.avail)}</td><td class="n">${pct1(u.M.util)}</td><td class="n">${fmt(u.fuel)}</td></tr>`).join("")}</tbody><tfoot><tr><td colspan="3">Fleet total</td><td class="n">${hh(K.ot)}</td><td class="n">${hh(K.od)}</td><td class="n">${hh(K.os)}</td><td class="n">${hh(K.dn)}</td><td class="n">${pct1(K.avail)}</td><td class="n">${pct1(K.util)}</td><td class="n">${fmt(M.fuel)}</td></tr></tfoot></table></div>
+<h3 class="sh3">Top delays and losses</h3>${M.top.length?`<div class="pars">${M.top.map(t=>`<div class="par"><span class="pl2"><i class="sdot" style="--c:${CATS[t.cat].c}"></i><b>${t.code}</b> ${esc(t.d)}</span><span class="ptr"><i style="width:${(t.ms/M.top[0].ms*100).toFixed(1)}%;background:${CATS[t.cat].c}"></i></span><span class="pv">${hh(t.ms)} h · ${pct1(t.ms/tot)}</span></div>`).join("")}</div>`:`<p class="empty">No delays recorded.</p>`}
+<p class="mut note">Availability is time not down (BLO, BL, PL). Utilisation is operating time (OT + OD) divided by operating plus standby time (OS), as in the standard time usage model. Estimated fuel counts operating time at each model's burn rate.</p>
+<div class="acts" style="--acw:190px"><button class="btn" data-sx="xlsx" data-rk="${esc(key)}">Download Excel</button><button class="btn hi" data-sx="pdf" data-rk="${esc(key)}">Download PDF</button><button class="btn" data-sx="act" data-rk="${esc(key)}">Send hours to Actuals</button></div>`;}
+function renderSum(){const r=dRec(),el=$("#dSum");if(!r){el.hidden=true;return;}el.hidden=false;el.innerHTML=sumHTML(r,SK(r.date,r.shift));}
+async function sendToActuals(r){if(!await askC("Send hours to Actuals?","Operating hours (Ready + Delay) for "+NAME[r.shift]+" shift on "+dl(r.date)+" replace the ready hours already entered for these machines.","Send hours"))return;
+  const a=S.act[r.date]||(S.act[r.date]={day:{},night:{}});a[r.shift]=a[r.shift]||{};let n=0;allUnits(r).forEach(id=>{const h=Math.round(metrics(totals(r,id)).op/HRS*10)/10;if(h>0||id in a[r.shift]){a[r.shift][id]=h;n++;}});save();toast("Hours for "+n+" machines sent to Actuals.");}
+function sxAct(btn){const r=(S.shifts||{})[btn.dataset.rk];if(!r)return;const k=btn.dataset.sx;if(k==="xlsx")shiftXlsx(r);else if(k==="pdf")openPdfDialog(o=>printDoc(shiftPrintHTML(r,o),"Dispatch shift "+r.date+" "+r.shift));else if(k==="act")sendToActuals(r);}
+
+const HIST={sel:null};
+function renderHist(){
+  const recs=Object.values(S.shifts||{}).sort((a,b)=>b.start-a.start),el=$("#hList"),det=$("#hDetail");
+  if(!recs.length){el.innerHTML=`<p class="empty">No shifts yet. Start one on the Dispatch page, or create a sample shift to see how the summary and timeline look.</p>`;det.innerHTML="";return;}
+  if(!HIST.sel||!S.shifts[HIST.sel])HIST.sel=SK(recs[0].date,recs[0].shift);
+  el.innerHTML=`<div class="scroll"><table><thead><tr><th>Date</th><th>Shift</th><th>State</th><th>Window</th><th class="n">Units</th><th class="n">Avail.</th><th class="n">Util.</th><th></th></tr></thead><tbody>${recs.map(r=>{const k=SK(r.date,r.shift),M=shiftModel(r),[ws,we]=shiftWin(r.date,r.shift);return`<tr class="${k===HIST.sel?"sel":""}"><td>${esc(dl(r.date))}${r.sample?` <span class="tg">Sample</span>`:""}</td><td>${NAME[r.shift]}</td><td><span class="chip st-${r.state}">${r.state==="live"?"Live":"Closed"}</span></td><td>${clk(ws)} to ${clk(we)}</td><td class="n">${M.units.length}</td><td class="n">${pct1(M.K.avail)}</td><td class="n">${pct1(M.K.util)}</td><td class="n"><button class="btn sm" data-open="${esc(k)}">${k===HIST.sel?"Viewing":"Open"}</button></td></tr>`;}).join("")}</tbody></table></div>`;
+  const r=S.shifts[HIST.sel];
+  det.innerHTML=`<section class="card" style="margin-top:16px"><div class="rowh"><h2>${esc(dl(r.date))} · ${NAME[r.shift]} shift</h2><span class="chip st-${r.state}">${r.state==="live"?"Live":"Closed"}</span></div><div class="acts" style="--acw:170px;margin:0 0 12px">${r.state==="live"?`<button class="btn hi" data-go="disp" data-k="${esc(HIST.sel)}">Open in Dispatch</button>`:`<button class="btn" data-hact="reopen">Reopen shift</button>`}<button class="btn" data-hact="delete">Delete shift</button></div>${sumHTML(r,HIST.sel)}</section><section class="card" style="margin-top:16px"><div class="rowh"><h2>Timeline</h2></div><div class="gscroll">${gantt(r,{live:r.state==="live"})}</div></section>`;
+}
+function makeSample(){
+  const ids=S.fleet.filter(m=>st(m.id)!=="down").map(m=>m.id);if(!ids.length){toast("Add machines on the Burn rates page first.");return;}
+  let d=ymd(new Date(NOWF())),s="day";for(let i=0;i<40;i++){if(!getRec(d,s))break;if(s==="day")s="night";else{s="day";d=addDays(d,-1);}}
+  let seed=[...d].reduce((a,c)=>a*31+c.charCodeAt(0),7)+(s==="night"?5:0);const rnd=()=>(seed=(seed*1664525+1013904223)%4294967296)/4294967296,pick=a=>a[Math.floor(rnd()*a.length)];
+  const [ws,we]=shiftWin(d,s),r={date:d,shift:s,start:ws,end:we,state:"closed",sample:true,units:{}},exs=ids.filter(i=>typeIs(i,"D")),min=60000;
+  const DEL={T:[[204,5,20],[206,3,12],[212,8,14],[205,4,10],[230,12,18]],D:[[200,6,14],[201,8,16],[202,4,9],[205,5,12],[300,10,20]],Z:[[203,10,25],[209,4,8],[230,12,18]],G:[[208,10,20],[230,12,18]],R:[[211,15,25],[101,20,40],[102,8,14]],A:[[210,10,18],[230,12,18]]};
+  ids.forEach((id,i)=>{const T=TL[typeOf(byId(id))],u=unitOf(r,id);let t=ws;const push=(c,m)=>{u.ev.push({t,c});t=Math.min(we,t+m*min);};
+    if(T==="T"&&exs.length){u.exc=exs[i%exs.length];u.asg.push({t:ws,e:u.exc});}
+    push(235,8+Math.round(rnd()*10));const brk=ws+(4+rnd()*1.5)*HRS;let crib=false,down=(i===3&&ids.length>6)?ws+(5+rnd()*2)*HRS:null;
+    while(t<we-20*min){if(down&&t>=down){push(pick([411,500,510]),90+Math.round(rnd()*60));down=null;continue;}
+      if(!crib&&t>=brk){push(232,40);push(233,12);crib=true;continue;}
+      push(100,35+Math.round(rnd()*55));if(t>=we-20*min)break;const d2=pick(DEL[T]||DEL.A);push(d2[0],d2[1]+Math.round(rnd()*(d2[2]-d2[1])));}
+    u.ev.push({t:Math.min(t,we-20*min),c:231});});
+  S.shifts[SK(d,s)]=r;HIST.sel=SK(d,s);save();toast("Sample shift created for "+dl(d)+", "+NAME[s]+" shift.");renderHist();}
+
+/* ---------- codes reference ---------- */
+function renderCodes(){
+  $("#cLegend").innerHTML=`<div class="clg">${CAT_ORDER.map(c=>`<div class="cl"><i class="sdot big" style="--c:${CATS[c].c}"></i><div><b>${CATS[c].n}</b><span class="sub">${CATS[c].tc} · ${esc(CODES.filter(o=>o.cat===c)[0].code+" to "+CODES.filter(o=>o.cat===c).slice(-1)[0].code)}</span></div></div>`).join("")}</div>`;
+  const q=$("#cq").value.trim().toLowerCase(),cc=$("#cc").value,ct=$("#ct").value;
+  const l=CODES.filter(o=>(!cc||o.cat===cc)&&(!ct||appl(o,ct))&&(!q||String(o.code).includes(q)||o.d.toLowerCase().includes(q)));
+  $("#cCnt").textContent=l.length+" of "+CODES.length+" codes";
+  $("#cTbl").innerHTML=`<thead><tr><th>Code</th><th>Description</th><th>Category</th><th>Applies to</th></tr></thead><tbody>${l.map(o=>`<tr><td><span class="inl"><i class="sdot" style="--c:${CATS[o.cat].c}"></i><b>${o.code}</b></span></td><td>${esc(o.d)}</td><td>${catLabel(o.cat)}</td><td>${o.ty==="*"?`<span class="tg">Dispatcher-set, any machine</span>`:TYPES.filter(t=>t!=="Other"&&appl(o,t)).map(t=>`<span class="inl tt" title="${esc(t)}">${icon(t)}</span>`).join("")}</td></tr>`).join("")||`<tr><td class="empty" colspan="4">No codes match.</td></tr>`}</tbody>`;
+}
+
+/* ====================== Dashboard ====================== */
+const fleetCounts=()=>{const c={up:0,standby:0,down:0};S.fleet.forEach(m=>c[st(m.id)]++);return c;};
+function liveRec(){const n=nowShift(),r=getRec(n.date,n.shift);if(r&&r.state==="live")return r;return Object.values(S.shifts||{}).filter(x=>x.state==="live").sort((a,b)=>b.start-a.start)[0]||null;}
+function donut(parts,center,sub){const tot=parts.reduce((a,p)=>a+p.v,0),C=2*Math.PI*37;let off=0,g=`<circle cx="50" cy="50" r="37" fill="none" style="stroke:var(--line)" stroke-width="14"/>`;
+  if(tot)parts.filter(p=>p.v>0).forEach(p=>{const len=p.v/tot*C;g+=`<circle cx="50" cy="50" r="37" fill="none" style="stroke:${p.c}" stroke-width="14" stroke-dasharray="${len.toFixed(2)} ${(C-len).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}" transform="rotate(-90 50 50)"><title>${esc(p.n)}: ${p.v}</title></circle>`;off+=len;});
+  return`<svg class="dnut" viewBox="0 0 100 100" role="img" aria-label="${esc(sub)}">${g}<text x="50" y="52" text-anchor="middle" class="dnv">${center}</text><text x="50" y="65" text-anchor="middle" class="dns">${esc(sub)}</text></svg>`;}
+const groupOf=cat=>cat==="OT"?"Ready":cat==="OD"||cat==="DS"?"Delay":cat==="SB"?"Standby":"Down";
+const GCOL={Ready:CATS.OT.c,Delay:CATS.OD.c,Standby:CATS.SB.c,Down:CATS.BLO.c};
+function renderDash(){
+  const now=NOWF(),today=ymd(new Date(now)),fc=fleetCounts(),x=dayStats(today),A=x.as.day+x.as.night,Pn=x.pt,lr=liveRec(),ns=nowShift(),tot=S.fleet.length;
+  $("#dSub").textContent=dl(today,{weekday:"long",day:"numeric",month:"long",year:"numeric"})+" · "+NAME[ns.shift]+" shift";
+  const on=lr?unitsOn(lr):[];let live="";
+  if(lr){const cnt={Ready:0,Delay:0,Standby:0,Down:0},rows=on.map(id=>{const e=lastEv(lr,id),o=CODE[e.c];cnt[groupOf(o.cat)]++;return{id,o,t:NOWF()-e.t};}).filter(z=>z.o.cat!=="OT").sort((a,b)=>b.t-a.t).slice(0,6);
+    live=`<div class="snap"><div class="snd">${donut(Object.keys(cnt).map(k=>({n:k,v:cnt[k],c:GCOL[k]})),on.length,"on shift")}<ul class="dl">${Object.keys(cnt).map(k=>`<li><i class="sdot" style="--c:${GCOL[k]}"></i><span>${k}</span><b>${cnt[k]}</b></li>`).join("")}</ul></div><div class="snl"><h3 class="sh3">Needs attention</h3>${rows.length?rows.map(z=>`<div class="arow"><span class="inl">${icon(typeOf(byId(z.id)))}<b>${esc(z.id)}</b></span><span class="at"><i class="sdot" style="--c:${CATS[z.o.cat].c}"></i><span class="ell">${z.o.code} ${esc(z.o.d)}</span></span><span class="mut">${fmtDur(z.t)}</span></div>`).join(""):`<p class="empty">Every unit on the shift is in Ready status.</p>`}</div></div><div class="acts" style="--acw:170px;margin-top:12px"><button class="btn hi" data-go="disp" data-k="${esc(SK(lr.date,lr.shift))}">Open dispatch</button><button class="btn" data-go="hist" data-k="${esc(SK(lr.date,lr.shift))}">View summary</button></div>`;}
+  else live=`<div class="dempty"><div class="dei">${navIcon("disp")}</div><p class="mut">No shift is running. Start one to track every machine status, assign trucks to excavators and build the shift summary.</p><div class="acts" style="--acw:190px;justify-content:center"><button class="btn hi" data-go="disp">Go to dispatch</button></div></div>`;
+  const wk0=addDays(today,-((new Date(today+"T00:00:00").getDay()+6)%7)),WR=rep(wk0,addDays(wk0,6)),WM=reportModel(WR,wk0,addDays(wk0,6)),fch=reportCharts(WR,WM,{Y:"var(--co)",N:"var(--ink)"}).find(c=>c.id==="fuel");
+  const al=[],add=(t,h,p)=>al.push({t,h,p});
+  if(!(Pn>0))add("warn","No fuel ceiling entered for today","plan");
+  if(fc.down)add("warn",fc.down+" machine"+(fc.down===1?" is":"s are")+" marked down: "+S.fleet.filter(m=>st(m.id)==="down").map(m=>esc(m.id)).join(", "),"rates");
+  if(lr){const ex=excOn(lr),noT=ex.filter(e=>!trucksOf(lr,e).length),un=unitsOn(lr).filter(id=>typeIs(id,"T")&&!lr.units[id].exc);
+    if(noT.length)add("warn","No trucks assigned to "+noT.join(", "),"disp");if(un.length)add("info",un.length+" truck"+(un.length===1?" is":"s are")+" not assigned to an excavator","disp");
+    unitsOn(lr).forEach(id=>{const e=lastEv(lr,id),o=CODE[e.c],d=NOWF()-e.t;if(o.cat!=="OT"&&d>30*60000&&al.length<8)add("warn",id+" in "+o.d+" for "+fmtDur(d),"disp");});
+    if(NOWF()>shiftWin(lr.date,lr.shift)[1])add("info","The "+NAME[lr.shift].toLowerCase()+" shift is past its scheduled end","disp");}
+  const recent=Object.values(S.shifts||{}).sort((a,b)=>b.start-a.start).slice(0,5);
+  const QL=[["plan","Plan","Fuel ceiling"],["disp","Dispatch","Run a shift"],["act","Actuals","Hours and fuel"],["hist","Shifts","Saved reports"],["codes","Codes","TUM statuses"],["rates","Burn rates","Fleet status"]];
+  const byT=TYPES.map(t=>({t,l:S.fleet.filter(m=>typeOf(m)===t)})).filter(z=>z.l.length);
+  $("#dashBody").innerHTML=`<div class="kg">${KPI("Fleet available",fc.up+fc.standby+" of "+tot,fc.up+" up · "+fc.standby+" standby · "+fc.down+" down","var(--up)")+KPI("Planned fuel today",Pn>0?fmt(Pn)+" L":"Not set",Pn>0?"Ceiling for today":"Enter a ceiling on the Plan page","var(--mut)")+KPI("Actual fuel today",fmt(A)+" L",Pn>0?(A>Pn?"+":A<Pn?"−":"")+fmt(Math.abs(A-Pn))+" L against plan":"Estimate from Actuals","var(--co)")+KPI("Live shift",lr?on.length+" units":"None",lr?NAME[lr.shift]+" shift running":"Start one in Dispatch","#D4FF24")}</div>
+<div class="dg"><section class="card s7"><div class="rowh"><h2>Live shift</h2><span class="chip ${lr?"st-live":""}">${lr?"Live":"Idle"}</span></div>${live}</section>
+<section class="card s5"><div class="rowh"><h2>Fleet status</h2><span class="chip">${tot} machines</span></div><div class="snd">${donut([{n:"Up",v:fc.up,c:"var(--up)"},{n:"Standby",v:fc.standby,c:"var(--sb)"},{n:"Down",v:fc.down,c:"var(--dn)"}],fc.up+fc.standby,"available")}<ul class="dl"><li><i class="sdot" style="--c:var(--up)"></i><span>Up</span><b>${fc.up}</b></li><li><i class="sdot" style="--c:var(--sb)"></i><span>Standby</span><b>${fc.standby}</b></li><li><i class="sdot" style="--c:var(--dn)"></i><span>Down</span><b>${fc.down}</b></li></ul></div><div class="tyl">${byT.map(z=>`<span class="inl tt" title="${esc(z.t)}">${icon(z.t)}<b>${z.l.length}</b><span class="mut">${esc(PLURAL[z.t])}</span></span>`).join("")}</div></section>
+<section class="card s7"><div class="rowh"><h2>Fuel this week</h2><span class="chip">${esc(dl(wk0,{day:"numeric",month:"short"}))} to ${esc(dl(addDays(wk0,6),{day:"numeric",month:"short"}))}</span></div>${cv(fch.cats,fch.ser,fch.title,fch.o,"x-week")}</section>
+<section class="card s5"><div class="rowh"><h2>Needs attention</h2><span class="chip">${al.length}</span></div>${al.length?al.map(a=>`<button class="al ${a.t}" data-go="${a.p}"><i class="sdot" style="--c:${a.t==="warn"?"var(--warn)":"var(--sb)"}"></i><span class="ell">${a.h}</span><span class="mut">›</span></button>`).join(""):`<p class="empty">All clear. Nothing needs attention right now.</p>`}</section>
+<section class="card s7"><div class="rowh"><h2>Recent shifts</h2><button class="btn sm" data-go="hist">All shifts</button></div>${recent.length?`<div class="scroll"><table><thead><tr><th>Date</th><th>Shift</th><th class="n">Units</th><th class="n">Avail.</th><th class="n">Util.</th><th></th></tr></thead><tbody>${recent.map(r=>{const M=shiftModel(r),k=SK(r.date,r.shift);return`<tr><td>${esc(dl(r.date))}${r.sample?` <span class="tg">Sample</span>`:""}</td><td>${NAME[r.shift]}</td><td class="n">${M.units.length}</td><td class="n">${pct1(M.K.avail)}</td><td class="n">${pct1(M.K.util)}</td><td class="n"><button class="btn sm" data-go="hist" data-k="${esc(k)}">Open</button></td></tr>`;}).join("")}</tbody></table></div>`:`<p class="empty">No shifts yet. Dispatch a shift, or create a sample on the Shifts page.</p>`}</section>
+<section class="card s5"><div class="rowh"><h2>Go to</h2></div><div class="ql">${QL.map(([k,l,s])=>`<button class="qt" data-go="${k}">${navIcon(k)}<span class="qn">${l}</span><span class="sub">${s}</span></button>`).join("")}</div></section></div>`;
+  drawCharts();
+}
+
+/* ====================== Exports: print, Excel ====================== */
+let pdfRun=null;
+function openPdfDialog(run){pdfRun=run;const d=$("#pdfDlg");if(!d.showModal){run(S.orient||"portrait");return;}$$("input[name=po]").forEach(i=>i.checked=i.value===(S.orient==="landscape"?"landscape":"portrait"));d.showModal();}
+function printDoc(html,name){const f=document.createElement("iframe"),old=document.title;f.style.cssText="position:fixed;right:0;bottom:0;width:0;height:0;border:0";f.setAttribute("aria-hidden","true");
+  f.onload=()=>setTimeout(()=>{document.title=name;const w=f.contentWindow;w.onafterprint=()=>{document.title=old;f.remove();};w.focus();w.print();setTimeout(()=>{document.title=old;},60000);},350);f.srcdoc=html;document.body.appendChild(f);}
+function shiftPrintHTML(r,orient){
+  const M=shiftModel(r),e=esc,K=M.K,gen=new Date().toLocaleString(undefined,{dateStyle:"long",timeStyle:"short"}),tot=M.top.reduce((a,t)=>a+t.ms,0)||1;
+  const sentence="Machines were on the shift for "+hh(M.agg.ms)+" unit-hours. Availability was "+pct1(K.avail)+", utilisation "+pct1(K.util)+" and "+hh(K.ot)+" hours were spent in Ready (OT)."+(M.top[0]?" The largest loss was "+M.top[0].d+" ("+M.top[0].code+") at "+hh(M.top[0].ms)+" hours.":"")+" Estimated fuel at operating hours was "+fmt(M.fuel)+" L.";
+  const css=`:root{--ink:#030407;--mut:#5b6672;--line:#d7dde2;--co:#1558C9;--tint:#f4f6fa;--card:#fff}@page{size:A4 ${orient==="landscape"?"landscape":"portrait"};margin:14mm 12mm 16mm;@bottom-left{content:"${APP}  |  Dispatch shift report  |  ${M.per}";font:8pt Arial,sans-serif;color:#5b6872}@bottom-right{content:"Page " counter(page) " of " counter(pages);font:8pt Arial,sans-serif;color:#5b6872}}*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}body{margin:0;color:var(--ink);font:9.5pt/1.45 "Segoe UI","Helvetica Neue",Arial,sans-serif}header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid var(--co);padding-bottom:8px;margin-bottom:12px}h1{font-size:21pt;margin:0;line-height:1.1}.sub{color:var(--mut);margin-top:3px}.brand{text-align:right;font-weight:700;font-size:9pt;color:var(--mut)}.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 12px}.kpi{border:1px solid var(--line);border-top:3px solid var(--ink);border-radius:4px;padding:7px 9px}.kpi span{display:block;color:var(--mut);font-size:8pt}.kpi b{font-size:14.5pt;line-height:1.25}.kpi small{display:block;color:var(--mut);font-size:7.6pt}.sum{background:var(--tint);border-left:3px solid var(--co);padding:8px 12px;margin-bottom:6px}h2{font-size:11.5pt;margin:15px 0 6px;padding-bottom:3px;border-bottom:1px solid var(--ink);break-after:avoid}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:8.4pt}thead{display:table-header-group}th{background:#030407;color:#fff;text-align:left;padding:5px 6px;font-weight:600;border-bottom:2px solid #D4FF24}td{padding:4px 6px;border-bottom:1px solid var(--line)}tbody tr:nth-child(even) td{background:#f7f9fa}tr{break-inside:avoid}.n{text-align:right}tfoot td{font-weight:700;border-top:2px solid var(--ink);border-bottom:0;background:#fff!important}.note{color:var(--mut);font-size:8pt;margin-top:10px}.ti{width:13px;height:13px;vertical-align:-2px;margin-right:4px}.par{display:grid;grid-template-columns:3fr 4fr 1.6fr;gap:8px;align-items:center;margin:4px 0;font-size:8.6pt}.ptr{display:block;height:9px;background:var(--tint);border-radius:9px;overflow:hidden}.ptr i{display:block;height:100%}.sdot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--c);margin-right:5px}.pv{text-align:right;color:var(--mut)}.gp{--glw:98px;--gmin:0}.gp .gwrap{min-width:0}.gp .gb{height:19px;margin:2px 0}.gp .gs em{font-size:6pt;line-height:19px;padding:0 3px}.gp .gl{font-size:7.5pt;position:static}.gp .gt{font-size:6.5pt}.gp .grow{break-inside:avoid}.gp .gleg{font-size:7pt}.sh3{font-size:10pt;margin:12px 0 4px}${GCSS}`;
+  return`<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Dispatch shift ${e(r.date)} ${e(r.shift)}</title><style>${css}</style></head><body>
+<header><div><h1>Dispatch Shift Report</h1><div class="sub">${e(M.per)} · ${e(M.win)}</div></div><div class="brand">${e(APP)}<div style="font-weight:400">Generated ${e(gen)}</div></div></header>
+<div class="kpis">${[["Units on shift",M.units.length+" units","started "+clk(r.start)+(r.end?", ended "+clk(r.end):"")],["Availability",pct1(K.avail),"time not down"],["Utilisation",pct1(K.util),"operating ÷ available"],["Production",pct1(K.prod),hh(K.ot)+" h Ready (OT)"]].map(([a,b,c])=>`<div class="kpi"><span>${a}</span><b>${b}</b><small>${c}</small></div>`).join("")}</div>
+<div class="sum">${e(sentence)}</div>
+<h2>Timeline</h2><div class="gp">${gantt(r,{})}</div>
+<h2>Units</h2><table><thead><tr><th>Unit</th><th>Type</th><th>Excavator</th><th class="n">Ready h</th><th class="n">Delay h</th><th class="n">Standby h</th><th class="n">Down h</th><th class="n">Avail.</th><th class="n">Util.</th><th class="n">Est. fuel (L)</th></tr></thead><tbody>${M.units.map(u=>`<tr><td>${icon(u.type)}<b>${e(u.id)}</b></td><td>${e(u.type)}</td><td>${e(u.exc||"–")}</td><td class="n">${hh(u.M.ot)}</td><td class="n">${hh(u.M.od)}</td><td class="n">${hh(u.M.os)}</td><td class="n">${hh(u.M.dn)}</td><td class="n">${pct1(u.M.avail)}</td><td class="n">${pct1(u.M.util)}</td><td class="n">${fmt(u.fuel)}</td></tr>`).join("")}</tbody><tfoot><tr><td colspan="3">Fleet total</td><td class="n">${hh(K.ot)}</td><td class="n">${hh(K.od)}</td><td class="n">${hh(K.os)}</td><td class="n">${hh(K.dn)}</td><td class="n">${pct1(K.avail)}</td><td class="n">${pct1(K.util)}</td><td class="n">${fmt(M.fuel)}</td></tr></tfoot></table>
+<h2>Top delays and losses</h2>${M.top.length?M.top.map(t=>`<div class="par"><span><i class="sdot" style="--c:${CATS[t.cat].c}"></i><b>${t.code}</b> ${e(t.d)}</span><span class="ptr"><i style="width:${(t.ms/M.top[0].ms*100).toFixed(1)}%;background:${CATS[t.cat].c}"></i></span><span class="pv">${hh(t.ms)} h · ${pct1(t.ms/tot)}</span></div>`).join(""):`<p class="note">No delays recorded.</p>`}
+<p class="note">Colours and codes follow the time usage model (TUM) in the OK Tedi Operations Metrics BoOK. Availability is time not down (BLO, BL, PL). Utilisation is operating time (OT + OD) divided by operating plus standby time (OS). Estimated fuel counts operating time at each model's burn rate.</p></body></html>`;}
+
+const xcol=i=>{let s="";i++;while(i>0){const m=(i-1)%26;s=String.fromCharCode(65+m)+s;i=Math.floor((i-1)/26);}return s;};
+function sheetB(widths){const rows=[],merges=[],hts={};return{widths,rows,merges,hts,
+  put(r,c,v,s){(rows[r]=rows[r]||[])[c]=v==null?{s}:{v,s};},
+  mrg(r,c0,c1,r1){merges.push(xcol(c0)+(r+1)+":"+xcol(c1)+((r1==null?r:r1)+1));},
+  fill(r,c0,c1,s){for(let c=c0;c<=c1;c++)if(!(rows[r]&&rows[r][c]))this.put(r,c,null,s);},
+  xml(footer){const NC=widths.length;let sd="";for(let r=0;r<rows.length;r++){const rr=rows[r]||[];let cs="";for(let c=0;c<NC;c++){const o=rr[c];if(!o)continue;const ref=xcol(c)+(r+1);cs+=(o.v==null||o.v==="")?`<c r="${ref}" s="${o.s}"/>`:typeof o.v==="number"?`<c r="${ref}" s="${o.s}"><v>${isFinite(o.v)?o.v:0}</v></c>`:`<c r="${ref}" s="${o.s}" t="inlineStr"><is><t xml:space="preserve">${xe(o.v)}</t></is></c>`;}sd+=`<row r="${r+1}"${hts[r]?` ht="${hts[r]}" customHeight="1"`:""}>${cs}</row>`;}
+    return'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+`<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetPr><pageSetUpPr fitToPage="1"/></sheetPr><sheetViews><sheetView showGridLines="0" workbookViewId="0"/></sheetViews><sheetFormatPr defaultRowHeight="15"/><cols>${widths.map((w,i)=>`<col min="${i+1}" max="${i+1}" width="${w}" customWidth="1"/>`).join("")}</cols><sheetData>${sd}</sheetData>${merges.length?`<mergeCells count="${merges.length}">${merges.map(m=>`<mergeCell ref="${m}"/>`).join("")}</mergeCells>`:""}<pageMargins left="0.4" right="0.4" top="0.6" bottom="0.7" header="0.3" footer="0.3"/><pageSetup paperSize="9" orientation="landscape" fitToWidth="1" fitToHeight="0"/><headerFooter><oddFooter>${xe(footer)}</oddFooter></headerFooter></worksheet>`;}};}
+function bookBlob(sheets,stylesXml){const H='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>',n=sheets.length;
+  return zipStore([
+   {name:"[Content_Types].xml",text:H+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>'+sheets.map((s,i)=>`<Override PartName="/xl/worksheets/sheet${i+1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join("")+'<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>'},
+   {name:"_rels/.rels",text:H+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'},
+   {name:"xl/workbook.xml",text:H+'<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>'+sheets.map((s,i)=>`<sheet name="${xe(s.name)}" sheetId="${i+1}" r:id="rId${i+1}"/>`).join("")+'</sheets></workbook>'},
+   {name:"xl/_rels/workbook.xml.rels",text:H+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'+sheets.map((s,i)=>`<Relationship Id="rId${i+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${i+1}.xml"/>`).join("")+`<Relationship Id="rId${n+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`},
+   {name:"xl/styles.xml",text:stylesXml},
+   ...sheets.map((s,i)=>({name:`xl/worksheets/sheet${i+1}.xml`,text:s.xml}))]);}
+function shiftXlsx(r){
+  const M=shiftModel(r),K=M.K,{S:ST,xml}=xStyles(),INK="030407",MUT="5B6672",LINE="D7DDE2",HI="1558C9",TINT="F4F6F8",ZEB="F7F9FA",ln=["thin",LINE],ink=["medium",INK];
+  const th=(h)=>ST({b:1,c:"FFFFFF",fill:"030407",bb:["medium","D4FF24"],h});
+  /* sheet 1: summary */
+  const A=sheetB([14,14,16,12,12,12,12,13,13,14]),NC=10;
+  A.put(0,0,"Dispatch Shift Report",ST({sz:22,b:1}));A.fill(0,1,4,ST());A.mrg(0,0,4);A.put(0,5,APP,ST({b:1,sz:10,h:"right"}));A.fill(0,6,9,ST());A.mrg(0,5,9);A.hts[0]=34;
+  A.put(1,0,M.per+" · "+M.win,ST({c:MUT}));A.fill(1,1,4,ST());A.mrg(1,0,4);A.put(1,5,"Generated "+new Date().toLocaleString(undefined,{dateStyle:"long",timeStyle:"short"}),ST({sz:9,c:MUT,h:"right"}));A.fill(1,6,9,ST());A.mrg(1,5,9);
+  A.fill(2,0,9,ST({fill:HI}));A.hts[2]=4;A.hts[3]=8;
+  [["Units on shift",M.units.length+" units","started "+clk(r.start)+(r.end?", ended "+clk(r.end):"")],["Availability",pct1(K.avail),"time not down"],["Utilisation",pct1(K.util),"operating ÷ available"],["Production",pct1(K.prod),hh(K.ot)+" h Ready (OT)"]].forEach(([a,b,c],k)=>{const c0=k*2,wl=k?["thick","FFFFFF"]:null;
+    A.put(4,c0,a,ST({sz:8,c:MUT,fill:TINT,bt:ink,bl:wl}));A.put(4,c0+1,null,ST({fill:TINT,bt:ink}));A.mrg(4,c0,c0+1);A.put(5,c0,b,ST({sz:15,b:1,fill:TINT,h:"left",bl:wl}));A.put(5,c0+1,null,ST({fill:TINT}));A.mrg(5,c0,c0+1);A.put(6,c0,c,ST({sz:8,c:MUT,fill:TINT,bl:wl}));A.put(6,c0+1,null,ST({fill:TINT}));A.mrg(6,c0,c0+1);});
+  A.hts[5]=26;A.hts[7]=8;
+  const txt="Availability was "+pct1(K.avail)+", utilisation "+pct1(K.util)+" and "+hh(K.ot)+" hours were spent in Ready (OT)."+(M.top[0]?" The largest loss was "+M.top[0].d+" ("+M.top[0].code+") at "+hh(M.top[0].ms)+" hours.":"")+" Estimated fuel at operating hours was "+fmt(M.fuel)+" L.";
+  A.put(8,0,txt,ST({fill:TINT,w:1,v:"top",bl:["thick",HI]}));A.fill(8,1,9,ST({fill:TINT}));A.mrg(8,0,9);A.hts[8]=34;A.hts[9]=8;
+  let rc=10;const sec=t=>{A.put(rc,0,t,ST({sz:11,b:1,bb:ink}));A.fill(rc,1,NC-1,ST({bb:ink}));A.mrg(rc,0,NC-1);A.hts[rc]=22;rc++;};
+  sec("Units");["Unit","Type","Excavator","Ready (h)","Delay (h)","Standby (h)","Down (h)","Availability","Utilisation","Est. fuel (L)"].forEach((h,i)=>A.put(rc,i,h,th(i>2?"right":"left")));rc++;
+  M.units.forEach((u,ri)=>{const o={bb:ln};if(ri%2)o.fill=ZEB;const row=[[u.id,{b:1}],[u.type,{}],[u.exc||"–",{}],[+(u.M.ot/HRS).toFixed(2),{fmt:"0.0",h:"right"}],[+(u.M.od/HRS).toFixed(2),{fmt:"0.0",h:"right"}],[+(u.M.os/HRS).toFixed(2),{fmt:"0.0",h:"right"}],[+(u.M.dn/HRS).toFixed(2),{fmt:"0.0",h:"right"}],[u.M.avail,{fmt:"0%",h:"right"}],[u.M.util,{fmt:"0%",h:"right"}],[Math.round(u.fuel),{fmt:"#,##0",h:"right"}]];row.forEach(([v,s],i)=>A.put(rc,i,v,ST({...o,...s})));rc++;});
+  const tt=[["Fleet total",{b:1}],["",{}],["",{}],[+(K.ot/HRS).toFixed(2),{fmt:"0.0",h:"right"}],[+(K.od/HRS).toFixed(2),{fmt:"0.0",h:"right"}],[+(K.os/HRS).toFixed(2),{fmt:"0.0",h:"right"}],[+(K.dn/HRS).toFixed(2),{fmt:"0.0",h:"right"}],[K.avail,{fmt:"0%",h:"right"}],[K.util,{fmt:"0%",h:"right"}],[Math.round(M.fuel),{fmt:"#,##0",h:"right"}]];
+  tt.forEach(([v,s],i)=>A.put(rc,i,v,ST({b:1,bt:ink,...s})));rc++;A.hts[rc]=10;rc++;
+  sec("Top delays and losses");[["Code",0],["Category",0],["Description",0],null,null,["Hours",1],["Share",1]].forEach((h,i)=>{if(h)A.put(rc,i,h[0],th(h[1]?"right":"left"));});A.fill(rc,3,4,th("left"));A.mrg(rc,2,4);rc++;
+  const tot=M.top.reduce((a,t)=>a+t.ms,0)||1;M.top.forEach((t,ri)=>{const o={bb:ln};A.put(rc,0,t.code,ST({...o,b:1,fill:CATS[t.cat].c.slice(1)}));A.put(rc,1,CATS[t.cat].n+" ("+CATS[t.cat].tc+")",ST(o));A.put(rc,2,t.d,ST(o));A.fill(rc,3,4,ST(o));A.mrg(rc,2,4);A.put(rc,5,+(t.ms/HRS).toFixed(2),ST({...o,fmt:"0.0",h:"right"}));A.put(rc,6,t.ms/tot,ST({...o,fmt:"0%",h:"right"}));rc++;});
+  A.hts[rc]=10;rc++;A.put(rc,0,"Availability is time not down (BLO, BL, PL). Utilisation is operating time (OT + OD) divided by operating plus standby time (OS). Estimated fuel counts operating time at each model's burn rate. Colours and codes follow the TUM in the OK Tedi Operations Metrics BoOK.",ST({sz:8,c:MUT,w:1,v:"top"}));A.fill(rc,1,NC-1,ST());A.mrg(rc,0,NC-1);A.hts[rc]=32;
+  /* sheet 2: timeline grid, one column per 15 minutes */
+  const [ws0]=shiftWin(r.date,r.shift),end=recEnd(r),a0=Math.min(ws0,r.start),b0=Math.max(shiftWin(r.date,r.shift)[1],end),SL=15*60000,NS=Math.max(1,Math.ceil((b0-a0)/SL)),wd=[14,12,12];for(let i=0;i<NS;i++)wd.push(3.4);
+  const B=sheetB(wd);B.put(0,0,"Shift timeline",ST({sz:18,b:1}));B.fill(0,1,12,ST());B.mrg(0,0,12);B.hts[0]=30;B.put(1,0,M.per+" · each column is 15 minutes",ST({c:MUT}));B.fill(1,1,12,ST());B.mrg(1,0,12);
+  ["Unit","Type","Excavator"].forEach((h,i)=>B.put(3,i,h,th("left")));
+  const d0=new Date(a0);d0.setMinutes(0,0,0);for(let c=0;c<NS;c+=1){const t=a0+c*SL;if(new Date(t).getMinutes()===0||c===0){let c1=c;while(c1+1<NS&&new Date(a0+(c1+1)*SL).getMinutes()!==0)c1++;B.put(3,3+c,clk(t),ST({b:1,sz:8,c:"FFFFFF",fill:"030407",h:"left",bb:["medium","D4FF24"]}));for(let k=c+1;k<=c1;k++)B.put(3,3+k,null,ST({fill:"030407",bb:["medium","D4FF24"]}));if(c1>c)B.mrg(3,3+c,3+c1);}}
+  let row=4;const used=new Set();
+  M.units.forEach(u=>{B.put(row,0,u.id,ST({b:1,bb:ln}));B.put(row,1,u.type,ST({bb:ln}));B.put(row,2,u.exc||"–",ST({bb:ln}));B.hts[row]=22;
+    const sg=segs(r,u.id),slot=[];for(let c=0;c<NS;c++){const s0=a0+c*SL,s1=s0+SL;let best=null,bo=0;sg.forEach(g=>{const o=Math.min(g.to,s1)-Math.max(g.from,s0);if(o>bo){bo=o;best=g.c;}});slot.push(best);}
+    for(let c=0;c<NS;){let c1=c;while(c1+1<NS&&slot[c1+1]===slot[c])c1++;const code=slot[c],len=c1-c+1;
+      if(code==null){for(let k=c;k<=c1;k++)B.put(row,3+k,null,ST({fill:TINT}));}else{used.add(code);const o=CODE[code],txt=len>=5?o.d:len>=2?String(code):"";B.put(row,3+c,txt,ST({sz:7,c:"10151C",b:1,fill:CATS[o.cat].c.slice(1),bl:["thin","FFFFFF"],h:"left"}));for(let k=c+1;k<=c1;k++)B.put(row,3+k,null,ST({fill:CATS[o.cat].c.slice(1),bl:["thin","FFFFFF"]}));if(len>1)B.mrg(row,3+c,3+c1);}
+      c=c1+1;}
+    row++;});
+  row++;B.put(row,0,"Legend",ST({sz:11,b:1,bb:ink}));B.fill(row,1,12,ST({bb:ink}));B.mrg(row,0,12);row++;
+  [...used].sort((x,y)=>x-y).forEach(code=>{const o=CODE[code];B.put(row,0,code,ST({b:1,fill:CATS[o.cat].c.slice(1),h:"center"}));B.put(row,1,o.d,ST({}));B.fill(row,2,6,ST({}));B.mrg(row,1,6);B.put(row,7,CATS[o.cat].n+" ("+CATS[o.cat].tc+")",ST({c:MUT}));B.fill(row,8,12,ST({}));B.mrg(row,7,12);row++;});
+  const foot="&L"+APP+"  |  Dispatch shift report  |  "+M.per+"&RPage &P of &N",blob=bookBlob([{name:"Shift summary",xml:A.xml(foot)},{name:"Timeline",xml:B.xml(foot)}],xml());
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="dispatch-shift_"+r.date+"_"+r.shift+".xlsx";document.body.appendChild(a);a.click();a.remove();
+}
+
 /* ---------- wiring ---------- */
-let cur="plan";
-const R={plan:renderPlan,act:renderAct,rates:renderRates};
+let cur="dash";
+const R={dash:renderDash,plan:renderPlan,disp:renderDisp,act:renderAct,hist:renderHist,codes:renderCodes,rates:renderRates};
 const refresh=()=>{save();R[cur]();};
-function tab(n){cur=n;pend=null;$$(".tab").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===n));["plan","act","rates"].forEach(k=>$("#p_"+k).hidden=k!==n);R[n]();}
-$$(".tab").forEach(b=>b.onclick=()=>tab(b.dataset.tab));
 const setDate=d=>{if(!d)return;S.date=d;renderPlan();};
 $("#pDate").onchange=e=>setDate(e.target.value);$("#dPrev").onclick=()=>setDate(addDays(S.date,-1));$("#dNext").onclick=()=>setDate(addDays(S.date,1));$("#dToday").onclick=()=>setDate(TODAY);
 const setA=d=>{if(!d)return;S.adate=d;rng("week");save();renderAct();};
@@ -733,7 +1186,7 @@ setTheme(t0==="dark"||t0==="light"?t0:(matchMedia("(prefers-color-scheme: dark)"
 $("#thL").onclick=()=>setTheme("light",true);$("#thD").onclick=()=>setTheme("dark",true);
 $("#xlsx").onclick=exportXlsx;
 $("#pdfCancel").onclick=()=>$("#pdfDlg").close();
-$("#pdfOk").onclick=()=>{const v=($("input[name=po]:checked")||{}).value||"portrait";S.orient=v;save();$("#pdfDlg").close();exportPdf(v);};
+$("#pdfOk").onclick=()=>{const v=($("input[name=po]:checked")||{}).value||"portrait";S.orient=v;save();$("#pdfDlg").close();if(pdfRun)pdfRun(v);};
 $("#pdfDlg").addEventListener("click",e=>{if(e.target===$("#pdfDlg"))$("#pdfDlg").close();});$("#pdf").onclick=askPdf;$$("[data-ep]").forEach(b=>b.onclick=()=>rng(b.dataset.ep));
 ["#rq"].forEach(i=>$(i).oninput=renderRates);["#rt","#rmk","#rst","#rs"].forEach(i=>$(i).onchange=renderRates);
 $("#sUp").onclick=()=>{shownR.forEach(m=>S.st[m.id]="up");refresh();};$("#sSb").onclick=()=>{shownR.forEach(m=>S.st[m.id]="standby");refresh();};$("#rdir").onclick=()=>{rdir=-rdir;renderRates();};
@@ -752,7 +1205,73 @@ $("#addBtn").onclick=()=>{
   ["#nId","#nMake","#nModel","#nRate"].forEach(i=>$(i).value="");msg.textContent="Added "+id+" as up.";refresh();
 };
 $("#reset").onclick=()=>{S=mkDef();save();R[cur]();};
-rng("week");renderPlan();
+document.head.insertAdjacentHTML("beforeend","<style>"+GCSS+"</style>");
+/* ====================== Navigation, dialogs and live updates ====================== */
+function buildNav(){
+  $("#topNav").innerHTML=PAGES.map(([k,l])=>`<button class="tab" role="tab" data-tab="${k}" aria-selected="false">${navIcon(k)}<span>${l}</span></button>`).join("");
+  $("#botNav").innerHTML=PAGES.map(([k,l,s])=>`<button data-tab="${k}" aria-label="${l}" aria-current="false">${navIcon(k)}<span>${s}</span></button>`).join("");
+}
+const pageFromHash=()=>{const h=location.hash.replace(/^#\/?/,"").split("?")[0];return PAGES.some(p=>p[0]===h)?h:null;};
+function show(n){cur=n;pend=null;closeMenu();
+  $$("[data-tab]").forEach(b=>{const on=b.dataset.tab===n;b.setAttribute("aria-selected",String(on));b.setAttribute("aria-current",on?"page":"false");});
+  PAGES.forEach(([k])=>{$("#p_"+k).hidden=k!==n;});try{localStorage.setItem("fleetfuel_page",n);}catch(e){}
+  R[n]();updateLiveBar();window.scrollTo(0,0);}
+function route(){let p=pageFromHash();if(!p){try{p=localStorage.getItem("fleetfuel_page");}catch(e){}if(!PAGES.some(x=>x[0]===p))p="dash";history.replaceState(null,"","#/"+p);}show(p);}
+function goPage(p){if(pageFromHash()===p)show(p);else location.hash="#/"+p;}
+function updateLiveBar(){const lr=liveRec(),el=$("#liveBar");if(!lr||cur==="disp"){el.hidden=true;return;}el.hidden=false;el.dataset.k=SK(lr.date,lr.shift);el.innerHTML=`<i class="pulse"></i><b>Live</b><span class="ell">${NAME[lr.shift]} shift · ${unitsOn(lr).length} units on shift</span><span class="go">Open dispatch ›</span>`;}
+
+document.addEventListener("click",e=>{const t=e.target;
+  const mi=t.closest("#ctx button[data-i]");if(mi){const c=$("#ctx"),o=c._it[+mi.dataset.i];closeMenu();if(o&&o.a)o.a();return;}
+  if(!t.closest("#ctx")&&!t.closest("[data-menu]"))closeMenu();
+  const pk=t.closest("[data-pick]");if(pk){openPicker([pk.dataset.pick]);return;}
+  const mm=t.closest("[data-menu]");if(mm){const b=mm.getBoundingClientRect();openMenu(mm.dataset.menu,b.left,b.bottom+4);return;}
+  const ac=t.closest("[data-act]");if(ac&&ac.dataset.act==="start"){startShift();return;}
+  const sx=t.closest("[data-sx]");if(sx){sxAct(sx);return;}
+  const gp=t.closest("[data-go]");if(gp){e.preventDefault();if(gp.dataset.k){const k=gp.dataset.k.split("|");if(gp.dataset.go==="disp"){DSP.date=k[0];DSP.shift=k[1];}else HIST.sel=gp.dataset.k;}goPage(gp.dataset.go);return;}
+  const lb=t.closest("#liveBar");if(lb){e.preventDefault();const k=lb.dataset.k.split("|");DSP.date=k[0];DSP.shift=k[1];goPage("disp");return;}
+  const op=t.closest("[data-open]");if(op){HIST.sel=op.dataset.open;renderHist();return;}
+  const ha=t.closest("[data-hact]");if(ha){const r=S.shifts[HIST.sel];if(!r)return;
+    if(ha.dataset.hact==="delete")askC("Delete this shift?","The "+NAME[r.shift].toLowerCase()+" shift on "+dl(r.date)+" and its timeline are removed. This cannot be undone.","Delete").then(ok=>{if(ok){delete S.shifts[HIST.sel];HIST.sel=null;save();renderHist();toast("Shift deleted.");}});
+    else{DSP.date=r.date;DSP.shift=r.shift;startShift();goPage("disp");}return;}
+  const tb=t.closest(".tsw button");if(tb){const g=tb.parentElement,id=g.dataset.id;S.ctypes=S.ctypes||{};S.ctypes[id]=tb.dataset.t;save();
+    g.querySelectorAll("button").forEach(x=>{const on=x===tb;x.classList.toggle("on",on);x.setAttribute("aria-pressed",String(on));});
+    const c=CHM[id],el=document.querySelector('.cv[data-cid="'+id+'"]');if(c&&el){c.o={...c.base,type:tb.dataset.t};el.innerHTML=chart(c.cats,c.ser,c.label,el.clientWidth,c.ms,c.o);}return;}
+});
+document.addEventListener("contextmenu",e=>{if(cur!=="disp")return;const c=e.target.closest("[data-mid]");if(!c)return;e.preventDefault();openMenu(c.dataset.mid,e.clientX,e.clientY);});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMenu();});
+document.addEventListener("input",e=>{if(e.target.id==="dTq"){DSP.tq=e.target.value;const r=dRec();if(r)$("#dTray").innerHTML=trayList(r,dEdit());}});
+window.addEventListener("scroll",closeMenu,{passive:true});
+window.addEventListener("hashchange",route);
+
+/* dispatch controls and dialogs */
+const setDsp=()=>{DSP.tq="";renderDisp();};
+$("#dDate").onchange=e=>{if(e.target.value){DSP.date=e.target.value;setDsp();}};
+$("#xPrev").onclick=()=>{DSP.date=addDays(DSP.date,-1);setDsp();};$("#xNext").onclick=()=>{DSP.date=addDays(DSP.date,1);setDsp();};
+$("#dNow").onclick=()=>{const n=nowShift();DSP.date=n.date;DSP.shift=n.shift;setDsp();};
+$$("input[name=dsh]").forEach(i=>i.onchange=()=>{DSP.shift=i.value;setDsp();});
+$("#dStart").onchange=e=>{S.dayStart=+e.target.value;save();renderDisp();};
+$("#dStartBtn").onclick=startShift;$("#dEndBtn").onclick=endShift;$("#dPlanBtn").onclick=addPlanned;
+$("#dAllBtn").onclick=()=>{const r=dRec();if(r)openPicker(unitsOn(r));};
+$("#pkQ").oninput=renderPicker;$("#pkL").onclick=e=>{const b=e.target.closest("[data-code]");if(b)applyCode(+b.dataset.code);};$("#pkCancel").onclick=()=>$("#stDlg").close();
+$("#asOk").onclick=applyAssign;$("#asCancel").onclick=()=>$("#asDlg").close();
+$("#cfOk").onclick=()=>{const d=$("#cfDlg"),f=d._res;d._res=null;d.close();if(f)f(true);};$("#cfCancel").onclick=()=>$("#cfDlg").close();
+$("#cfDlg").addEventListener("close",()=>{const d=$("#cfDlg");if(d._res){const f=d._res;d._res=null;f(false);}});
+["#stDlg","#asDlg","#cfDlg"].forEach(i=>$(i).addEventListener("click",e=>{if(e.target===$(i))$(i).close();}));
+$("#hSample").onclick=makeSample;
+["#cq"].forEach(i=>$(i).oninput=renderCodes);["#cc","#ct"].forEach(i=>$(i).onchange=renderCodes);
+$("#cc").innerHTML=`<option value="">All categories</option>`+CAT_ORDER.map(c=>`<option value="${c}">${catLabel(c)}</option>`).join("");
+$("#ct").innerHTML=`<option value="">All machine types</option>`+TYPES.filter(t=>t!=="Other").map(t=>`<option>${t}</option>`).join("");
+$("#dStart").innerHTML=[...Array(12)].map((_,h)=>`<option value="${h}">${pad(h)}:00</option>`).join("");
+
+/* live clock: timers every second, timeline every two */
+let tickN=0;setInterval(()=>{if(document.hidden)return;tickN++;$$("[data-since]").forEach(el=>{el.textContent=fmtDur(NOWF()-(+el.dataset.since));});updateLiveBar();
+  if(cur==="disp"){if(tickN%2===0)renderLive();if(tickN%10===0)renderSum();}
+  if(cur==="dash"&&tickN%15===0)renderDash();
+  if(cur==="hist"&&tickN%15===0&&HIST.sel&&S.shifts[HIST.sel]&&S.shifts[HIST.sel].state==="live")renderHist();},1000);
+
+rng("week");{const ns=nowShift();DSP.date=ns.date;DSP.shift=ns.shift;}
+buildNav();$$("[data-tab]").forEach(b=>b.onclick=()=>goPage(b.dataset.tab));
+route();
 if("serviceWorker" in navigator&&location.protocol!=="file:")navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
 </body>
