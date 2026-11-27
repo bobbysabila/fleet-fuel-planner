@@ -1,13 +1,15 @@
 # Fleet Fuel Planner (Prototype)
 
-Plan fuel use for a heavy equipment fleet.
+Plan fuel use for a heavy equipment fleet and dispatch it live during a shift.
 
-- Set each machine as up, standby or down (Burn rates by model tab)
-- Plan each date with one 24-hour fuel ceiling that you enter (Day shift, then Night shift of the same date) and get ready hours per machine
-- Record actual hours per shift and compare estimated fuel for the date (both shifts) against the planned fuel
-- Built-in suggestions to cut fuel use, with no API key or AI service needed
+- **Dashboard**: fleet status, planned and actual fuel today, the live shift at a glance, alerts, recent shifts and quick links
+- **Plan**: one 24-hour fuel ceiling per date that you enter (Day shift, then Night shift of the same date), with ready hours per machine
+- **Dispatch**: run a Day or Night shift live. Drag machines onto the board, drag or right-click to assign haul trucks to excavators, change status codes during the shift, watch a live timeline, and export the shift summary as Excel or PDF
+- **Actuals**: record actual hours per shift, compare estimated fuel with plan, switchable charts, Excel and PDF reports
+- **Shifts**: every saved dispatch shift with its summary and timeline
+- **Codes**: the time usage model (TUM) status codes from the OK Tedi Operations Metrics BoOK, with the machine types each code applies to
+- **Burn rates**: fleet list with burn rates by model and machine status (up, standby, down)
 - Light and dark themes
-- Export reports from the Actuals tab as Excel (same layout and colours as the PDF) or PDF (choose portrait or landscape when downloading)
 
 Live app: https://bobbysabila.github.io/fleet-fuel-planner/
 
